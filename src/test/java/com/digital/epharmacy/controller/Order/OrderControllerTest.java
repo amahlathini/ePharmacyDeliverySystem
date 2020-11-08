@@ -71,9 +71,8 @@ public class OrderControllerTest {
                 .postForEntity(url, order, Order.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-        Order createdOrder = postResponse.getBody();
-        System.out.println("Saved data:" + createdOrder);
-        assertEquals(order.getOrderTotal(), createdOrder.getOrderTotal());
+        System.out.println("Saved data:" + postResponse.getBody());
+        assertEquals(order.getOrderTotal(), postResponse.getBody().getOrderTotal());
 
     }
 

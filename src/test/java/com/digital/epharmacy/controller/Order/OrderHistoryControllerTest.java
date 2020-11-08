@@ -58,8 +58,7 @@ public class OrderHistoryControllerTest {
                 .postForEntity(url, orderHistory, OrderHistory.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-        orderHistory = postResponse.getBody();
-        System.out.println("Saved data:" + orderHistory);
+        System.out.println("Saved data:" + postResponse.getBody());
         assertEquals(orderHistory.getTotalNumberOfOrders(), postResponse.getBody().getTotalNumberOfOrders());
 
     }

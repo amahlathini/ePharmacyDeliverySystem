@@ -75,7 +75,7 @@ class OrderReceiptControllerTest {
                 .postForEntity(url,orderReceipt,OrderReceipt.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-        System.out.println("Saved Data:" +orderReceipt);
+        System.out.println("Saved Data:" +postResponse.getBody());
         assertEquals(orderReceipt.getReceipt_number(),postResponse.getBody().getReceipt_number());
     }
 
