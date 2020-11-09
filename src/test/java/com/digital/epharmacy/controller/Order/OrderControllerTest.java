@@ -35,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OrderControllerTest {
 
+<<<<<<< HEAD:src/test/java/com/digital/epharmacy/controller/Order/OrderControllerTest.java
     private static String USERNAME = "UserProfile";
     private static String USER_PASSWORD = "54321";
     private static String ADMIN_USERNAME = "Admin";
@@ -48,6 +49,26 @@ public class OrderControllerTest {
 
 
 
+=======
+<<<<<<< HEAD
+    //as per business rule, we need items on the db to place order
+    private static CatalogueItem catalogueItem = CatalogueItemFactory.createCatalogueItem(36, "Mayogel",
+            "oral health", 36, 200);
+
+    @Autowired
+    private static TestRestTemplate restTemplateItem;
+    private static final String baseURLItem = "http://localhost:8080/catalogueItem";
+    private static String itemUrl = baseURLItem + "/create";
+
+    private static ResponseEntity<CatalogueItem> item1 = restTemplateItem.postForEntity(itemUrl, catalogueItem, CatalogueItem.class);
+
+    private  static List<CatalogueItem> items = Stream.of(item1.getBody()).collect(Collectors.toList());
+
+
+
+=======
+>>>>>>> upstream/master
+>>>>>>> fada8d01bd679c3ec679ea5029fe1583abcf922c:src/test/java/com/digital/epharmacy/controller/order/OrderControllerTest.java
     private static UserProfile user = UserProfileFactory
             .createUserProfile("Chris","Mahlathini", "male");
 
