@@ -1,7 +1,10 @@
 package com.digital.epharmacy.controller.Driver;
 
 import com.digital.epharmacy.entity.Driver.DriverCar;
+import com.digital.epharmacy.entity.Driver.DriverLocation;
+import com.digital.epharmacy.entity.Driver.DriverProfile;
 import com.digital.epharmacy.factory.Driver.DriverCarFactory;
+import com.digital.epharmacy.factory.Driver.DriverProfileFactory;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.MethodOrderer;
@@ -27,14 +30,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DriverCarControllerTest {
 
-    DriverCar driverCar = DriverCarFactory.createDriverCar("CY 240", "blue", "Ford", "Figo");
+    DriverLocation driverLocation = new DriverLocation(20, 50);
+    DriverProfile driverProfile = DriverProfileFactory.createDriverProfile("Chaddy","Hawthorne",driverLocation);
+
+
+    DriverCar driverCar = DriverCarFactory.createDriverCar("CY 240", "blue", "Ford", "Figo", driverProfile);
 
     private static String SECURITY_USERNAME = "Caruser";
     private static String SECURITY_PASSWORD = "Carpassword";
 
     @Autowired
     private TestRestTemplate restTemplate;
-    private String baseURL = "http://localhost:8080/Car/";
+    private String baseURL = "http://localhost:8080/cars/";
 
     @Order(1)
     @Test
@@ -49,17 +56,17 @@ class DriverCarControllerTest {
         driverCar = postResponse.getBody();
 
         System.out.println("Saved Data:" +driverCar);
-        assertEquals(driverCar.getCarId(),postResponse.getBody().getCarId());
+        assertEquals(driverCar.getCar_id(),postResponse.getBody().getCar_id());
     }
 
     @Order(2)
     @Test
     public void read() {
 
-        String url = baseURL + "read/" + driverCar.getCarId();
+        String url = baseURL + "read/" + driverCar.getCar_id();
         System.out.println("URL: " +url);
         ResponseEntity<DriverCar> response = restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).getForEntity(url,DriverCar.class);
-        assertEquals(driverCar.getCarId(), response.getBody().getCarId());
+        assertEquals(driverCar.getCar_id(), response.getBody().getCar_id());
         System.out.println(response);
         System.out.println(response.getBody());
     }
@@ -68,13 +75,13 @@ class DriverCarControllerTest {
     @Test
     public void update() {
 
-        DriverCar updated = new DriverCar.Builder().copy(driverCar).setCarName("Toyota").builder();
+        DriverCar updated = new DriverCar.Builder().copy(driverCar).setCar_name("Toyota").build();
         String url = baseURL = "update";
         System.out.println("URL: " +url);
         System.out.println("Post Data: " +updated);
 
         ResponseEntity<DriverCar> response = restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).postForEntity(url,updated,DriverCar.class);
-        assertEquals(driverCar.getCarId(), response.getBody().getCarId());
+        assertEquals(driverCar.getCar_id(), response.getBody().getCar_id());
     }
 
     @Order(4)
@@ -95,7 +102,7 @@ class DriverCarControllerTest {
     @Test
     public void delete() {
 
-        String url = baseURL +"delete/" +driverCar.getCarId();
+        String url = baseURL +"delete/" +driverCar.getCar_id();
         System.out.println("URL: " +url);
         restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).delete(url);
     }

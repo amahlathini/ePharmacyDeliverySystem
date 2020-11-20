@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+;
 
 /*
  * Author: Nicole Hawthorne
@@ -21,21 +22,27 @@ import java.util.Objects;
  * */
 //main class
 @Entity
+@Table(name = "addresses")
 public class Address {
     //naming entity attributes and assigning their variable values
     @Id
-    @Column(name = "id")
-    private String addressId;
+    @Column(name = "user_id")
+    private String address_id;
     @NotNull(message = "Street number is required")
     @Range(min = 1, max = 2147483647, message = "Street number is required")
-    private int streetNumber;
+    private int street_number;
     @NotNull(message = "Area code is required")
     @Range(min = 1, max = 2147483647, message = "Area code is required")
-    private int areaCode;
-    @NotBlank(message = "Street name is required")
-    private String streetName;
-    @NotBlank(message = "Area name is required")
-    private String areaName;
+    private int area_code;
+    @NotNull(message = "Street name is required")
+    private String street_name;
+    @NotNull(message = "Area name is required")
+    private String area_name;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private UserProfile user;
+
 
 
 
@@ -45,86 +52,101 @@ public class Address {
     }
     //constructor for Builder class
     private Address (Builder builder){
-        this.addressId = builder.addressId;
-        this.streetNumber = builder.streetNumber;
-        this.areaCode = builder.areaCode;
-        this.streetName = builder.streetName;
-        this.areaName = builder.areaName;
+        this.address_id = builder.address_id;
+        this.street_number = builder.street_number;
+        this.area_code = builder.area_code;
+        this.street_name = builder.street_name;
+        this.area_name = builder.area_name;
+        this.user = builder.user;
     }
 
     //getters to get all values of attributes
 
-    public String getAddressId() {
-        return addressId;
+
+    public String getAddress_id() {
+        return address_id;
     }
 
-    public int getStreetNumber() {
-        return streetNumber;
+    public int getStreet_number() {
+        return street_number;
     }
 
-    public int getAreaCode() {
-        return areaCode;
+    public int getArea_code() {
+        return area_code;
     }
 
-    public String getStreetName() {
-        return streetName;
+    public String getStreet_name() {
+        return street_name;
     }
 
-    public String getAreaName() {
-        return areaName;
+    public String getArea_name() {
+        return area_name;
+    }
+
+    public UserProfile getUser() {
+        return user;
     }
 
     // toString to display what is in the Address class
     @Override
     public String toString() {
         return "Address{" +
-                ", pharmacyId=" + addressId +
-                ", streetNumber=" + streetNumber +
-                ", areaCode=" + areaCode +
-                ", streetName='" + streetName + '\'' +
-                ", areaName='" + areaName + '\'' +
+                ", pharmacyId=" + address_id +
+                ", street_number=" + street_number +
+                ", area_code=" + area_code +
+                ", street_name='" + street_name + '\'' +
+                ", area_name='" + area_name + '\'' +
                 '}';
     }
 
     //inner Builder class to implement the builder pattern
     public static class Builder {
-        private String addressId;
-        private int streetNumber, areaCode;
-        private String streetName, areaName;
+        private String address_id;
+        private int street_number, area_code;
+        private String street_name, area_name;
+        private UserProfile user;
 
         //setting PharmacyId value using builder pattern
-        public Builder setAddressId(String addressId){
-            this.addressId = addressId;
-            return this;
-        }
-        //setting StreetNumber value using builder pattern
-        public Builder setStreetNumber(int streetNumber){
-            this.streetNumber = streetNumber;
-            return this;
-        }
-        //setting AreaCode value using builder pattern
-        public Builder setAreaCode(int areaCode){
-            this.areaCode = areaCode;
-            return this;
-        }
-        //setting StreetName value using builder pattern
-        public Builder setStreetName(String streetName){
-            this.streetName = streetName;
+
+
+        public Builder setAddress_id(String address_id) {
+            this.address_id = address_id;
             return this;
         }
 
-        //setting AreaName value using builder pattern
-        public Builder setAreaName(String areaName){
-            this.areaName = areaName;
+        public Builder setStreet_number(int street_number) {
+            this.street_number = street_number;
             return this;
         }
+
+        public Builder setArea_code(int area_code) {
+            this.area_code = area_code;
+            return this;
+        }
+
+        public Builder setStreet_name(String street_name) {
+            this.street_name = street_name;
+            return this;
+        }
+
+        public Builder setArea_name(String area_name) {
+            this.area_name = area_name;
+            return this;
+        }
+
+        public Builder setUser(UserProfile user) {
+            this.user = user;
+            return this;
+        }
+
         // Builder copy method that create instance of ContactInformation and makes a copy out of it
         public Builder copy(Address address){
-            this.addressId = address.addressId;
-            this.streetNumber = address.streetNumber;
-            this.areaCode = address.areaCode;
-            this.streetName = address.streetName;
-            this.areaName = address.areaName;
+            this.address_id = address.address_id;
+            this.street_number = address.street_number;
+            this.area_code = address.area_code;
+            this.street_name = address.street_name;
+            this.area_name = address.area_name;
+            this.user = address.user;
             return this;
         }
 
@@ -139,11 +161,16 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return addressId.equals(address.addressId);
+        return street_number == address.street_number &&
+                area_code == address.area_code &&
+                address_id.equals(address.address_id) &&
+                street_name.equals(address.street_name) &&
+                area_name.equals(address.area_name) &&
+                Objects.equals(user, address.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(addressId);
+        return Objects.hash(address_id, street_number, area_code, street_name, area_name, user);
     }
 }

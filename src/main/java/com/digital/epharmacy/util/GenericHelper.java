@@ -4,17 +4,15 @@ package com.digital.epharmacy.util;
 * Ayabulela Mahlathini - adding method to handle payment servies, get payment date and notification - 05 July 2020
 * */
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
+;
 
 public class GenericHelper {
-    public static String generateId() {
-        return UUID.randomUUID().toString();
-    }
 
     //handling payment services
-    public static String handlePaymentServices(String paymentMethod, double total){
+    public static String handlePaymentServices(String paymentMethod, BigDecimal total){
         boolean complete = false;
 
         switch (paymentMethod) {

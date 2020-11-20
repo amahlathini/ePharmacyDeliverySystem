@@ -54,14 +54,14 @@ public class PharmacyBankAccountInformationServiceImplTest {
     @Test
     public void a_create() {
         PharmacyBankAccountInformation created = service.create(bankAccountInformation);
-        assertEquals(bankAccountInformation.getBankAccountId(), created.getBankAccountId());
+        assertEquals(bankAccountInformation.getBank_account_id(), created.getBank_account_id());
         System.out.println("Created: " + created);
     }
 
 
     @Test
     public void b_read() {
-        PharmacyBankAccountInformation read = service.read(bankAccountInformation.getBankAccountId());
+        PharmacyBankAccountInformation read = service.read(bankAccountInformation.getBank_account_id());
         System.out.println("Read: " + read);
     }
 
@@ -71,9 +71,9 @@ public class PharmacyBankAccountInformationServiceImplTest {
         PharmacyBankAccountInformation updated = new PharmacyBankAccountInformation
                 .Builder()
                 .copy(bankAccountInformation)
-                .setBankName("First National bank")
-                .setAccountNumber(784102)
-                .setBranchCode(14780)
+                .setBank_name("First National bank")
+                .setAccount_number(784102)
+                .setBranch_code(14780)
                 .build();
         updated = service.update(updated);
         System.out.println("Updated: " + updated);
@@ -82,7 +82,7 @@ public class PharmacyBankAccountInformationServiceImplTest {
 
     @Test
     public void e_delete() {
-        boolean deleted = service.delete(bankAccountInformation.getBankAccountId());
+        boolean deleted = service.delete(bankAccountInformation.getBank_account_id());
         assertTrue(deleted);
 
         if (deleted)

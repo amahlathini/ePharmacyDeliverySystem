@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +38,7 @@ public class DriverProfileServiceImpl implements DriverProfileService {
                 return this.repository.save(driverProfile);
             }catch (Exception e)
             {
-                throw new MyCustomExceptionHandler("Driver Profile '" + driverProfile.getDriverId() + "' already exists");
+                throw new MyCustomExceptionHandler("Driver Profile '" + driverProfile.getDriver_id() + "' already exists");
             }
     }
 
@@ -55,7 +56,7 @@ public class DriverProfileServiceImpl implements DriverProfileService {
     @Override
     public DriverProfile update(DriverProfile driverProfile) {
 
-        if(this.repository.existsById(driverProfile.getDriverId())) {
+        if(this.repository.existsById(driverProfile.getDriver_id())) {
             return this.repository.save(driverProfile);
         }
         else {

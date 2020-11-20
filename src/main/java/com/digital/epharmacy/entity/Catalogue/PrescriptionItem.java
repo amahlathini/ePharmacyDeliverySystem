@@ -3,6 +3,7 @@ package com.digital.epharmacy.entity.Catalogue;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /*
 Author: Nelson Mpyana, 217029620
@@ -17,80 +18,69 @@ Version: 1.0
  * Date: 25/10/2020
  * */
 @Entity
+@Table(name = "prescriptions")
 public class PrescriptionItem {
     //declaring the Variables
     @Id
+    @GeneratedValue
     @Column(name = "id")
-    private String prescriptionId;
-    @NotBlank(message = "Prescription number is required")
-    private int prescriptionNumber;
-    @NotNull(message = "Prescription number is required")
-    private String prescriptionType;
+    private String prescription_number;
+    @NotNull(message = "Prescription type is required")
+    private String prescription_type;
     @NotNull(message = "Prescribing doctor number is required")
-    private String prescribingDoctor;
+    private String prescribing_doctor;
 
     protected PrescriptionItem (){}
 
-    //Mutatators
-    public int getPrescriptionNumber() {
-        return prescriptionNumber;
+    public String getPrescription_number() {
+        return prescription_number;
     }
 
-    public String getPrescriptionType() {
-        return prescriptionType;
+    public String getPrescription_type() {
+        return prescription_type;
     }
 
-    public String getPrescribingDoctor() {
-        return prescribingDoctor;
-    }
-
-    public String getPrescriptionId() {
-        return prescriptionId;
+    public String getPrescribing_doctor() {
+        return prescribing_doctor;
     }
 
     //To string method
     @Override
     public String toString() {
         return "Prescription Item{" +
-                "prescription Id=" + prescriptionId +
-                "prescription Number=" + prescriptionNumber +
-                ", prescription Type='" + prescriptionType + '\'' +
-                ", prescribing Doctor='" + prescribingDoctor + '\'' +
+                "prescription Id=" + prescription_number +
+                "prescription Number=" + prescription_number +
+                ", prescription Type='" + prescription_type + '\'' +
+                ", prescribing Doctor='" + prescribing_doctor + '\'' +
                 '}';
     }
 
 
     //Creating a builder static class. An immutable class
     public static class Builder {
-        int prescriptionNumber;
-        String prescriptionType, prescribingDoctor, prescriptionId;
+        private String prescription_number;
+        private String prescription_type, prescribing_doctor;
 
-        public Builder setPrescriptionNumber(int prescriptionNumber) {
-            this.prescriptionNumber = prescriptionNumber;
+        public Builder setPrescription_number(String prescription_number) {
+            this.prescription_number = prescription_number;
             return this;
         }
 
-        public Builder setPrescriptionType(String prescriptionType) {
-            this.prescriptionType = prescriptionType;
+        public Builder setPrescription_type(String prescription_type) {
+            this.prescription_type = prescription_type;
             return this;
         }
 
-        public Builder setPrescribingDoctor(String prescribingDoctor) {
-            this.prescribingDoctor = prescribingDoctor;
-            return this;
-        }
-
-        public Builder setPrescriptionId(String prescriptionId) {
-            this.prescriptionId = prescriptionId;
+        public Builder setPrescribing_doctor(String prescribing_doctor) {
+            this.prescribing_doctor = prescribing_doctor;
             return this;
         }
 
         // copy method
         public Builder copy(PrescriptionItem prescriptionItem) {
-            this.prescriptionId = prescriptionItem.prescriptionId;
-            this.prescriptionType = prescriptionItem.prescriptionType;
-            this.prescriptionNumber = prescriptionItem.prescriptionNumber;
-            this.prescribingDoctor = prescriptionItem.prescribingDoctor;
+            this.prescription_number = prescriptionItem.prescription_number;
+            this.prescription_type = prescriptionItem.prescription_type;
+            this.prescribing_doctor = prescriptionItem.prescribing_doctor;
             return this;
         }
         public PrescriptionItem build() {
@@ -100,10 +90,23 @@ public class PrescriptionItem {
 
     //A private constructor
     private PrescriptionItem(Builder builder) {
-        this.prescriptionId = builder.prescriptionId;
-        this.prescriptionNumber = builder.prescriptionNumber;
-        this.prescribingDoctor = builder.prescribingDoctor;
-        this.prescriptionType = builder.prescriptionType;
+        this.prescription_number = builder.prescription_number;
+        this.prescribing_doctor = builder.prescribing_doctor;
+        this.prescription_type = builder.prescription_type;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PrescriptionItem that = (PrescriptionItem) o;
+        return prescription_number == that.prescription_number &&
+                prescription_type.equals(that.prescription_type) &&
+                prescribing_doctor.equals(that.prescribing_doctor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(prescription_number, prescription_type, prescribing_doctor);
+    }
 }

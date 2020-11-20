@@ -7,19 +7,23 @@ package com.digital.epharmacy.controller.Order;
 
 import com.digital.epharmacy.entity.Catalogue.CatalogueItem;
 import com.digital.epharmacy.entity.Order.Order;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import com.digital.epharmacy.factory.Order.OrderFactory;
 import com.digital.epharmacy.service.Order.Impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
     @Autowired
@@ -29,13 +33,13 @@ public class OrderController {
     public Order create(@RequestBody Order order){
 
         Order newOrder = OrderFactory
-                .createOrder(order.getUser(), order.getItems(), order.getPaymentType());
-        return orderService.create(newOrder);
+                .createOrder(order.getUser(), order.getItems(), order.getPayment_type());
+       return orderService.create(newOrder);
     }
 
-    @GetMapping("/read/{orderID}")
-    public Order read(@PathVariable String orderID){
-        return orderService.read(orderID);
+    @GetMapping("/read/{order_id}")
+    public Order read(@PathVariable String order_id){
+        return orderService.read(order_id);
     }
 
     @PostMapping("/update")
@@ -43,32 +47,42 @@ public class OrderController {
         return orderService.update(order);
     }
 
-    @DeleteMapping("/delete/{userID}")
-    public boolean delete(@PathVariable String orderID) {
-        return orderService.delete(orderID);
+    @DeleteMapping("/delete/{order_id}")
+    public boolean delete(@PathVariable String order_id) {
+        return orderService.delete(order_id);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<Order> getAll() {
         return orderService.getAll();
     }
 
     //get all completed orders with payment successful for the delivery guys
-    @GetMapping("/completedOrders")
+    @GetMapping("/processing")
+    public Set<Order> getAllProcessingOrders() {
+        return orderService.getAllProcessing();
+    }
+
+    @GetMapping("/completed")
     public Set<Order> getAllCompletedOrders() {
         return orderService.getAllCompletedOrders();
     }
 
+    @GetMapping("/canceled")
+    public Set<Order> getAllCanceledOrders() {
+        return orderService.getAllCanceled();
+    }
+
     //tracking order status
-    @GetMapping("/trackStatus/{orderID}")
-    public String trackOrderStatus(@PathVariable String orderID) {
-        return orderService.trackOrderStatus(orderID);
+    @GetMapping("/track/{order_id}")
+    public String trackOrderStatus(@PathVariable String order_id) {
+        return orderService.trackOrderStatus(order_id);
     }
 
     //getting all the history by a user
-    @GetMapping("/pastOrders/{userID}")
-    public Set<Order> getAllOrdersByUser(@PathVariable String userID) {
-        return orderService.getAllOrdersByUser(userID);
+    @GetMapping("/past/{user_id}")
+    public Set<Order> getAllOrdersByUser(@PathVariable String user_id) {
+        return orderService.getAllOrdersByUser(user_id);
     }
 
 }

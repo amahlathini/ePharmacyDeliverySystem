@@ -6,15 +6,19 @@ package com.digital.epharmacy.controller.Order;
  */
 
 import com.digital.epharmacy.entity.Order.OrderHistory;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import com.digital.epharmacy.factory.Order.OrderHistoryFactory;
 import com.digital.epharmacy.service.Order.Impl.OrderHistoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
+;
 
 @RestController
-@RequestMapping("/orderHistory")
+@RequestMapping("/history")
 public class OrderHistoryController {
 
     @Autowired
@@ -23,7 +27,7 @@ public class OrderHistoryController {
     @PostMapping("/create")
     public OrderHistory create(@RequestBody OrderHistory orderHistory){
         OrderHistory newOrderHistory = OrderHistoryFactory
-                .createOrderHistory(orderHistory.getUser(),orderHistory.getTotalNumberOfOrders(),orderHistory.getTotalOrderValue());
+                .createOrderHistory(orderHistory.getUser(),orderHistory.getTotal_number_of_orders(),orderHistory.getTotal_order_value());
         return orderHistoryService.create(newOrderHistory);
     }
 
@@ -37,12 +41,12 @@ public class OrderHistoryController {
         return orderHistoryService.update(orderHistory);
     }
 
-    @DeleteMapping("/delete/{userID}")
-    public boolean delete(@PathVariable String userID) {
-        return orderHistoryService.delete(userID);
+    @DeleteMapping("/delete/{user_id}")
+    public boolean delete(@PathVariable String user_id) {
+        return orderHistoryService.delete(user_id);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<OrderHistory> getAll() {
         return orderHistoryService.getAll();
     }

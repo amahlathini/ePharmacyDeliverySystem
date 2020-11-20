@@ -41,7 +41,7 @@ import java.util.Set;
 
       //  ContactInformation UserProfile = null;
         //for(ContactInformation u: this.contactInformationDB){
-          //  if(u.getUserId().equalsIgnoreCase(UserId)){
+          //  if(u.getUser_id().equalsIgnoreCase(UserId)){
 
             //    UserProfile = u;
             //}
@@ -52,7 +52,7 @@ import java.util.Set;
 
     //@Override
     //public ContactInformation update(ContactInformation contactInformation) {
-      // ContactInformation oldContactInformation = read(contactInformation.getUserId());
+      // ContactInformation oldContactInformation = read(contactInformation.getUser_id());
        //if(oldContactInformation != null){
 
          //  this.contactInformationDB.remove(oldContactInformation);

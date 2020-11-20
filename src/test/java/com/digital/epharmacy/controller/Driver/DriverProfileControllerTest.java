@@ -1,5 +1,6 @@
 package com.digital.epharmacy.controller.Driver;
 
+import com.digital.epharmacy.entity.Driver.DriverLocation;
 import com.digital.epharmacy.entity.Driver.DriverProfile;
 import com.digital.epharmacy.factory.Driver.DriverProfileFactory;
 import org.junit.FixMethodOrder;
@@ -27,14 +28,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DriverProfileControllerTest {
 
-    DriverProfile driverProfile = DriverProfileFactory.createDriverProfile("Chaddy","Boswell","Belville");
+    DriverLocation driverLocation = new DriverLocation(20, 50);
+
+
+    DriverProfile driverProfile = DriverProfileFactory.createDriverProfile("Chaddy","Boswell",driverLocation);
 
     private static String SECURITY_USERNAME = "Driveruser";
     private static String SECURITY_PASSWORD = "Driverpassword";
 
     @Autowired
     private TestRestTemplate restTemplate;
-    private String baseURL = "http://localhost:8080/driverProfile";
+    private String baseURL = "http://localhost:8080/drivers/";
 
     @Order(1)
     @Test
@@ -50,17 +54,17 @@ class DriverProfileControllerTest {
         driverProfile = postResponse.getBody();
 
         System.out.println("Saved Data:" +driverProfile);
-        assertEquals(driverProfile.getDriverId(),postResponse.getBody().getDriverId());
+        assertEquals(driverProfile.getDriver_id(),postResponse.getBody().getDriver_id());
     }
 
     @Order(2)
     @Test
     public void read() {
 
-        String url = baseURL + "read/" + driverProfile.getDriverId();
+        String url = baseURL + "read/" + driverProfile.getDriver_id();
         System.out.println("URL: " +url);
         ResponseEntity<DriverProfile> response = restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).getForEntity(url,DriverProfile.class);
-        assertEquals(driverProfile.getDriverId(), response.getBody().getDriverId());
+        assertEquals(driverProfile.getDriver_id(), response.getBody().getDriver_id());
 
         System.out.println(response);
         System.out.println(response.getBody());
@@ -70,14 +74,14 @@ class DriverProfileControllerTest {
     @Test
     public void update() {
 
-        DriverProfile updated = new DriverProfile.Builder().copy(driverProfile).setDriverLocation("Kuislriver").builder();
+        DriverProfile updated = new DriverProfile.Builder().copy(driverProfile).setDriver_location(new DriverLocation(20, 50)).builder();
         String url = baseURL = "update";
         System.out.println("URL: " +url);
         System.out.println("Post Data: " +updated);
 
         ResponseEntity<DriverProfile> response = restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).postForEntity(url,updated,DriverProfile.class);
         driverProfile = response.getBody();
-        assertEquals(driverProfile.getDriverId(), response.getBody().getDriverId());
+        assertEquals(driverProfile.getDriver_id(), response.getBody().getDriver_id());
     }
 
     @Order(4)
@@ -98,7 +102,7 @@ class DriverProfileControllerTest {
     @Test
     public void delete() {
 
-        String url = baseURL +"delete/" +driverProfile.getDriverId();
+        String url = baseURL +"delete/" +driverProfile.getDriver_id();
         System.out.println("URL: " +url);
         restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).delete(url);
     }

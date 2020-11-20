@@ -28,10 +28,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PrescriptionItemControllerTest {
 
-    PrescriptionItem prescriptionItem = PrescriptionItemFactory.createPrescriptionItem(5236, " Optometory ", "");
+    private static String USERNAME = "UserProfile";
+    private static String USER_PASSWORD = "54321";
+    private static String SECURITY_USERNAME = "Admin";
+    private static String SECURITY_PASSWORD = "12345";
+
+    PrescriptionItem prescriptionItem = PrescriptionItemFactory.createPrescriptionItem( " Optometory ", "");
     @Autowired
     private TestRestTemplate restTemplate;
-    private String baseURL = "http://localhost:8080/prescriptionItem";
+    private String baseURL = "http://localhost:8080/prescriptions";
 
     @Order(1)
     @Test
@@ -45,16 +50,16 @@ class PrescriptionItemControllerTest {
         assertNotNull(response.getBody());
         prescriptionItem = response.getBody();
         System.out.println("Saved Data: " + prescriptionItem);
-        assertEquals(prescriptionItem.getPrescriptionNumber(), response.getBody().getPrescriptionNumber());
+        assertEquals(prescriptionItem.getPrescription_number(), response.getBody().getPrescription_number());
     }
 
     @Order(2)
     @Test
     void b_read() {
-        String url = baseURL + "/prescriptionNumber/" + prescriptionItem.getPrescriptionNumber();
+        String url = baseURL + "/read/" + prescriptionItem.getPrescription_number();
         System.out.println("URL: " + url);
         ResponseEntity<PrescriptionItem> response = restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).getForEntity(url, PrescriptionItem.class);
-        assertEquals(prescriptionItem.getPrescriptionNumber(), response.getBody().getPrescriptionNumber());
+        assertEquals(prescriptionItem.getPrescription_number(), response.getBody().getPrescription_number());
     }
 
     @Order(4)
@@ -63,9 +68,9 @@ class PrescriptionItemControllerTest {
         PrescriptionItem prescriptionItemItemUpdate = new PrescriptionItem
                 .Builder()
                 .copy(prescriptionItem)
-                .setPrescriptionType(" Chronic")
+                .setPrescription_type(" Chronic")
                 .build();
-        String url = baseURL + "/update/" + prescriptionItem.getPrescriptionType();
+        String url = baseURL + "/update/" + prescriptionItem.getPrescription_number();
 
         System.out.println("URL: " + url);
         System.out.println("POST Data: " + prescriptionItemItemUpdate);
@@ -73,7 +78,7 @@ class PrescriptionItemControllerTest {
 
         prescriptionItem = response.getBody();
 
-        assertEquals(prescriptionItem.getPrescriptionType(), response.getBody().getPrescriptionType());
+        assertEquals(prescriptionItem.getPrescription_type(), response.getBody().getPrescription_type());
     }
 
     @Order(5)
@@ -91,7 +96,7 @@ class PrescriptionItemControllerTest {
     @Order(6)
     @Test
     void delete() {
-        String url = baseURL + "/delete/" + prescriptionItem.getPrescriptionNumber();
+        String url = baseURL + "/delete/" + prescriptionItem.getPrescription_number();
         System.out.println("URL: " + url);
         restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).delete(url);
     }

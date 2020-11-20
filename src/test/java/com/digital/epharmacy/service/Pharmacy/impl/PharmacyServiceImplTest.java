@@ -38,19 +38,19 @@ public class PharmacyServiceImplTest {
     @Test
     public void a_create() {
         Pharmacy created = service.create(pharmacy);
-        Assert.assertEquals(pharmacy.getPharmacyId(), created.getPharmacyId());
+        Assert.assertEquals(pharmacy.getPharmacy_id(), created.getPharmacy_id());
         System.out.println("Created: " + created);
     }
 
     @Test
     public void b_read() {
-        Pharmacy read = service.read(pharmacy.getPharmacyId());
+        Pharmacy read = service.read(pharmacy.getPharmacy_id());
         System.out.println("Read: " + read);
     }
 
     @Test
     public void c_update() {
-        Pharmacy updated = new Pharmacy.Builder().copy(pharmacy).setPharmacyName("Revenue Pharmacy").build();
+        Pharmacy updated = new Pharmacy.Builder().copy(pharmacy).setPharmacy_name("Revenue Pharmacy").build();
         updated = service.update(updated);
         System.out.println("Updated: " + updated);
     }
@@ -64,7 +64,7 @@ public class PharmacyServiceImplTest {
 
     @Test
     public void e_delete() {
-        boolean deleted = service.delete(pharmacy.getPharmacyId());
+        boolean deleted = service.delete(pharmacy.getPharmacy_id());
         Assert.assertTrue(deleted);
 
         if (deleted)

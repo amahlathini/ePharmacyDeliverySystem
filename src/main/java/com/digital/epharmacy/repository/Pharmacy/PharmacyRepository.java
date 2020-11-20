@@ -4,6 +4,8 @@ import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+;
+
 
 /*
  * Author: Opatile Kelobang
@@ -17,5 +19,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PharmacyRepository extends JpaRepository<Pharmacy, String> {
-    Pharmacy findPharmacyByPharmacyName(String pharmacyName);
 }

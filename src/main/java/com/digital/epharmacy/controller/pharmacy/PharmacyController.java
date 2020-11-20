@@ -6,12 +6,14 @@ import com.digital.epharmacy.service.Pharmacy.impl.PharmacyServiceImpl;
 import com.digital.epharmacy.service.Validation.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Set;
+;
 
 /*
  * Author: Opatile Kelobang
@@ -23,42 +25,41 @@ import java.util.Set;
  *
  */
 @RestController
-@RequestMapping("/pharmacy")
+@RequestMapping("/pharmacies")
 public class PharmacyController {
 
     @Autowired
     private PharmacyServiceImpl pharmacyService;
 
-    @Autowired
-    private ValidationService validationService;
+//    @Autowired
+//    private ValidationService validationService;
 
     @PostMapping("/create")
-    public ResponseEntity<Pharmacy> create(@Valid @RequestBody Pharmacy pharmacy, BindingResult result){
+    public Pharmacy create(@Valid @RequestBody Pharmacy pharmacy){
 
-        ResponseEntity<Pharmacy> errorMap = (ResponseEntity<Pharmacy>) validationService.MapValidationService(result);
+//        ResponseEntity<Pharmacy> errorMap = (ResponseEntity<Pharmacy>) validationService.MapValidationService(result);
+//
+//        if (errorMap != null)
+//            return errorMap;
 
-        if (errorMap != null)
-            return errorMap;
+        Pharmacy newPharmacy = pharmacyService.create(PharmacyFactory.createPharmacy(pharmacy.getPharmacy_name()));
 
-        Pharmacy newPharmacy = PharmacyFactory.createPharmacy(pharmacy.getPharmacyName());
-        pharmacyService.create(newPharmacy);
-
-        return new ResponseEntity<Pharmacy>(pharmacy, HttpStatus.CREATED);
+        return newPharmacy;
 
     }
 
-    @GetMapping("/id/{pharmacyId}")
-    public ResponseEntity<?> readByPharmacyID(@PathVariable String pharmacyId){
-        Pharmacy pharmacy = pharmacyService.read(pharmacyId);
+    @GetMapping("/read/id/{pharmacy_id}")
+    public Pharmacy readByPharmacyID(@PathVariable String pharmacy_id){
+        Pharmacy pharmacy = pharmacyService.read(pharmacy_id);
 
-        return new ResponseEntity<Pharmacy>(pharmacy, HttpStatus.OK);
+        return pharmacy;
     }
 
-    @GetMapping("/name/{pharmacyName}")
-    public ResponseEntity<?> readByPharmacyName(@PathVariable String pharmacyName){
-        Pharmacy pharmacy = pharmacyService.findPharmacyByPharmacyName(pharmacyName);
+    @GetMapping("/read/name/{pharmacy_name}")
+    public Pharmacy readByPharmacyName(@PathVariable String pharmacy_name){
+        Pharmacy pharmacy = pharmacyService.findPharmacyByPharmacyName(pharmacy_name);
 
-        return new ResponseEntity<Pharmacy>(pharmacy, HttpStatus.OK);
+        return pharmacy;
     }
 
     @PostMapping("/update")
@@ -66,14 +67,14 @@ public class PharmacyController {
         return pharmacyService.update(pharmacy);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<Pharmacy> getAll(){
         return pharmacyService.getAll();
     }
     
-    @DeleteMapping("/delete/{pharmacyId}")
-    public boolean delete(@PathVariable String pharmacyId){
-        return pharmacyService.delete(pharmacyId);
+    @DeleteMapping("/delete/{pharmacy_id}")
+    public boolean delete(@PathVariable String pharmacy_id){
+        return pharmacyService.delete(pharmacy_id);
     }
     
 

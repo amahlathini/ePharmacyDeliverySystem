@@ -12,14 +12,14 @@
     //public void create() {
 
       //  ContactInformation created = repository.create(contactInformation);
-        //Assert.assertEquals(contactInformation.getUserId(), created.getUserId());
+        //Assert.assertEquals(contactInformation.getUser_id(), created.getUser_id());
         //System.out.println("Created:" + created);
     //}
 
     //@Test
     //public void read() {
 
-      //  ContactInformation read = repository.read(contactInformation.getUserId());
+      //  ContactInformation read = repository.read(contactInformation.getUser_id());
         //System.out.println("Read:" + read);
 
     //}
@@ -39,7 +39,7 @@
     //@Test
     //public void delete() {
 
-      //  boolean deleted = repository.delete(contactInformation.getUserId());
+      //  boolean deleted = repository.delete(contactInformation.getUser_id());
         //Assert.assertTrue(deleted);
 
         //if(deleted)

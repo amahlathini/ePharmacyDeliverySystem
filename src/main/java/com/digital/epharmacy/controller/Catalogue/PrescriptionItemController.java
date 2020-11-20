@@ -14,7 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Set;
-
+@RestController
+@RequestMapping("/prescriptions")
 public class  PrescriptionItemController {
     @Autowired
     private PrescriptionItemServiceImpl prescriptionItemService;
@@ -23,38 +24,35 @@ public class  PrescriptionItemController {
     private ValidationService validationService;
 
     @PostMapping("/create")
-    public ResponseEntity<PrescriptionItem> create(@Valid @RequestBody PrescriptionItem prescriptionItem, BindingResult result){
+    public PrescriptionItem create(@Valid @RequestBody PrescriptionItem prescriptionItem){
 
-        ResponseEntity<PrescriptionItem> errorMap = (ResponseEntity<PrescriptionItem>) validationService.MapValidationService(result);
-        if (errorMap != null)
-            return errorMap;
+//        ResponseEntity<PrescriptionItem> errorMap = (ResponseEntity<PrescriptionItem>) validationService.MapValidationService(result);
+//        if (errorMap != null)
+//            return errorMap;
         PrescriptionItem newPrescriptionItem = PrescriptionItemFactory
                 .createPrescriptionItem(
-                        prescriptionItem.getPrescriptionNumber(),
-                        prescriptionItem.getPrescribingDoctor(),
-                        prescriptionItem.getPrescriptionType()
+                        prescriptionItem.getPrescription_type(),
+                        prescriptionItem.getPrescribing_doctor()
 
                 );
 
-        prescriptionItemService.create(newPrescriptionItem);
+        return prescriptionItemService.create(newPrescriptionItem);
 
-        return new ResponseEntity<PrescriptionItem>(prescriptionItem, HttpStatus.CREATED);
     }
-    @GetMapping("/read/{prescriptionNumber}")
-    public ResponseEntity<PrescriptionItem> read(@PathVariable String prescriptionNumber) {
-        PrescriptionItem prescriptionItem = prescriptionItemService.read(prescriptionNumber);
-        return new ResponseEntity<PrescriptionItem>(prescriptionItem, HttpStatus.OK);
+    @GetMapping("/read/{prescription_number}")
+    public PrescriptionItem read(@PathVariable String prescription_number) {
+        return prescriptionItemService.read(prescription_number);
     }
     @PostMapping("/update")
     public PrescriptionItem update(@Valid @RequestBody PrescriptionItem prescriptionItemInfo){
         return prescriptionItemService.update(prescriptionItemInfo);
     }
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<PrescriptionItem> getall(){
         return prescriptionItemService.getAll();
     }
 
-    @DeleteMapping("/delete/{prescriptionNumber}")
+    @DeleteMapping("/delete/{prescription_number}")
     public boolean delete(@PathVariable String prescriptionNumber){
         return prescriptionItemService.delete(prescriptionNumber);
     }

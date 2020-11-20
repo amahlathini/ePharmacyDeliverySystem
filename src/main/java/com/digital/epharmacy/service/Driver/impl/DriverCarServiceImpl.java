@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class DriverCarServiceImpl implements DriverCarService {
         try{
             return this.repository.save(driverCar);
         } catch (Exception e){
-            throw new MyCustomExceptionHandler("Driver Car '" + driverCar.getCarId()+ "' already exists");
+            throw new MyCustomExceptionHandler("Driver Car '" + driverCar.getCar_id()+ "' already exists");
         }
     }
 

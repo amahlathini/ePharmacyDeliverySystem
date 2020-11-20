@@ -1,5 +1,6 @@
 package com.digital.epharmacy.service.Pharmacy.impl;
 
+import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import com.digital.epharmacy.repository.Pharmacy.PharmacyRepository;
 import com.digital.epharmacy.service.Pharmacy.PharmacyService;
@@ -9,6 +10,7 @@ import com.digital.epharmacy.controller.ExceptionHandler.MyCustomExceptionHandle
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 /*
  * Author: Opatile Kelobang
@@ -33,13 +35,20 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
-    public Pharmacy findPharmacyByPharmacyName(String pharmacyName) {
-        Pharmacy newPharmacy = repository.findPharmacyByPharmacyName(pharmacyName);
+    public Pharmacy findPharmacyByPharmacyName(String pharmacy_name) {
+        Set<Pharmacy> pharmacies = this.repository.findAll().stream().collect(Collectors.toSet());
+        Pharmacy pharmacy;
 
-        if (newPharmacy == null)
+        pharmacy = pharmacies.stream()
+                .filter(p -> p
+                        .getPharmacy_name()
+                        .equals(pharmacy_name))
+                .findAny().orElse(null);
+
+        if (pharmacy == null)
             throw new MyCustomExceptionHandler("Pharmacy name or id does not exist");
 
-        return newPharmacy;
+        return pharmacy;
     }
 
     @Override
@@ -48,7 +57,7 @@ public class PharmacyServiceImpl implements PharmacyService {
             return this.repository.save(pharmacy);
         } catch (Exception e)
         {
-            throw new MyCustomExceptionHandler("Pharmacy '" + pharmacy.getPharmacyName() + "' already exists");
+            throw new MyCustomExceptionHandler("Pharmacy '" + pharmacy.getPharmacy_name() + "' already exists");
         }
 
     }
@@ -66,7 +75,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     @Override
     public Pharmacy update(Pharmacy pharmacy) {
-        if(this.repository.existsById(pharmacy.getPharmacyId())) {
+        if(this.repository.existsById(pharmacy.getPharmacy_id())) {
             return this.repository.save(pharmacy);
         }
         else {

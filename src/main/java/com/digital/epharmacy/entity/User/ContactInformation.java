@@ -1,9 +1,9 @@
 package com.digital.epharmacy.entity.User;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
+;
 
 /*
  * Author: Nicole Hawthorne
@@ -19,73 +19,94 @@ import javax.validation.constraints.NotNull;
  * */
 //main class
 @Entity
+@Table(name = "contacts")
 public class ContactInformation {
     //naming entity attributes and assigning their variable values
     @Id
-    private String contactId;
-    private String primaryNumber;
-    private String secondaryNumber;
+    @Column(name = "user_id")
+    private String contact_id;
+    private String primary_number;
+    private String secondary_number;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private UserProfile user;
 
     protected ContactInformation(){}
     
     //constructor for Builder class
     private ContactInformation (Builder builder){
-        this.contactId = builder.contactId;
-        this.primaryNumber = builder.primaryNumber;
-        this.secondaryNumber = builder.secondaryNumber;
+        this.contact_id = builder.contact_id;
+        this.primary_number = builder.primary_number;
+        this.secondary_number = builder.secondary_number;
+        this.user = builder.user;
     }
 
     //getters to get all values of attributes
-    public String getcontactId() {
-        return contactId;
+
+
+    public String getContact_id() {
+        return contact_id;
     }
 
-    public String getPrimaryNumber() {
-        return primaryNumber;
+    public String getPrimary_number() {
+        return primary_number;
     }
 
-    public String getSecondaryNumber() {
-        return secondaryNumber;
+    public String getSecondary_number() {
+        return secondary_number;
+    }
+
+    public UserProfile getUser() {
+        return user;
     }
 
     // toString to display what is in the ContactInformation class
     @Override
     public String toString() {
         return "ContactInformation{" +
-                "contactId=" + contactId +
-                ", primaryNumber=" + primaryNumber +
-                ", secondaryNumber=" + secondaryNumber +
+                "contact_id=" + contact_id +
+                ", primary_number=" + primary_number +
+                ", secondary_number=" + secondary_number +
                 '}';
     }
 
     //inner Builder class to implement the builder pattern
     public static class Builder{
-        private String primaryNumber;
-        private String secondaryNumber;
-        private String contactId;
+        private String primary_number;
+        private String secondary_number;
+        private String contact_id;
+        private UserProfile user;
 
         //setting UserId value using builder pattern
-        public Builder setUserId(String contactId){
-            this.contactId = contactId;
+
+        public Builder setPrimary_number(String primary_number) {
+            this.primary_number = primary_number;
             return this;
         }
 
-        //setting PrimaryNumber value using builder pattern
-        public Builder setPrimaryNumber(String primaryNumber){
-            this.primaryNumber = primaryNumber;
+        public Builder setSecondary_number(String secondary_number) {
+            this.secondary_number = secondary_number;
             return this;
         }
-        //setting SecondaryNumber value using builder pattern
-        public Builder setSecondaryNumber(String secondaryNumber){
-            this.secondaryNumber = secondaryNumber;
+
+        public Builder setContact_id(String contact_id) {
+            this.contact_id = contact_id;
+            return this;
+        }
+
+        public Builder setUser(UserProfile user) {
+            this.user = user;
             return this;
         }
 
         // Builder copy method that create instance of ContactInformation and makes a copy out of it
         public Builder copy(ContactInformation contactInformation){
-            this.contactId = contactInformation.contactId;
-            this.primaryNumber = contactInformation.primaryNumber;
-            this.secondaryNumber = contactInformation.secondaryNumber;
+            this.contact_id = contactInformation.contact_id;
+            this.primary_number = contactInformation.primary_number;
+            this.secondary_number = contactInformation.secondary_number;
+            this.user = contactInformation.user;
             return this;
         }
 
@@ -93,5 +114,21 @@ public class ContactInformation {
         public ContactInformation build(){
             return new ContactInformation(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactInformation that = (ContactInformation) o;
+        return contact_id.equals(that.contact_id) &&
+                primary_number.equals(that.primary_number) &&
+                Objects.equals(secondary_number, that.secondary_number) &&
+                Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contact_id, primary_number, secondary_number, user);
     }
 }

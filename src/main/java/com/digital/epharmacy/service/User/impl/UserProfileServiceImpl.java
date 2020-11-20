@@ -5,6 +5,7 @@ package com.digital.epharmacy.service.User.impl;
  * Desc: Implementation for all userprofile methods
  * */
 import com.digital.epharmacy.controller.ExceptionHandler.MyCustomExceptionHandler;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import com.digital.epharmacy.entity.User.UserProfile;
 import com.digital.epharmacy.repository.User.UserProfileRepository;
 import com.digital.epharmacy.service.User.UserProfileService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,11 +31,19 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public UserProfile findUserProfileByUserName(String userName) {
-        UserProfile newUserProfile = repository.findUserProfileByUserName(userName);
-        if (newUserProfile == null)
+        Set<UserProfile> users = this.repository.findAll().stream().collect(Collectors.toSet());
+        UserProfile user;
+
+        user = users.stream()
+                .filter(p -> p
+                        .getUser_name()
+                        .equals(userName))
+                .findAny().orElse(null);
+
+        if (user == null)
             throw new MyCustomExceptionHandler("UserName or Id does not exist");
 
-        return newUserProfile;
+        return user;
     }
 
     @Override
@@ -49,7 +59,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfile update(UserProfile userProfile) {
 
-        if (this.repository.existsById(userProfile.getUserId()))
+        if (this.repository.existsById(userProfile.getUser_id()))
             return this.repository.save(userProfile);
         return null;
     }

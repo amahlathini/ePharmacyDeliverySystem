@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
         completedOrders = orders.stream()
                 .filter(o -> o
-                        .getOrderStatus()
+                        .getOrder_status()
                         .trim()
                         .equalsIgnoreCase("Completed"))
                 .collect(Collectors.toSet());
@@ -45,24 +46,53 @@ public class OrderServiceImpl implements OrderService {
         return completedOrders;
     }
 
+    @Override
+    public Set<Order> getAllProcessing() {
+        Set<Order> orders = getAll();
+        Set<Order> processingOrders;
+
+        processingOrders = orders.stream()
+                .filter(o -> o
+                        .getOrder_status()
+                        .trim()
+                        .equalsIgnoreCase("Processing"))
+                .collect(Collectors.toSet());
+
+        return processingOrders;
+    }
+
+    @Override
+    public Set<Order> getAllCanceled() {
+        Set<Order> orders = getAll();
+        Set<Order> canceledOrders;
+
+        canceledOrders = orders.stream()
+                .filter(o -> o
+                        .getOrder_status()
+                        .trim()
+                        .equalsIgnoreCase("Canceled"))
+                .collect(Collectors.toSet());
+
+        return canceledOrders;
+    }
+
     //tracking order status
     @Override
-    public String trackOrderStatus(String orderID) {
-        return this.read(orderID).getOrderStatus();
+    public String trackOrderStatus(String order_id) {
+        return this.read(order_id).getOrder_status();
     }
 
     //getting all the history by a user
     @Override
-    public Set<Order> getAllOrdersByUser(String userID) {
+    public Set<Order> getAllOrdersByUser(String user_id) {
         Set<Order> orders = getAll();
         Set<Order> orderHistoryByUser;
 
         orderHistoryByUser = orders.stream()
                 .filter(o -> o
                         .getUser()
-                        .getUserId()
-                        .trim()
-                        .equalsIgnoreCase(userID))
+                        .getUser_id()
+                        .equals(user_id))
                 .collect(Collectors.toSet());
 
         return orderHistoryByUser;
@@ -82,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order update(Order order) {
-        if (this.repository.existsById(order.getOrderNumber())) {
+        if (this.repository.existsById(order.getOrder_number())) {
             return this.repository.save(order);
         }
         return null;

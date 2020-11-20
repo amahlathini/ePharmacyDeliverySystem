@@ -39,9 +39,7 @@ public class OrderHistoryServiceImplTest {
     @Autowired
     private OrderHistoryService service;
 
-    private static UserProfile user = UserProfileFactory
-            .createUserProfile("Ayabulela","Mahlathini", "male");
-
+    private static UserProfile user = UserProfileFactory.createUserProfile("Opatile","Hawthorne","F","aa@gmail.com", "password");
 
     private static OrderHistory orderHistory = OrderHistoryFactory
             .createOrderHistory(user, 25,new BigDecimal(6500.00));
@@ -51,7 +49,7 @@ public class OrderHistoryServiceImplTest {
     void a_create() {
 
         OrderHistory createdOrderHistory = service.create(orderHistory);
-        Assert.assertEquals(orderHistory.getUser().getUserId(), createdOrderHistory.getUser().getUserId());
+        Assert.assertEquals(orderHistory.getUser().getUser_id(), createdOrderHistory.getUser().getUser_id());
         System.out.println("Created:" + createdOrderHistory);
 
     }
@@ -60,8 +58,8 @@ public class OrderHistoryServiceImplTest {
     @Test
     void b_read() {
 
-        OrderHistory readOrderHistory = service.read(orderHistory.getUser().getUserId());
-        assertEquals(25, readOrderHistory.getTotalNumberOfOrders());
+        OrderHistory readOrderHistory = service.read(orderHistory.getUser().getUser_id());
+        assertEquals(25, readOrderHistory.getTotal_number_of_orders());
         System.out.println("Read:" + readOrderHistory);
     }
 
@@ -72,12 +70,12 @@ public class OrderHistoryServiceImplTest {
         OrderHistory updatedOrderHistory = new OrderHistory
                 .Builder()
                 .copy(orderHistory)
-                .setTotalNumberOfOrders(150)
+                .setTotal_number_of_orders(150)
                 .build();
 
         service.update(updatedOrderHistory);
 
-        assertNotEquals(orderHistory.getTotalNumberOfOrders(), updatedOrderHistory.getTotalNumberOfOrders());
+        assertNotEquals(orderHistory.getTotal_number_of_orders(), updatedOrderHistory.getTotal_number_of_orders());
 
         System.out.println("Updated: " + updatedOrderHistory);
     }
@@ -95,13 +93,12 @@ public class OrderHistoryServiceImplTest {
     @Order(5)
     @Test
     void e_delete() {
-        String orderHistoryToDel = orderHistory.getUser().getUserId();
-        boolean deleted = service.delete(orderHistoryToDel);
+        boolean deleted = service.delete(orderHistory.getId());
 
         Assert.assertTrue(deleted);
 
         if (deleted) {
-            System.out.println("Deleted: " + orderHistoryToDel);
+            System.out.println("Deleted: " + orderHistory.getId());
         }
     }
 

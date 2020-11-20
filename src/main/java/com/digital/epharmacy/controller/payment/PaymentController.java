@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/payments")
 public class PaymentController {
 
     @Autowired
@@ -26,32 +26,26 @@ public class PaymentController {
     private ValidationService validationService;
 
     @PostMapping("/create")
-    public ResponseEntity<Payment> create(@Valid @RequestBody Payment payment, BindingResult result) {
-        ResponseEntity<Payment>  errorMap = (ResponseEntity<Payment>) validationService.MapValidationService(result);
-
-        if(errorMap != null){
-
-            return errorMap;
-        }
+    public Payment create(@Valid @RequestBody Payment payment) {
+//        ResponseEntity<Payment>  errorMap = (ResponseEntity<Payment>) validationService.MapValidationService(result);
+//
+//        if(errorMap != null){
+//
+//            return errorMap;
+//        }
 
         Payment newPayment = PaymentFactory
                 .makePayment(
-                        payment.getUserID(),
-                        payment.getOrderNumber(),
-                        payment.getPharmacyID(),
-                        payment.getTypeOfPayment(),
-                        payment.getPaymentTotal()
+                        payment.getOrder()
                 );
-        paymentService.create(newPayment);
+        return paymentService.create(newPayment);
 
-        return new ResponseEntity<Payment>(newPayment, HttpStatus.CREATED);
     }
 
-    @GetMapping("/read/{userId}")
-    public ResponseEntity<Payment> read (@PathVariable String userID){
+    @GetMapping("/read/{payment_ref}")
+    public Payment read (@PathVariable String payment_ref){
 
-        Payment newPayment = paymentService.read(userID);
-        return new ResponseEntity<Payment>(newPayment, HttpStatus.OK);
+        return paymentService.read(payment_ref);
     }
 
     @PostMapping("/update")
@@ -59,13 +53,13 @@ public class PaymentController {
         return paymentService.update(payment);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<Payment>getAll(){
         return paymentService.getAll();
     }
 
-    @DeleteMapping("/delete/{userId}")
-    public boolean delete(@PathVariable String userId){
-        return paymentService.delete(userId);
+    @DeleteMapping("/delete/{payment_ref}")
+    public boolean delete(@PathVariable String payment_ref){
+        return paymentService.delete(payment_ref);
     }
 }

@@ -2,6 +2,7 @@ package com.digital.epharmacy.service.PharmacyBankAccountInformation.impl;
 
 
 import com.digital.epharmacy.controller.ExceptionHandler.MyCustomExceptionHandler;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import com.digital.epharmacy.entity.Pharmacy.PharmacyBankAccountInformation;
 import com.digital.epharmacy.repository.PharmacyBankAccountInformation.PharmacyBankAccountInformationRepository;
 import com.digital.epharmacy.service.PharmacyBankAccountInformation.PharmacyBankAccountInformationService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 /*
@@ -35,7 +37,7 @@ public class PharmacyBankAccountInformationServiceImpl implements PharmacyBankAc
         try{
             return this.repository.save(pharmacyBankAccountInformation);
         } catch (Exception e){
-            throw new MyCustomExceptionHandler("Account with ID '" + pharmacyBankAccountInformation.getBankAccountId() + "' already exists");
+            throw new MyCustomExceptionHandler("Account with ID '" + pharmacyBankAccountInformation.getBank_account_id() + "' already exists");
         }
 
     }
@@ -60,7 +62,13 @@ public class PharmacyBankAccountInformationServiceImpl implements PharmacyBankAc
 
     @Override
     public PharmacyBankAccountInformation findByAccountNumber(int accountNumber) {
-        PharmacyBankAccountInformation bankDetails = repository.findByAccountNumber(accountNumber);
+        Set<PharmacyBankAccountInformation> detailsSet = this.repository.findAll().stream().collect(Collectors.toSet());
+        PharmacyBankAccountInformation bankDetails;
+
+        bankDetails = detailsSet.stream()
+                .filter(p -> String.valueOf(p.getAccount_number())
+                        .equals(accountNumber))
+                .findAny().orElse(null);
 
         if (bankDetails == null)
             throw new MyCustomExceptionHandler("Bank account does not exist");

@@ -5,73 +5,94 @@ package com.digital.epharmacy.entity.Pharmacy;
  * Date: 04 July 2020
  */
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
+;
 
 @Entity
+@Table(name = "pharmacies")
 public class Pharmacy {
     // all the attributes of entity
     @Id
+    @GeneratedValue(generator = "PHARM-generator")
+    @GenericGenerator(name = "PHARM-generator",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "PHARM"),
+            strategy = "com.digital.epharmacy.util.CustomIDGenerator")
     @Column(name = "id")
-    private String pharmacyId;
+    private String pharmacy_id;
     @Column(unique = true)
-    @NotBlank(message = "Pharmacy name is required")
-    private String pharmacyName;
-
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pharmacyId")
-    private Set<PharmacyBankAccountInformation> bankAccount;
+    @NotNull
+    private String pharmacy_name;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private PharmacyBankAccountInformation bank_account;
 
     protected Pharmacy(){}
 
     // builder pattern method constructor
     private Pharmacy(Builder builder)
     {
-        this.pharmacyId = builder.pharmacyId;
-        this.pharmacyName = builder.pharmacyName;
+        this.pharmacy_id = builder.pharmacy_id;
+        this.pharmacy_name = builder.pharmacy_name;
+        this.bank_account = builder.bank_account;
     }
 
     // getters for all attributes of entity Pharmacy
-    public String getPharmacyId() {
-        return pharmacyId;
+
+
+    public String getPharmacy_id() {
+        return pharmacy_id;
     }
 
-    public String getPharmacyName() {
-        return pharmacyName;
+    public String getPharmacy_name() {
+        return pharmacy_name;
     }
 
-    // to string method for Pharmacy entity
+    public PharmacyBankAccountInformation getBank_account() {
+        return bank_account;
+    }
+
     @Override
     public String toString() {
         return "Pharmacy{" +
-                "pharmacyId=" + pharmacyId +
-                ", pharmacyName='" + pharmacyName + '\'' +
+                "pharmacy_id=" + pharmacy_id +
+                ", pharmacy_name='" + pharmacy_name + '\'' +
+                ", bank_account=" + bank_account +
                 '}';
     }
 
     // add setters using building pattern
     public static class Builder
     {
-        private String pharmacyId;
-        private String pharmacyName;
+        private String pharmacy_id;
+        private String pharmacy_name;
+        private PharmacyBankAccountInformation bank_account;
 
-        public Builder setPharmacyID(String pharmacyId) {
-            this.pharmacyId = pharmacyId;
+        public Builder setPharmacy_id(String pharmacy_id) {
+            this.pharmacy_id = pharmacy_id;
             return this;
         }
 
-        public Builder setPharmacyName(String pharmacyName) {
-            this.pharmacyName = pharmacyName;
+        public Builder setPharmacy_name(String pharmacy_name) {
+            this.pharmacy_name = pharmacy_name;
+            return this;
+        }
+
+        public Builder setBank_account(PharmacyBankAccountInformation bank_account) {
+            this.bank_account = bank_account;
             return this;
         }
 
         // Copy method for Pharmacy entity
         public Builder copy (Pharmacy pharmacy)
         {
-            this.pharmacyId = pharmacy.pharmacyId;
-            this.pharmacyName = pharmacy.pharmacyName;
+            this.pharmacy_id = pharmacy.pharmacy_id;
+            this.pharmacy_name = pharmacy.pharmacy_name;
+            this.bank_account = pharmacy.bank_account;
             return this;
         }
 
@@ -86,12 +107,14 @@ public class Pharmacy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pharmacy pharmacy = (Pharmacy) o;
-        return pharmacyId.equals(pharmacy.pharmacyId);
+        return Objects.equals(pharmacy_id, pharmacy.pharmacy_id) &&
+                pharmacy_name.equals(pharmacy.pharmacy_name) &&
+                Objects.equals(bank_account, pharmacy.bank_account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pharmacyId);
+        return Objects.hash(pharmacy_id, pharmacy_name, bank_account);
     }
 }
 

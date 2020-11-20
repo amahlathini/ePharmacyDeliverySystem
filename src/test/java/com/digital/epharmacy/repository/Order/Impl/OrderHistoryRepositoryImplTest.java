@@ -37,7 +37,7 @@
 //    void a_create() {
 //
 //        OrderHistory createdOrderHistory = repository.create(orderHistory);
-//        Assert.assertEquals(orderHistory.getUserId(), createdOrderHistory.getUserId());
+//        Assert.assertEquals(orderHistory.getUser_id(), createdOrderHistory.getUser_id());
 //        System.out.println("Created:" + createdOrderHistory);
 //
 //    }
@@ -46,7 +46,7 @@
 //    @Test
 //    void b_read() {
 //
-//        OrderHistory readOrderHistory = repository.read(orderHistory.getUserId());
+//        OrderHistory readOrderHistory = repository.read(orderHistory.getUser_id());
 //        assertEquals(25, readOrderHistory.getTotalNumberOfOrders());
 //        System.out.println("Read:" + readOrderHistory);
 //    }
@@ -79,7 +79,7 @@
 //    @Order(5)
 //    @Test
 //    void e_delete() {
-//        String orderHistoryToDel = orderHistory.getUserId();
+//        String orderHistoryToDel = orderHistory.getUser_id();
 //        boolean deleted = repository.delete(orderHistoryToDel);
 //
 //        Assert.assertTrue(deleted);

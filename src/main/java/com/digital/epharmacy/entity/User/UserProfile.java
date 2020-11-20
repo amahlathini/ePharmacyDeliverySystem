@@ -1,9 +1,14 @@
 package com.digital.epharmacy.entity.User;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+;
 
 /*
  * Author: Nicole Hawthorne
@@ -19,92 +24,172 @@ import java.util.Objects;
  * */
 //main class
 @Entity
+@Table(name = "users")
 public class UserProfile {
     //naming entity attributes and assigning their variable values
     @Id
-    @Column(name = "id")
-    private String userId;
-    @NotBlank(message = "Username is required")
-    private String userName;
-    @NotBlank(message = "User Surname is required")
-    private String userSurname;
-    @NotBlank(message = "Gender is required")
+    @GeneratedValue(generator = "USER-generator")
+    @GenericGenerator(name = "USER-generator",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "USER"),
+            strategy = "com.digital.epharmacy.util.CustomIDGenerator")
+    @Column(name = "user_id", columnDefinition = "varchar(255)")
+    private String user_id;
+    @NotNull(message = "Name is required")
+    private String user_name;
+    @NotNull(message = "Surname is required")
+    private String user_surname;
     private String gender;
+    @Email(message = "Email Address is required")
+    private String email;
+    private String password;
+    @OneToOne(mappedBy = "userprofile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private ContactInformation contact;
+    @OneToOne(mappedBy = "userprofile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Address address;
+    @OneToOne(mappedBy = "userprofile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private MedicalAid medical_aid;
+
 
     protected UserProfile(){}
 
     //constructor for Builder class
     private UserProfile (Builder builder){
-        this.userId = builder.userId;
-        this.userName = builder.userName;
-        this.userSurname = builder.userSurname;
+        this.user_id = builder.user_id;
+        this.user_name = builder.user_name;
+        this.user_surname = builder.user_surname;
         this.gender = builder.gender;
+        this.address = builder.address;
+        this.contact = builder.contact;
+        this.medical_aid = builder.medical_aid;
+        this.email = builder.email;
+        this.password = builder.password;
 
     }
     //getters to get all values of attributes
-    public String getUserId() {
-        return userId;
+
+
+    public String getUser_id() {
+        return user_id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public String getUserSurname() {
-        return userSurname;
+    public String getUser_surname() {
+        return user_surname;
     }
 
     public String getGender() {
         return gender;
     }
 
+    public ContactInformation getContact() {
+        return contact;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public MedicalAid getMedical_aid() {
+        return medical_aid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     // toString to display what is in the UserProfile class
 
     @Override
     public String toString() {
         return "UserProfile{" +
-                "userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userSurname='" + userSurname + '\'' +
+                "user_id=" + user_id +
+                ", user_name='" + user_name + '\'' +
+                ", user_surname='" + user_surname + '\'' +
                 ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", contact=" + contact +
+                ", address=" + address +
+                ", medical_aid=" + medical_aid +
                 '}';
     }
 
     //inner Builder class to implement the builder pattern
     public static class Builder{
         //same assigned attributes in main class with variable values
-        private String userId;
-        private String userName, userSurname, gender;
+        private String user_id;
+        private String user_name, user_surname, gender, email, password;
+        private ContactInformation contact;
+        private Address address;
+        private MedicalAid medical_aid;
 
 
-        //setting userId value using builder pattern
-        public Builder setUserId(String userId){
-            this.userId = userId;
+        public Builder setUser_id(String user_id) {
+            this.user_id = user_id;
             return this;
         }
-        //setting userName value using builder pattern
-        public Builder setUserName(String userName){
-            this.userName = userName;
+
+        public Builder setUser_name(String user_name) {
+            this.user_name = user_name;
             return this;
         }
-        //setting userSurname value using builder pattern
-        public Builder setUserSurname(String userSurname){
-            this.userSurname = userSurname;
+
+        public Builder setUser_surname(String user_surname) {
+            this.user_surname = user_surname;
             return this;
         }
+
         //setting Gender value using builder pattern
         public Builder setGender(String gender){
             this.gender = gender;
             return this;
         }
 
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder setContact(ContactInformation contact) {
+            this.contact = contact;
+            return this;
+        }
+
+        public Builder setAddress(Address address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder setMedical_aid(MedicalAid medical_aid) {
+            this.medical_aid = medical_aid;
+            return this;
+        }
+
         // Builder copy method that create instance of UserProfile and makes a copy out of it
         public Builder copy(UserProfile userProfile){
-            this.userId = userProfile.userId;
-            this.userName = userProfile.userName;
-            this.userSurname = userProfile.userSurname;
+            this.user_id = userProfile.user_id;
+            this.user_name = userProfile.user_name;
+            this.user_surname = userProfile.user_surname;
             this.gender = userProfile.gender;
+            this.medical_aid = userProfile.medical_aid;
+            this.address = userProfile.address;
+            this.contact = userProfile.contact;
+            this.email = userProfile.email;
+            this.password = userProfile.password;
             return this;
 
         }
@@ -119,11 +204,19 @@ public class UserProfile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserProfile that = (UserProfile) o;
-        return userId.equals(that.userId);
+        return Objects.equals(user_id, that.user_id) &&
+                Objects.equals(user_name, that.user_name) &&
+                Objects.equals(user_surname, that.user_surname) &&
+                Objects.equals(gender, that.gender) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(contact, that.contact) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(medical_aid, that.medical_aid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId);
+        return Objects.hash(user_id, user_name, user_surname, gender, email, password, contact, address, medical_aid);
     }
 }

@@ -6,109 +6,111 @@ package com.digital.epharmacy.entity.Payment;
  and changed default constructor to protected
  * Date: 26/10/2020
  * */
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.digital.epharmacy.entity.Order.Order;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
+import com.digital.epharmacy.entity.User.UserProfile;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Objects;
+
 //Main class
 @Entity
+@Table(name = "payments")
 public class Payment {
 
     //Declaring variables using all attributes from the Payment Entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String referenceNumber;
+    @Column(name = "id")
+    private String reference_number;
     @NotNull(message = "Payment Status is required")
-    private String paymentStatus;
+    private String payment_status;
     @NotNull(message = "Type of Payment is required")
-    private String typeOfPayment;
+    private String type_of_payment;
     @NotNull(message = "Payment Notification is required")
-    private String paymentNotification;
+    private String payment_notification;
     @NotNull(message = "Payment total is required")
-    private double paymentTotal;
+    private BigDecimal payment_total;
     @NotNull(message = "Date is required")
     private String date;
-
-    //declaring foreign keys, using String datatype for now
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String pharmacyID;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String userID;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String orderNumber;
-
+    @NotNull
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn(name = "order_id")
+    private Order order;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Pharmacy pharmacy;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private UserProfile user;
+    
     protected Payment (){}
     //builder Constructor
     public Payment(Builder builder) {
 
-        this.pharmacyID = builder.pharmacyID;
-        this.userID = builder.userID;
-        this.orderNumber = builder.orderNumber;
-        this.paymentStatus = builder.paymentStatus;
-        this.typeOfPayment = builder.typeOfPayment;
-        this.referenceNumber = builder.referenceNumber;
-        this.paymentNotification = builder.paymentNotification;
-        this.paymentTotal = builder.paymentTotal;
+        this.pharmacy = builder.pharmacy;
+        this.user = builder.user;
+        this.order = builder.order;
+        this.payment_status = builder.payment_status;
+        this.type_of_payment = builder.type_of_payment;
+        this.reference_number = builder.reference_number;
+        this.payment_notification = builder.payment_notification;
+        this.payment_total = builder.payment_total;
         this.date = builder.date;
     }
 
     //getters for the declared variables
 
 
-    public String getPharmacyID() {
-        return pharmacyID;
+    public String getReference_number() {
+        return reference_number;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getPayment_status() {
+        return payment_status;
     }
 
-    public String getOrderNumber() {
-        return orderNumber;
+    public String getType_of_payment() {
+        return type_of_payment;
     }
 
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public String getPayment_notification() {
+        return payment_notification;
     }
 
-    public String getTypeOfPayment() {
-        return typeOfPayment;
-    }
-
-    public String getReferenceNumber() {
-        return referenceNumber;
-    }
-
-    public String getPaymentNotification() {
-        return paymentNotification;
-    }
-
-    public double getPaymentTotal() {
-        return paymentTotal;
+    public BigDecimal getPayment_total() {
+        return payment_total;
     }
 
     public String getDate() {
         return date;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public UserProfile getUser() {
+        return user;
+    }
+
     //displaying all variables as a string
     @Override
     public String toString() {
         return "Payment{" +
-                "paymentStatus='" + paymentStatus + '\'' +
-                ", typeOfPayment='" + typeOfPayment + '\'' +
-                ", referenceNumber='" + referenceNumber + '\'' +
-                ", paymentNotification='" + paymentNotification + '\'' +
-                ", paymentTotal=" + paymentTotal +
+                "payment_status='" + payment_status + '\'' +
+                ", type_of_payment='" + type_of_payment + '\'' +
+                ", reference_number='" + reference_number + '\'' +
+                ", payment_notification='" + payment_notification + '\'' +
+                ", payment_total=" + payment_total +
                 ", date=" + date +
-                ", pharmacyID=" + pharmacyID +
-                ", userID=" + userID +
-                ", orderNumber=" + orderNumber +
+                ", pharmacy=" + pharmacy +
+                ", user=" + user +
+                ", order=" + order +
                 '}';
     }
 
@@ -116,66 +118,61 @@ public class Payment {
     public static class Builder{
 
         //Declaring variables using all attributes from the Payment Entity, same as the ones from the main class
-        private String paymentStatus, typeOfPayment, referenceNumber, paymentNotification;
-        private double paymentTotal;
+        private String payment_status, type_of_payment, payment_notification;
+        private String reference_number;
+        private BigDecimal payment_total;
         private String date;
-        private String pharmacyID;
-        private String userID;
-        private String orderNumber;
+        private Pharmacy pharmacy;
+        private UserProfile user;
+        private Order order;
 
         //Setters for all declared variables using the Builder pattern
 
-        //setting paymentStatus
-        public Builder setPaymentStatus(String paymentStatus) {
-            this.paymentStatus = paymentStatus;
+        //setting payment_status
+
+
+        public Builder setPayment_status(String payment_status) {
+            this.payment_status = payment_status;
             return this;
         }
 
-        //setting pharmacyID
-        public Builder setPharmacyID(String pharmacyID) {
-            this.pharmacyID = pharmacyID;
+        public Builder setType_of_payment(String type_of_payment) {
+            this.type_of_payment = type_of_payment;
             return this;
         }
 
-        //setting userID
-        public Builder setUserID(String userID) {
-            this.userID = userID;
+        public Builder setPayment_notification(String payment_notification) {
+            this.payment_notification = payment_notification;
             return this;
         }
 
-        //setting orderNumber
-        public Builder setOrderNumber(String orderNumber) {
-            this.orderNumber = orderNumber;
+        public Builder setReference_number(String reference_number) {
+            this.reference_number = reference_number;
             return this;
         }
 
-        //setting typeOfPayment
-        public Builder setTypeOfPayment(String typeOfPayment) {
-            this.typeOfPayment = typeOfPayment;
+        public Builder setPayment_total(BigDecimal payment_total) {
+            this.payment_total = payment_total;
             return this;
         }
 
-        //setting referenceNumber
-        public Builder setReferenceNumber(String referenceNumber) {
-            this.referenceNumber = referenceNumber;
-            return this;
-        }
-
-        //setting paymentNotification
-        public Builder setPaymentNotification(String paymentNotification) {
-            this.paymentNotification = paymentNotification;
-            return this;
-        }
-
-        //setting paymentTotal
-        public Builder setPaymentTotal(double paymentTotal) {
-            this.paymentTotal = paymentTotal;
-            return this;
-        }
-
-        //setting date
         public Builder setDate(String date) {
             this.date = date;
+            return this;
+        }
+
+        public Builder setPharmacy(Pharmacy pharmacy) {
+            this.pharmacy = pharmacy;
+            return this;
+        }
+
+        public Builder setUser(UserProfile user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder setOrder(Order order) {
+            this.order = order;
             return this;
         }
 
@@ -183,15 +180,15 @@ public class Payment {
         // and making a copy of it
         public Builder copy(Payment payment){
 
-            this.pharmacyID = payment.pharmacyID;
-            this.userID = payment.userID;
-            this.orderNumber = payment.orderNumber;
-            this.paymentStatus = payment.paymentStatus;
-            this.paymentNotification = payment.paymentNotification;
-            this.paymentTotal = payment.paymentTotal;
-            this.typeOfPayment = payment.typeOfPayment;
+            this.pharmacy = payment.pharmacy;
+            this.user = payment.user;
+            this.order = payment.order;
+            this.payment_status = payment.payment_status;
+            this.payment_notification = payment.payment_notification;
+            this.payment_total = payment.payment_total;
+            this.type_of_payment = payment.type_of_payment;
             this.date = payment.date;
-            this.referenceNumber = payment.referenceNumber;
+            this.reference_number = payment.reference_number;
             return this;
         }
 
@@ -206,11 +203,19 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(referenceNumber, payment.referenceNumber);
+        return reference_number.equals(payment.reference_number) &&
+                payment_status.equals(payment.payment_status) &&
+                Objects.equals(type_of_payment, payment.type_of_payment) &&
+                Objects.equals(payment_notification, payment.payment_notification) &&
+                Objects.equals(payment_total, payment.payment_total) &&
+                Objects.equals(date, payment.date) &&
+                order.equals(payment.order) &&
+                Objects.equals(pharmacy, payment.pharmacy) &&
+                Objects.equals(user, payment.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(referenceNumber);
+        return Objects.hash(reference_number, payment_status, type_of_payment, payment_notification, payment_total, date, order, pharmacy, user);
     }
 }

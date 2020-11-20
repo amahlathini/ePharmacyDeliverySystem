@@ -13,20 +13,20 @@ import java.util.Date;
         * */
 public class OrderReceiptFactory {
     // Class to create Order Receipt as a factory
-    public static OrderReceipt createOrderReceipt (Order order, Pharmacy pharmacy)
+    public static OrderReceipt createOrderReceipt (Order order)
     {
 
        String date = GenericHelper.paymentDate();
 
         OrderReceipt orderReceipt = new OrderReceipt.Builder()
-                .setReceipt_number(order.getOrderNumber())
+                .setReceipt_number(order.getOrder_number())
                 .setOrder(order)
-                .setPharmacy(pharmacy)
+                .setPharmacy(order.getPharmacy())
                 .setUser(order.getUser())
-                .setItemQuantity(order.getTotalCatalogueItems())
-                .setPaymentTotal(order.getOrderTotal())
+                .setQuantity(order.getTotal_catalogue_items())
+                .setPayment_total(order.getOrder_total())
                 .setItems(order.getItems())
-                .setTypeOfPayment(order.getPaymentType())
+                .setType_of_payment(order.getPayment_type())
                 .setDate(date)
                 .build();
         return orderReceipt;

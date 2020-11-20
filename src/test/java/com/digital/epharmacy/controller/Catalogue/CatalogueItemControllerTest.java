@@ -6,7 +6,13 @@ package com.digital.epharmacy.controller.Catalogue;
  * Date: 09/26/2020
  */
 import com.digital.epharmacy.entity.Catalogue.CatalogueItem;
+import com.digital.epharmacy.entity.Catalogue.Category;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
+import com.digital.epharmacy.entity.User.UserProfile;
 import com.digital.epharmacy.factory.Catalogue.CatalogueItemFactory;
+import com.digital.epharmacy.factory.Catalogue.CategoryFactory;
+import com.digital.epharmacy.factory.Pharmacy.PharmacyFactory;
+import com.digital.epharmacy.factory.User.UserProfileFactory;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.FixMethodOrder;
@@ -23,6 +29,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.math.BigDecimal;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,13 +43,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class CatalogueItemControllerTest {
 
+    private static String USERNAME = "UserProfile";
+    private static String USER_PASSWORD = "54321";
+    private static String SECURITY_USERNAME = "Admin";
+    private static String SECURITY_PASSWORD = "12345";
 
-    CatalogueItem catItem = CatalogueItemFactory.createCatalogueItem(5585, "Mayo gel", " Heartburn medicine",
-            10, 500);
+    private static Category category = CategoryFactory.createCategory("Colds & Flu", "image_url");
+    private static Pharmacy pharmacy = PharmacyFactory.createPharmacy("Clicks");
+    private static CatalogueItem catItem = CatalogueItemFactory.createCatalogueItem("Mayogel", "oral health",
+            36, BigDecimal.valueOf(200.00), "image_url", category, pharmacy);
+
 
     @Autowired
     private TestRestTemplate restTemplate;
-    private final String baseURL = "http://localhost:8080/catalogueItem";
+    private final String baseURL = "http://localhost:8080/items";
 
 
     @Order(1)
@@ -52,35 +71,33 @@ class CatalogueItemControllerTest {
         assertNotNull(response.getBody());
         catItem = response.getBody();
         System.out.println("Saved Data: " + catItem);
-        assertEquals(catItem.getItemNumber(), response.getBody().getItemNumber());
+        assertEquals(catItem.getItem_number(), response.getBody().getItem_number());
     }
 
     @Order(2)
     @Test
-    @Ignore
     void b_readByItemNumber() {
-        String url = baseURL + "/itemNumber/" + catItem.getItemNumber();
+        String url = baseURL + "/read/" + catItem.getItem_number();
         System.out.println("URL: " + url);
         ResponseEntity<CatalogueItem> response = restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD)
                 .getForEntity(url, CatalogueItem.class);
-        assertEquals(catItem.getItemNumber(), response.getBody().getItemNumber());
+        assertEquals(catItem.getItem_number(), response.getBody().getItem_number());
     }
 
     @Order(3)
     @Test
     @Ignore
     void c_readByCatalogueDesc() {
-        String url = baseURL + "/desc/" + catItem.getItemDescription();
+        String url = baseURL + "/desc/" + catItem.getItem_description();
         System.out.println("URL: " + url);
         ResponseEntity<CatalogueItem> response = restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).getForEntity(url, CatalogueItem.class);
-        assertEquals(catItem.getItemDescription(), response.getBody().getItemDescription());
+        assertEquals(catItem.getItem_description(), response.getBody().getItem_description());
         System.out.println(response);
         System.out.println(response.getBody());
     }
 
     @Order(5)
     @Test
-    @Ignore
     void getAll() {
         String url = baseURL + "/all";
         System.out.println("URL: " + url);
@@ -93,15 +110,14 @@ class CatalogueItemControllerTest {
 
     @Order(4)
     @Test
-    @Ignore
     void update() {
         CatalogueItem catalogueItemUpdate = new CatalogueItem
                 .Builder()
                 .copy(catItem)
-                .setItemQuantity( 20
+                .setItem_quantity( 20
                 )
                 .build();
-        String url = baseURL + "/update/" + catItem.getItemQuantity();
+        String url = baseURL + "/update/" + catItem.getItem_quantity();
 
         System.out.println("URL: " + url);
         System.out.println("POST Data: " + catalogueItemUpdate);
@@ -109,14 +125,13 @@ class CatalogueItemControllerTest {
 
         catItem = response.getBody();
 
-        assertEquals(catItem.getItemQuantity(), response.getBody().getItemQuantity());
+        assertEquals(catItem.getItem_quantity(), response.getBody().getItem_quantity());
     }
 
     @Order(6)
     @Test
-    @Ignore
     void delete() {
-        String url = baseURL + "/delete/" + catItem.getItemNumber();
+        String url = baseURL + "/delete/" + catItem.getItem_number();
         System.out.println("URL: " + url);
         restTemplate.delete(url);
     }

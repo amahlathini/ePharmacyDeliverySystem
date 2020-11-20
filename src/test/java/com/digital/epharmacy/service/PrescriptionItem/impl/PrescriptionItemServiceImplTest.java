@@ -19,7 +19,7 @@ class PrescriptionItemServiceImplTest {
     @Autowired
     private static PrescriptionItemService service;
     private static PrescriptionItem prescriptionItem = PrescriptionItemFactory.createPrescriptionItem(
-            6332, "Eye Drop", "Dr Smith");
+             "Eye Drop", "Dr Smith");
 
     @Order(5)
     @Test
@@ -32,7 +32,7 @@ class PrescriptionItemServiceImplTest {
     @Test
     public void a_create() {
         PrescriptionItem created = service.create((prescriptionItem));
-        Assert.assertEquals(prescriptionItem.getPrescriptionNumber(), created.getPrescriptionNumber());
+        Assert.assertEquals(prescriptionItem.getPrescription_number(), created.getPrescription_number());
         System.out.println("Created: " + created);
     }
 
@@ -40,7 +40,7 @@ class PrescriptionItemServiceImplTest {
     @Test
 
     public void b_read() {
-        PrescriptionItem read = service.read(prescriptionItem.getPrescribingDoctor());
+        PrescriptionItem read = service.read(prescriptionItem.getPrescription_number());
         System.out.println("Read: " + read);
     }
 
@@ -48,7 +48,7 @@ class PrescriptionItemServiceImplTest {
     @Test
 
     void c_update() {
-        PrescriptionItem updated = new PrescriptionItem.Builder().copy(prescriptionItem).setPrescriptionType("Spectacles").build();
+        PrescriptionItem updated = new PrescriptionItem.Builder().copy(prescriptionItem).setPrescription_type("Spectacles").build();
         updated = service.update(updated);
         System.out.println("Updated: " + updated);
     }
@@ -57,7 +57,7 @@ class PrescriptionItemServiceImplTest {
     @Test
 
     void d_delete() {
-        boolean deleted = service.delete(prescriptionItem.getPrescriptionType());
+        boolean deleted = service.delete(prescriptionItem.getPrescription_number());
         Assert.assertTrue(deleted);
 
         if (deleted)

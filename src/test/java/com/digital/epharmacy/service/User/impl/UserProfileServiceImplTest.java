@@ -30,7 +30,7 @@ public class UserProfileServiceImplTest {
 
     @Autowired
     private UserProfileService service;
-    private static UserProfile userProfile = UserProfileFactory.createUserProfile("Nicole","Hawthorne","F");
+    private static UserProfile userProfile = UserProfileFactory.createUserProfile("Nicole","Hawthorne","F", "aa@gmail.com", "password");
 
     @Order(4)
     @Test
@@ -44,28 +44,28 @@ public class UserProfileServiceImplTest {
     @Test
     void a_create() {
         UserProfile created = service.create(userProfile);
-        Assert.assertEquals(userProfile.getUserId(), created.getUserId());
+        Assert.assertEquals(userProfile.getUser_id(), created.getUser_id());
         System.out.println("User ID created" + created);
     }
 
     @Order(2)
     @Test
     void b_read() {
-        UserProfile read = service.read(userProfile.getUserId());
+        UserProfile read = service.read(userProfile.getUser_id());
         System.out.println("Read: " + read);
     }
 
     @Order(3)
     @Test
     void c_update() {
-        UserProfile updated = new UserProfile.Builder().copy(userProfile).setUserName("Inneke").setGender("F").build();
+        UserProfile updated = new UserProfile.Builder().copy(userProfile).setUser_name("Inneke").setGender("F").build();
         updated = service.update(updated);
         System.out.println("Updated User" + updated);
     }
     @Order(5)
     @Test
     void e_delete() {
-        boolean deleted = service.delete(userProfile.getUserId());
+        boolean deleted = service.delete(userProfile.getUser_id());
         Assert.assertTrue(deleted);
         if (deleted)
             System.out.println("User Deleted");

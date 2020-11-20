@@ -9,11 +9,17 @@ import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.service.IService;
 
 import java.util.Set;
+;
 
 public interface OrderService extends IService<Order, String> {
     Set<Order> getAll();
 
     Set<Order> getAllCompletedOrders();
+
+    Set<Order> getAllProcessing();
+
+    Set<Order> getAllCanceled();
+
 
     String trackOrderStatus(String orderID);
 

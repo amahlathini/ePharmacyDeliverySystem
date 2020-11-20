@@ -15,11 +15,10 @@ public class PrescriptionItemFactoryTest {
 
     @Test
     public void createPrescriptionItem() {
-        PrescriptionItem prescriptionItem = PrescriptionItemFactory.createPrescriptionItem(122, "Eye glasses",
+        PrescriptionItem prescriptionItem = PrescriptionItemFactory.createPrescriptionItem("Eye glasses",
                 "Dr Opatile");
-        assertEquals(122, prescriptionItem.getPrescriptionNumber());
-        assertEquals("Eye glasses", prescriptionItem.getPrescriptionType());
-        assertEquals("Dr Opatile", prescriptionItem.getPrescribingDoctor());
+        assertEquals("Eye glasses", prescriptionItem.getPrescription_type());
+        assertEquals("Dr Opatile", prescriptionItem.getPrescribing_doctor());
 
     }
 

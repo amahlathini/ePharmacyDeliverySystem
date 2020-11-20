@@ -15,8 +15,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Set;
+;
 
 @RestController
+@RequestMapping("/items")
 public class CatalogueItemController {
 
 
@@ -27,42 +29,42 @@ public class CatalogueItemController {
     private ValidationService validationService;
 
     @PostMapping("/create")
-    public ResponseEntity<CatalogueItem> create(@Valid @RequestBody CatalogueItem catalogueItem, BindingResult result){
+    public CatalogueItem create(@Valid @RequestBody CatalogueItem catalogueItem){
 
-        ResponseEntity<CatalogueItem> errorMap = (ResponseEntity<CatalogueItem>) validationService.MapValidationService(result);
-        if (errorMap != null)
-            return errorMap;
+//        ResponseEntity<CatalogueItem> errorMap = (ResponseEntity<CatalogueItem>) validationService.MapValidationService(result);
+//        if (errorMap != null)
+//            return errorMap;
 
         CatalogueItem newCatalogueItem = CatalogueItemFactory
                 .createCatalogueItem(
-                        catalogueItem.getItemNumber(),
-                        catalogueItem.getItemName(),
-                        catalogueItem.getItemDescription(),
-                        catalogueItem.getItemQuantity(),
-                        catalogueItem.getItemPrice()
+                        catalogueItem.getItem_name(),
+                        catalogueItem.getItem_description(),
+                        catalogueItem.getItem_quantity(),
+                        catalogueItem.getItem_price(),
+                        catalogueItem.getItem_image(),
+                        catalogueItem.getCategory(),
+                        catalogueItem.getPharmacy()
 
                 );
 
-        catalogueItemService.create(newCatalogueItem);
+       return catalogueItemService.create(newCatalogueItem);
 
-        return new ResponseEntity<CatalogueItem>(catalogueItem, HttpStatus.CREATED);
     }
-    @GetMapping("/read/{catalogueName}")
-    public ResponseEntity<CatalogueItem> read(@PathVariable String catalogueName) {
-        CatalogueItem catItem = catalogueItemService.read(catalogueName);
-        return new ResponseEntity<CatalogueItem>(catItem, HttpStatus.OK);
+    @GetMapping("/read/{catalogue_name}")
+    public CatalogueItem read(@PathVariable String catalogue_name) {
+        return catalogueItemService.read(catalogue_name);
     }
     @PostMapping("/update")
     public CatalogueItem update(@Valid @RequestBody CatalogueItem catItemInfo){
         return catalogueItemService.update(catItemInfo);
     }
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<CatalogueItem> getall(){
         return catalogueItemService.getAll();
     }
 
-    @DeleteMapping("/delete/{itemName}")
-    public boolean delete(@PathVariable String itemName){
-        return catalogueItemService.delete(itemName);
+    @DeleteMapping("/delete/{item_name}")
+    public boolean delete(@PathVariable String item_name){
+        return catalogueItemService.delete(item_name);
     }
 }

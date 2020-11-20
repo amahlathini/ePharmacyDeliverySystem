@@ -40,15 +40,15 @@ public class AddressRepositoryImplTest {
     @Test
     public void a_create() {
         Address created = repository.create(address);
-        assertEquals(address.getUserId(), created.getUserId());
+        assertEquals(address.getUser_id(), created.getUser_id());
         System.out.println("Create: " + created);
     }
 
     @Order(2)
     @Test
     public void b_read() {
-        Address read = repository.read(address.getUserId());
-        assertEquals(address.getUserId(),read.getUserId());
+        Address read = repository.read(address.getUser_id());
+        assertEquals(address.getUser_id(),read.getUser_id());
         System.out.println("Read: " + read);
     }
 
@@ -66,7 +66,7 @@ public class AddressRepositoryImplTest {
     @Order(5)
     @Test
     public void e_delete() {
-        boolean deleted =   repository.delete(address.getUserId());
+        boolean deleted =   repository.delete(address.getUser_id());
         Assert.assertTrue(deleted);
         if (deleted){
             System.out.println("Entry deleted");

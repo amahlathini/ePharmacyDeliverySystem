@@ -15,8 +15,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+;
 
 @Entity
+@Table(name = "history")
 public class OrderHistory implements Serializable {
 
     @Id
@@ -28,9 +30,9 @@ public class OrderHistory implements Serializable {
     @PrimaryKeyJoinColumn(name = "user_id")
     private UserProfile user;
     @NotNull(message = "Total number of orders is required")
-    private int totalNumberOfOrders;
+    private int total_number_of_orders;
     @NotNull(message = "Total Order value is required")
-    private BigDecimal totalOrderValue; //Ayabulela Mahlathini - change from double to BigDecimal
+    private BigDecimal total_order_value; //Ayabulela Mahlathini - change from double to BigDecimal
 
     //default contructor - Ayabulela Mahlathini
     protected OrderHistory(){}
@@ -38,8 +40,8 @@ public class OrderHistory implements Serializable {
     public OrderHistory(Builder builder){
         this.id = builder.id;
         this.user = builder.user;
-        this.totalNumberOfOrders = builder.totalNumberOfOrders;
-        this.totalOrderValue = builder.totalOrderValue;
+        this.total_number_of_orders = builder.total_number_of_orders;
+        this.total_order_value = builder.total_order_value;
     }
 
     public String getId() {
@@ -50,54 +52,55 @@ public class OrderHistory implements Serializable {
         return user;
     }
 
-    public int getTotalNumberOfOrders() {
-        return totalNumberOfOrders;
+    public int getTotal_number_of_orders() {
+        return total_number_of_orders;
     }
 
-    public BigDecimal getTotalOrderValue() {
-        return totalOrderValue;
+    public BigDecimal getTotal_order_value() {
+        return total_order_value;
     }
 
     @Override
     public String toString() {
         return "OrderHistory{" +
-                "user=" + user +
-                ", totalNumberOfOrders=" + totalNumberOfOrders +
-                ", totalOrderValue=" + totalOrderValue +
+                "id=" + id +
+                ", user=" + user +
+                ", total_number_of_orders=" + total_number_of_orders +
+                ", total_order_value=" + total_order_value +
                 '}';
     }
 
     public static class Builder{
         private String id;
         private UserProfile user;
-        private int totalNumberOfOrders;
-        private BigDecimal totalOrderValue;
+        private int total_number_of_orders;
+        private BigDecimal total_order_value;
 
         public Builder setId(String id) {
             this.id = id;
             return this;
         }
 
-        public Builder setUser(UserProfile user){
+        public Builder setUser(UserProfile user) {
             this.user = user;
             return this;
         }
 
-        public Builder setTotalNumberOfOrders(int totalNumberOfOrders){
-            this.totalNumberOfOrders= totalNumberOfOrders;
+        public Builder setTotal_number_of_orders(int total_number_of_orders) {
+            this.total_number_of_orders = total_number_of_orders;
             return this;
         }
 
-        public Builder setTotalOrderValue(BigDecimal totalOrderValue){
-            this.totalOrderValue = totalOrderValue;
+        public Builder setTotal_order_value(BigDecimal total_order_value) {
+            this.total_order_value = total_order_value;
             return this;
         }
 
         public Builder copy(OrderHistory orderHistory){
             this.id = orderHistory.id;
             this.user = orderHistory.user;
-            this.totalNumberOfOrders = orderHistory.totalNumberOfOrders;
-            this.totalOrderValue= orderHistory.totalOrderValue;
+            this.total_number_of_orders = orderHistory.total_number_of_orders;
+            this.total_order_value= orderHistory.total_order_value;
             return this;
         }
 
@@ -111,12 +114,14 @@ public class OrderHistory implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderHistory that = (OrderHistory) o;
-        return id.equals(that.id) &&
-                user.equals(that.user);
+        return total_number_of_orders == that.total_number_of_orders &&
+                id.equals(that.id) &&
+                user.equals(that.user) &&
+                Objects.equals(total_order_value, that.total_order_value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user);
+        return Objects.hash(id, user, total_number_of_orders, total_order_value);
     }
 }

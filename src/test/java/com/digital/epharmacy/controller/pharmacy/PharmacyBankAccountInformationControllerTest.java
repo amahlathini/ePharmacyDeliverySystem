@@ -41,7 +41,7 @@ public class PharmacyBankAccountInformationControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private String baseURL = "http://localhost:8080/bankdetails";
+    private String baseURL = "http://localhost:8080/bank_details";
 
     @Order(1)
     @Test
@@ -58,19 +58,19 @@ public class PharmacyBankAccountInformationControllerTest {
         assertNotNull(response.getBody());
         bankInfo = response.getBody();
         System.out.println("Saved Data: " + bankInfo);
-        assertEquals(bankInfo.getBankAccountId(), response.getBody().getBankAccountId());
+        assertEquals(bankInfo.getBank_account_id(), response.getBody().getBank_account_id());
     }
 
     @Order(2)
     @Test
     public void b_read() {
-        String url = baseURL + "/read/" + bankInfo.getBankName();
+        String url = baseURL + "/read/" + bankInfo.getBank_name();
         System.out.println("URL: " + url);
 
         ResponseEntity<PharmacyBankAccountInformation> response = restTemplate
                 .withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD)
                 .getForEntity(url, PharmacyBankAccountInformation.class);
-        assertEquals(bankInfo.getBankName(), response.getBody().getBankName());
+        assertEquals(bankInfo.getBank_name(), response.getBody().getBank_name());
         System.out.println(response);
         System.out.println(response.getBody());
     }
@@ -81,10 +81,10 @@ public class PharmacyBankAccountInformationControllerTest {
         PharmacyBankAccountInformation bankUpdate = new PharmacyBankAccountInformation
                 .Builder()
                 .copy(bankInfo)
-                .setBankName("FNB")
+                .setBank_name("FNB")
                 .build();
 
-        String url = baseURL + "/update/" + bankInfo.getBankAccountId();
+        String url = baseURL + "/update"; // + bankInfo.getBankAccountId();
 
         System.out.println("URL: " + url);
         System.out.println("POST Data: " + bankUpdate);
@@ -93,7 +93,7 @@ public class PharmacyBankAccountInformationControllerTest {
                 .withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD)
                 .postForEntity(url, bankUpdate, PharmacyBankAccountInformation.class);
         bankInfo = response.getBody();
-        assertEquals(bankInfo.getBankAccountId(), response.getBody().getBankAccountId());
+        assertEquals("FNB", response.getBody().getBank_name());
     }
 
     @Order(4)
@@ -114,7 +114,7 @@ public class PharmacyBankAccountInformationControllerTest {
     @Order(5)
     @Test
     public void delete() {
-        String url = baseURL + "/delete/" + bankInfo.getBankAccountId();
+        String url = baseURL + "/delete/" + bankInfo.getBank_account_id();
         System.out.println("URL: " + url);
         restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).delete(url);
     }

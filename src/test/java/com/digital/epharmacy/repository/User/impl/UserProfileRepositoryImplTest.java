@@ -31,32 +31,32 @@
  @Test
  public void a_create() {
  UserProfile created = repository.create(userProfile);
- assertEquals(userProfile.getUserId(), created.getUserId());
+ assertEquals(userProfile.getUser_id(), created.getUser_id());
  System.out.println("Create: " + created);
  }
 
  @Order(2)
  @Test
  public void b_read() {
- UserProfile read = repository.read(userProfile.getUserId());
- assertEquals(userProfile.getUserId(),read.getUserId());
+ UserProfile read = repository.read(userProfile.getUser_id());
+ assertEquals(userProfile.getUser_id(),read.getUser_id());
  System.out.println("Read: " + read);
  }
 
  @Order(3)
  @Test
  public void c_update() {
- UserProfile updated = new UserProfile.Builder().copy(userProfile).setUserName("Inneke").setGender("Female").setUserSurname("Hawthorne").build();
+ UserProfile updated = new UserProfile.Builder().copy(userProfile).setUser_name("Inneke").setGender("Female").setUser_surname("Hawthorne").build();
  updated = repository.update(updated);
- assertEquals(userProfile.getUserId(), updated.getUserId());
- assertNotEquals(userProfile.getUserName(), updated.getUserName());
+ assertEquals(userProfile.getUser_id(), updated.getUser_id());
+ assertNotEquals(userProfile.getUser_name(), updated.getUser_name());
  System.out.println("Update: " + updated );
  }
 
  @Order(5)
  @Test
  public void e_delete() {
- boolean deleted =   repository.delete(userProfile.getUserId());
+ boolean deleted =   repository.delete(userProfile.getUser_id());
  Assert.assertTrue(deleted);
  if (deleted){
  System.out.println("Entry deleted");

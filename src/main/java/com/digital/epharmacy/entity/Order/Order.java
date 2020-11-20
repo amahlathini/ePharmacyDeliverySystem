@@ -16,7 +16,10 @@ package com.digital.epharmacy.entity.Order;
  * */
 
 import com.digital.epharmacy.entity.Catalogue.CatalogueItem;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import com.digital.epharmacy.entity.User.UserProfile;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,6 +32,10 @@ public class Order {
 
     //Entity attributes
     @Id
+    @GeneratedValue(generator = "ORDER-generator")
+    @GenericGenerator(name = "ORDER-generator",
+            parameters = @Parameter(name = "prefix", value = "ORDER"),
+            strategy = "com.digital.epharmacy.util.CustomIDGenerator")
     @NotNull
     private String order_number; // (Ayabulela Mahlathini) changed order number to string so that it is auto generated in the factor;
     @NotNull(message = "User is required")
@@ -41,6 +48,9 @@ public class Order {
     private String payment_type;
     private String order_status; //(Ayabulela Mahlathini)added order_status
     private String date;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Pharmacy pharmacy;
+
 
     //default contructor - Ayabulela Mahlathini
     protected Order(){}
@@ -55,39 +65,45 @@ public class Order {
         this.order_total = builder.order_total;
         this.payment_type = builder.payment_type;
         this.order_status = builder.order_status;
+
         this.date = builder.date;
     }
     //Getters for all attributes.
+
+    public String getOrder_number() {
+        return order_number;
+    }
+
     public UserProfile getUser() {
         return user;
     }
 
-    public String getOrderNumber() {
-        return order_number;
+    public BigDecimal getOrder_total() {
+        return order_total;
     }
 
     public Set<CatalogueItem> getItems() {
         return items;
     }
 
-    public int getTotalCatalogueItems() {
+    public int getTotal_catalogue_items() {
         return total_catalogue_items;
     }
 
-    public BigDecimal getOrderTotal() {
-        return order_total;
-    }
-
-    public String getPaymentType() {
+    public String getPayment_type() {
         return payment_type;
     }
 
-    public String getOrderStatus() {
+    public String getOrder_status() {
         return order_status;
     }
 
-    public Object getDate() {
+    public String getDate() {
         return date;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
     }
 
     //toString method that displays whats in the order class
@@ -96,7 +112,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "order_number='" + order_number + '\'' +
+                "order_number=" + order_number +
                 ", user=" + user +
                 ", order_total=" + order_total +
                 ", items=" + items +
@@ -104,6 +120,7 @@ public class Order {
                 ", payment_type='" + payment_type + '\'' +
                 ", order_status='" + order_status + '\'' +
                 ", date='" + date + '\'' +
+                ", pharmacy=" + pharmacy +
                 '}';
     }
 
@@ -117,18 +134,18 @@ public class Order {
         private int total_catalogue_items;
         private BigDecimal order_total;
         private String payment_type, order_status;
+        private Pharmacy pharmacy;
         private String date;
 
         // setting user value using builder pattern
-        public Builder setUser(UserProfile user){
 
+
+        public Builder setUser(UserProfile user) {
             this.user = user;
             return this;
         }
 
-        //setting order_number value using builder pattern
-        public Builder setOrderNumber(String order_number){
-
+        public Builder setOrder_number(String order_number) {
             this.order_number = order_number;
             return this;
         }
@@ -138,38 +155,32 @@ public class Order {
             return this;
         }
 
-        //setting total_catalogue_items value using builder pattern
-        public Builder setTotalCatalogueItems(int total_catalogue_items){
-
+        public Builder setTotal_catalogue_items(int total_catalogue_items) {
             this.total_catalogue_items = total_catalogue_items;
             return this;
-
         }
 
-        //setting order_total value using builder pattern
-        public Builder setOrderTotal(BigDecimal order_total){
-
+        public Builder setOrder_total(BigDecimal order_total) {
             this.order_total = order_total;
             return this;
         }
 
-        //setting paymentDate value using builder pattern
-        public Builder setPaymentType(String payment_type){
-
+        public Builder setPayment_type(String payment_type) {
             this.payment_type = payment_type;
             return this;
         }
 
-        //setting order_status value using builder pattern
-        public Builder setOrderStatus(String order_status){
-
+        public Builder setOrder_status(String order_status) {
             this.order_status = order_status;
             return this;
         }
 
-        //setting date value using builder pattern
-        public Builder setDate(String date){
+        public Builder setPharmacy(Pharmacy pharmacy) {
+            this.pharmacy = pharmacy;
+            return this;
+        }
 
+        public Builder setDate(String date) {
             this.date = date;
             return this;
         }
@@ -201,15 +212,16 @@ public class Order {
         return total_catalogue_items == order.total_catalogue_items &&
                 order_number.equals(order.order_number) &&
                 user.equals(order.user) &&
-                Objects.equals(order_total, order.order_total) &&
-                Objects.equals(items, order.items) &&
+                order_total.equals(order.order_total) &&
+                items.equals(order.items) &&
                 Objects.equals(payment_type, order.payment_type) &&
                 Objects.equals(order_status, order.order_status) &&
-                Objects.equals(date, order.date);
+                Objects.equals(date, order.date) &&
+                Objects.equals(pharmacy, order.pharmacy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(order_number, user, order_total, items, total_catalogue_items, payment_type, order_status, date);
+        return Objects.hash(order_number, user, order_total, items, total_catalogue_items, payment_type, order_status, date, pharmacy);
     }
 }

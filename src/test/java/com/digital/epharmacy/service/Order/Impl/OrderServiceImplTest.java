@@ -6,10 +6,14 @@ package com.digital.epharmacy.service.Order.Impl;
  */
 
 import com.digital.epharmacy.entity.Catalogue.CatalogueItem;
+import com.digital.epharmacy.entity.Catalogue.Category;
 import com.digital.epharmacy.entity.Order.Order;
+import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 import com.digital.epharmacy.entity.User.UserProfile;
 import com.digital.epharmacy.factory.Catalogue.CatalogueItemFactory;
+import com.digital.epharmacy.factory.Catalogue.CategoryFactory;
 import com.digital.epharmacy.factory.Order.OrderFactory;
+import com.digital.epharmacy.factory.Pharmacy.PharmacyFactory;
 import com.digital.epharmacy.factory.User.UserProfileFactory;
 import com.digital.epharmacy.service.CatalogueItem.CatalogueItemService;
 import com.digital.epharmacy.service.Order.OrderService;
@@ -25,8 +29,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,21 +45,20 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OrderServiceImplTest {
 
+    private static Category category = CategoryFactory.createCategory("Colds & Flu", "image_url");
+    private static Pharmacy pharmacy = PharmacyFactory.createPharmacy("Clicks");
+    private static CatalogueItem catalogueItem = CatalogueItemFactory.createCatalogueItem("Mayogel", "oral health",
+            36, BigDecimal.valueOf(200.00), "image_url", category, pharmacy);
+    private static UserProfile user = UserProfileFactory.createUserProfile("Opatile","Hawthorne","F","aa@gmail.com", "password");
+
+    private static Set<CatalogueItem> items = Stream.of(catalogueItem).collect(Collectors.toSet());
+
+
+
     @Autowired
     private OrderService service;
 
     //as per business rules, we need items to place orders
-    private static CatalogueItem catalogueItem = CatalogueItemFactory.createCatalogueItem(36, "Mayogel",
-            "oral health", 36, 200);
-    private static CatalogueItem catalogueItem2 = CatalogueItemFactory.createCatalogueItem(37, "Mayogel",
-            "oral health", 5, 300);
-
-    private static Set<CatalogueItem> items = Stream.of(catalogueItem, catalogueItem2).collect(Collectors.toSet());
-
-    private static UserProfile user = UserProfileFactory
-            .createUserProfile("Siyabulela","Ngwana", "male");
-
-
 
     private static Order order = OrderFactory
             .createOrder(user, items,"yoco");
@@ -65,16 +70,16 @@ public class OrderServiceImplTest {
         System.out.println(order);
         Order createdOrder = service.create(order);
         System.out.println(createdOrder);
-        Assert.assertEquals(order.getOrderNumber(), createdOrder.getOrderNumber());
+        Assert.assertEquals(order.getOrder_number(), createdOrder.getOrder_number());
         System.out.println("Created:" + createdOrder);
     }
 
     @org.junit.jupiter.api.Order(2)
     @Test
     void b_read() {
-        System.out.println(order.getOrderNumber());
-        Order readOrder = service.read(order.getOrderNumber());
-        assertEquals(order.getOrderNumber(), readOrder.getOrderNumber());
+        System.out.println(order.getOrder_number());
+        Order readOrder = service.read(order.getOrder_number());
+        assertEquals(order.getOrder_number(), readOrder.getOrder_number());
         System.out.println("Read:" + readOrder);
     }
 
@@ -84,11 +89,11 @@ public class OrderServiceImplTest {
         Order updatedOrder = new Order
                 .Builder()
                 .copy(order)
-                .setPaymentType("paypal")
+                .setPayment_type("paypal")
                 .build();
 
         service.update(updatedOrder);
-        assertNotEquals(order.getPaymentType(), updatedOrder.getPaymentType());
+        assertNotEquals(order.getPayment_type(), updatedOrder.getPayment_type());
         System.out.println("Updated: " + updatedOrder);
     }
 
@@ -109,7 +114,7 @@ public class OrderServiceImplTest {
         Order updatedOrder = new Order
                 .Builder()
                 .copy(order)
-                .setOrderStatus("Completed")
+                .setOrder_status("Completed")
                 .build();
 
         service.update(updatedOrder);
@@ -124,7 +129,7 @@ public class OrderServiceImplTest {
     @Test
     void f_getAllByUser() {
 
-        Set<Order> ordersByUser = service.getAllOrdersByUser(order.getUser().getUserId());
+        Set<Order> ordersByUser = service.getAllOrdersByUser(order.getUser().getUser_id());
         assertEquals(1, ordersByUser.size());
 
         System.out.println("Get All By User's ID: " + ordersByUser);
@@ -133,7 +138,7 @@ public class OrderServiceImplTest {
     @org.junit.jupiter.api.Order(7)
     @Test
     void g_delete() {
-        String orderToDel = order.getOrderNumber();
+        String orderToDel = order.getOrder_number();
         boolean deleted = service.delete(orderToDel);
 
         Assert.assertTrue(deleted);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Set;
+;
 
 /*
  * Author: Opatile Kelobang
@@ -23,7 +24,7 @@ import java.util.Set;
  * Added Endpoint to search by account number
  */
 @RestController
-@RequestMapping("/bankdetails")
+@RequestMapping("/bank_details")
 public class PharmacyBankAccountInformationController {
 
     @Autowired
@@ -33,38 +34,35 @@ public class PharmacyBankAccountInformationController {
     private ValidationService validationService;
 
     @PostMapping("/create")
-    public ResponseEntity<PharmacyBankAccountInformation> create(@Valid @RequestBody PharmacyBankAccountInformation bankinfo, BindingResult result){
+    public PharmacyBankAccountInformation create(@Valid @RequestBody PharmacyBankAccountInformation bankinfo){
 
-        ResponseEntity<PharmacyBankAccountInformation> errorMap = (ResponseEntity<PharmacyBankAccountInformation>) validationService.MapValidationService(result);
-
-        if (errorMap != null)
-            return errorMap;
+//        ResponseEntity<PharmacyBankAccountInformation> errorMap = (ResponseEntity<PharmacyBankAccountInformation>) validationService.MapValidationService(result);
+//
+//        if (errorMap != null)
+//            return errorMap;
 
         PharmacyBankAccountInformation newBankInfo = PharmacyBankAccountInformationFactory
                 .createPharmacyBankAccountInformation(
-                        bankinfo.getBankName(),
-                        bankinfo.getAccountNumber(),
-                        bankinfo.getBranchCode(),
-                        bankinfo.getBeneficiaryReference()
+                        bankinfo.getBank_name(),
+                        bankinfo.getAccount_number(),
+                        bankinfo.getBranch_code(),
+                        bankinfo.getBeneficiary_reference()
                 );
 
-        bankService.create(newBankInfo);
+        return bankService.create(newBankInfo);
 
-        return new ResponseEntity<PharmacyBankAccountInformation>(bankinfo, HttpStatus.CREATED);
     }
 
-    @GetMapping("/read/{bankAccountId}")
-    public ResponseEntity<PharmacyBankAccountInformation> read(@PathVariable String bankAccountId){
-        PharmacyBankAccountInformation bankInfo = bankService.read(bankAccountId);
+    @GetMapping("/read/{bank_account_id}")
+    public PharmacyBankAccountInformation read(@PathVariable String bank_account_id){
+        return bankService.read(bank_account_id);
 
-        return new ResponseEntity<PharmacyBankAccountInformation>(bankInfo, HttpStatus.OK);
     }
 
-    @GetMapping("/account/{accountNumber}")
-    public ResponseEntity<PharmacyBankAccountInformation> read(@PathVariable int accountNumber){
-        PharmacyBankAccountInformation bankInfo = bankService.findByAccountNumber(accountNumber);
+    @GetMapping("/account/{account_number}")
+    public PharmacyBankAccountInformation read(@PathVariable int account_number){
+        return bankService.findByAccountNumber(account_number);
 
-        return new ResponseEntity<PharmacyBankAccountInformation>(bankInfo, HttpStatus.OK);
     }
 
     @PostMapping("/update")
@@ -72,13 +70,13 @@ public class PharmacyBankAccountInformationController {
         return bankService.update(bankInfo);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<PharmacyBankAccountInformation> getall(){
         return bankService.getAll();
     }
 
-    @DeleteMapping("/delete/{bankAccountId}")
-    public boolean delete(@PathVariable String bankAccountId){
-        return bankService.delete(bankAccountId);
+    @DeleteMapping("/delete/{bank_account_id}")
+    public boolean delete(@PathVariable String bank_account_id){
+        return bankService.delete(bank_account_id);
     }
 }

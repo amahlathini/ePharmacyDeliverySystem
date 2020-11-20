@@ -30,7 +30,7 @@ class PharmacyControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private String baseURL = "http://localhost:8080/pharmacy";
+    private static String baseURL = "http://localhost:8080/pharmacies";
 
     @Order(1)
     @Test
@@ -47,18 +47,18 @@ class PharmacyControllerTest {
         assertNotNull(response.getBody());
         pharmacy = response.getBody();
         System.out.println("Saved Data: " + pharmacy);
-        assertEquals(pharmacy.getPharmacyId(), response.getBody().getPharmacyId());
+        assertEquals(pharmacy.getPharmacy_id(), response.getBody().getPharmacy_id());
     }
 
     @Order(2)
     @Test
     public void b_readByPharmacyID() {
-        String url = baseURL + "/id/" + pharmacy.getPharmacyId();
+        String url = baseURL + "/id/" + pharmacy.getPharmacy_id();
         System.out.println("URL: " + url);
         ResponseEntity<Pharmacy> response = restTemplate
                 .withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD)
                 .getForEntity(url, Pharmacy.class);
-        assertEquals(pharmacy.getPharmacyId(), response.getBody().getPharmacyId());
+        assertEquals(pharmacy.getPharmacy_id(), response.getBody().getPharmacy_id());
         System.out.println(response);
         System.out.println(response.getBody());
     }
@@ -66,12 +66,12 @@ class PharmacyControllerTest {
     @Order(3)
     @Test
     public void c_readByPharmacyName() {
-        String url = baseURL + "/name/" + pharmacy.getPharmacyName();
+        String url = baseURL + "/name/" + pharmacy.getPharmacy_name();
         System.out.println("URL: " + url);
         ResponseEntity<Pharmacy> response = restTemplate
                 .withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD)
                 .getForEntity(url, Pharmacy.class);
-        assertEquals(pharmacy.getPharmacyName(), response.getBody().getPharmacyName());
+        assertEquals(pharmacy.getPharmacy_name(), response.getBody().getPharmacy_name());
         System.out.println(response);
         System.out.println(response.getBody());
     }
@@ -82,11 +82,11 @@ class PharmacyControllerTest {
         Pharmacy pharmacyUpdate = new Pharmacy
                 .Builder()
                 .copy(pharmacy)
-                .setPharmacyName(
+                .setPharmacy_name(
                         "Glen's Pharmacy"
                 )
                 .build();
-        String url = baseURL + "/update/" + pharmacy.getPharmacyId();
+        String url = baseURL + "/update"; //+ pharmacy.getPharmacyId();
 
         System.out.println("URL: " + url);
         System.out.println("POST Data: " + pharmacyUpdate);
@@ -96,7 +96,7 @@ class PharmacyControllerTest {
 
         pharmacy = response.getBody();
 
-        assertEquals(pharmacy.getPharmacyName(), response.getBody().getPharmacyName());
+        assertEquals("Glen's Pharmacy", response.getBody().getPharmacy_name());
     }
 
     @Order(5)
@@ -116,7 +116,7 @@ class PharmacyControllerTest {
     @Order(6)
     @Test
     public void delete() {
-        String url = baseURL + "/delete/" + pharmacy.getPharmacyId();
+        String url = baseURL + "/delete/" + pharmacy.getPharmacy_id();
         System.out.println("URL: " + url);
         restTemplate.withBasicAuth(SECURITY_USERNAME, SECURITY_PASSWORD).delete(url);
     }

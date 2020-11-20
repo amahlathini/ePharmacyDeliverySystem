@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 //import com.digital.epharmacy.repository.CatalogueItem.Impl.CatalogueItemRepositoryImpl;
@@ -40,7 +41,8 @@ public class CatalogueItemServiceImpl implements CatalogueItemService {
         List <CatalogueItem> itemsByCategory;
 
         itemsByCategory = orders.stream()
-                .filter(o -> o .getItemDescription()
+                .filter(o -> o.getCategory()
+                        .getCategory_name()
                 .trim()
                 .equalsIgnoreCase(productCategory))
                 .collect(Collectors.toList());
@@ -73,7 +75,5 @@ public class CatalogueItemServiceImpl implements CatalogueItemService {
         if (!this.repository.existsById(catalogueItem)) return true;
         return false;
     }
-
-
 
 }

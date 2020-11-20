@@ -35,7 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment update(Payment payment) {
 
-        if(this.repository.existsById(payment.getReferenceNumber())){
+        if(this.repository.existsById(payment.getReference_number())){
             return this.repository.save(payment);
         }
 

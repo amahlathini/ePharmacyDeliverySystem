@@ -11,33 +11,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
+;
 
 @RestController
-@RequestMapping ("/driver")
+@RequestMapping ("/drivers")
 public class DriverProfileController {
     @Autowired
     private DriverProfileServiceImpl driverProfileService;
 
     @PostMapping ("/create")
     public DriverProfile create (@RequestBody DriverProfile driverProfile){
-        DriverProfile newDriverProfile = DriverProfileFactory.createDriverProfile(driverProfile.getDriverName(),driverProfile.getDriverSurname(),driverProfile.getDriverLocation());
+        DriverProfile newDriverProfile = DriverProfileFactory.createDriverProfile(driverProfile.getDriver_name(),driverProfile.getDriver_surname(),driverProfile.getDriver_location());
         return driverProfileService.create(newDriverProfile);
     }
-    @GetMapping ("/read/{driverId}")
-    public DriverProfile read (@PathVariable String driverId){
-        return driverProfileService.read(driverId);
+    @GetMapping ("/read/{driver_id}")
+    public DriverProfile read (@PathVariable String driver_id){
+        return driverProfileService.read(driver_id);
     }
     @PostMapping ("/update")
     public DriverProfile update (@RequestBody DriverProfile driverProfile){
         return driverProfileService.update(driverProfile);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public Set<DriverProfile>getAll(){
         return driverProfileService.getAll();
     }
-    @DeleteMapping ("/delete/{driverId}")
-    public boolean delete(@PathVariable String driverId){
-        return driverProfileService.delete(driverId);
+    @DeleteMapping ("/delete/{driver_id}")
+    public boolean delete(@PathVariable String driver_id){
+        return driverProfileService.delete(driver_id);
     }
 }

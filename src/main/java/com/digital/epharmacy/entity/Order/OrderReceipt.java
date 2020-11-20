@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "receipts")
 public class OrderReceipt {
 
     //Ayabulela Mahlathini - Fixed relationships
@@ -33,20 +34,18 @@ public class OrderReceipt {
     @PrimaryKeyJoinColumn(name = "order_number")
     private Order order;
     @NotNull(message = "Item Qty is required")
-    private int itemQuantity;
+    private int quantity;
     @NotNull(message = "Payment total is required")
-    private BigDecimal paymentTotal;
+    private BigDecimal payment_total;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "id")
     private Pharmacy pharmacy;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserProfile user;
     @NotNull(message = "Items are required")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<CatalogueItem> items = new HashSet<>();
     @NotNull(message = "Type of Payment total is required")
-    private String typeOfPayment;
+    private String type_of_payment;
     @NotNull(message = "String is required")
     private String date;
 
@@ -63,10 +62,10 @@ public class OrderReceipt {
         this.date = builder.date;
         this.pharmacy = builder.pharmacy;
         this.user = builder.user;
-        this.paymentTotal = builder.paymentTotal;
-        this.typeOfPayment = builder.typeOfPayment;
+        this.payment_total = builder.payment_total;
+        this.type_of_payment = builder.type_of_payment;
         this.items = builder.items;
-        this.itemQuantity = builder.itemQuantity;
+        this.quantity = builder.quantity;
     }
 
     //Getters for all attributes
@@ -80,6 +79,14 @@ public class OrderReceipt {
         return order;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public BigDecimal getPayment_total() {
+        return payment_total;
+    }
+
     public Pharmacy getPharmacy() {
         return pharmacy;
     }
@@ -88,40 +95,30 @@ public class OrderReceipt {
         return user;
     }
 
-    public int getItemQuantity() {
-        return itemQuantity;
-    }
-
-    public BigDecimal getPaymentTotal() {
-        return paymentTotal;
-    }
-
-
     public Set<CatalogueItem> getItems() {
         return items;
     }
 
-    public String getTypeOfPayment() {
-        return typeOfPayment;
+    public String getType_of_payment() {
+        return type_of_payment;
     }
 
     public String getDate() {
         return date;
     }
 
-
     @Override
     public String toString() {
         return "OrderReceipt{" +
-                "receipt_number='" + receipt_number + '\'' +
+                "receipt_number=" + receipt_number +
                 ", order=" + order +
-                ", itemQuantity=" + itemQuantity +
-                ", paymentTotal=" + paymentTotal +
+                ", quantity=" + quantity +
+                ", payment_total=" + payment_total +
                 ", pharmacy=" + pharmacy +
                 ", user=" + user +
-                ", items='" + items + '\'' +
-                ", typeOfPayment='" + typeOfPayment + '\'' +
-                ", date=" + date +
+                ", items=" + items +
+                ", type_of_payment='" + type_of_payment + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 
@@ -130,12 +127,12 @@ public class OrderReceipt {
 
         private String receipt_number;
         private Order order;
-        private int itemQuantity;
-        private BigDecimal paymentTotal;
+        private int quantity;
+        private BigDecimal payment_total;
         private Pharmacy pharmacy;
         private UserProfile user;
         private Set<CatalogueItem> items;
-        private String typeOfPayment;
+        private String type_of_payment;
         private String date;
 
 
@@ -147,19 +144,18 @@ public class OrderReceipt {
             return this;
         }
 
-
-        public Builder settString(String date) {
-            this.date = date;
-            return this;
-        }
-
         public Builder setOrder(Order order) {
             this.order = order;
             return this;
         }
 
-        public Builder setDate(String date) {
-            this.date = date;
+        public Builder setQuantity(int quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public Builder setPayment_total(BigDecimal payment_total) {
+            this.payment_total = payment_total;
             return this;
         }
 
@@ -173,26 +169,20 @@ public class OrderReceipt {
             return this;
         }
 
-        public Builder setPaymentTotal(BigDecimal paymentTotal) {
-            this.paymentTotal = paymentTotal;
-            return this;
-        }
-
-        public Builder setTypeOfPayment(String typeOfPayment) {
-            this.typeOfPayment = typeOfPayment;
-            return this;
-        }
-
         public Builder setItems(Set<CatalogueItem> items) {
             this.items = items;
             return this;
         }
 
-        public Builder setItemQuantity(int itemQuantity) {
-            this.itemQuantity = itemQuantity;
+        public Builder setType_of_payment(String type_of_payment) {
+            this.type_of_payment = type_of_payment;
             return this;
         }
 
+        public Builder setDate(String date) {
+            this.date = date;
+            return this;
+        }
 
         // Builder copy method that create instance of OrderReceipt
         public Builder copy(OrderReceipt orderReceipt) {
@@ -202,10 +192,10 @@ public class OrderReceipt {
             this.date = orderReceipt.date;
             this.pharmacy = orderReceipt.pharmacy;
             this.user = orderReceipt.user;
-            this.paymentTotal = orderReceipt.paymentTotal;
-            this.typeOfPayment = orderReceipt.typeOfPayment;
+            this.payment_total = orderReceipt.payment_total;
+            this.type_of_payment = orderReceipt.type_of_payment;
             this.items = orderReceipt.items;
-            this.itemQuantity = orderReceipt.itemQuantity;
+            this.quantity = orderReceipt.quantity;
 
             return this;
 
@@ -223,19 +213,19 @@ public class OrderReceipt {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderReceipt that = (OrderReceipt) o;
-        return itemQuantity == that.itemQuantity &&
+        return quantity == that.quantity &&
                 receipt_number.equals(that.receipt_number) &&
                 order.equals(that.order) &&
-                paymentTotal.equals(that.paymentTotal) &&
+                payment_total.equals(that.payment_total) &&
                 pharmacy.equals(that.pharmacy) &&
                 user.equals(that.user) &&
                 items.equals(that.items) &&
-                typeOfPayment.equals(that.typeOfPayment) &&
+                type_of_payment.equals(that.type_of_payment) &&
                 date.equals(that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(receipt_number, order, itemQuantity, paymentTotal, pharmacy, user, items, typeOfPayment, date);
+        return Objects.hash(receipt_number, order, quantity, payment_total, pharmacy, user, items, type_of_payment, date);
     }
 }

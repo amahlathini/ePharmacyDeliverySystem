@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 /*
@@ -38,7 +39,7 @@ public class MedicalAidServiceImpl implements MedicalAidService {
         try{
            return this.repository.save(medicalAid);
         } catch (Exception e) {
-            throw new MyCustomExceptionHandler("Medical Aid '" + medicalAid.getUserMedicalAidNumber() + "' already exists");
+            throw new MyCustomExceptionHandler("Medical Aid '" + medicalAid.getUser_medical_aid_number() + "' already exists");
         }
 
     }
@@ -55,7 +56,7 @@ public class MedicalAidServiceImpl implements MedicalAidService {
 
     @Override
     public MedicalAid update(MedicalAid medicalAid) {
-        if (this.repository.existsById(medicalAid.getMedicalAidId())) {
+        if (this.repository.existsById(medicalAid.getMedical_aid_id())) {
             return this.repository.save(medicalAid);
         }
         else {

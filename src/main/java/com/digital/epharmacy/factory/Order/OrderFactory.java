@@ -16,34 +16,31 @@ import java.util.Set;
 public class OrderFactory {
 
     //changed required parameters to accomodate items being ordered
-    public static Order createOrder(UserProfile user, Set<CatalogueItem> items, String paymentType) {
+    public static Order createOrder(UserProfile user, Set<CatalogueItem> items, String payment_type) {
 
-        //generating order number
-        String orderNumber = GenericHelper.generateId();
-
-        double orderTotal = 0;
+        double order_total = 0;
 
         //calculating total for the whole order
         if (items != null) {
             for (CatalogueItem ci : items) {
-                double itemsTotal = ci.getItemPrice() * ci.getItemQuantity();
-                orderTotal += itemsTotal;
+                double itemsTotal = ci.getItem_price().doubleValue() * ci.getItem_quantity();
+                order_total += itemsTotal;
             }
         }
         //getting the date
         String date = GenericHelper.paymentDate();
 
         //default for the orderStatus
-        String orderStatus = "Processing";
+        String order_status = "Processing";
 
         Order order = new Order.Builder()
                 .setUser(user)
-                .setOrderNumber(orderNumber)
                 .setItems(items)
-                .setTotalCatalogueItems(items.size())
-                .setOrderTotal(BigDecimal.valueOf(orderTotal))
-                .setPaymentType(paymentType)
-                .setOrderStatus(orderStatus)
+                .setTotal_catalogue_items(items.size())
+                .setOrder_total(BigDecimal.valueOf(order_total))
+                .setPayment_type(payment_type)
+                .setOrder_status(order_status)
+                .setPharmacy(items.stream().findFirst().get().getPharmacy())
                 .setDate(date)
                 .build();
         return order;

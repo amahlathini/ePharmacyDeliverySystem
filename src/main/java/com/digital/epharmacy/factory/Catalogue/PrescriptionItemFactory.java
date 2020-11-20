@@ -9,15 +9,11 @@ import com.digital.epharmacy.util.GenericHelper;
 
 public class PrescriptionItemFactory {
 
-    public static PrescriptionItem createPrescriptionItem(int prescriptionNumber, String prescriptionType, String prescribingDoctor)
+    public static PrescriptionItem createPrescriptionItem(String prescription_type, String prescribing_doctor)
     {
-        String prescriptionId = GenericHelper.generateId();
-
         PrescriptionItem prescriptionItem = new PrescriptionItem.Builder()
-                .setPrescriptionId(prescriptionId)
-                .setPrescriptionNumber(prescriptionNumber)
-                .setPrescriptionType(prescriptionType)
-                .setPrescribingDoctor(prescribingDoctor)
+                .setPrescription_type(prescription_type)
+                .setPrescribing_doctor(prescribing_doctor)
                 .build();
         return prescriptionItem;
     }

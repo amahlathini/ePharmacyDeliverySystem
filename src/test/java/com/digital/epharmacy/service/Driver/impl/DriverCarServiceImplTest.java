@@ -5,7 +5,10 @@ package com.digital.epharmacy.service.Driver.impl;
  * Date: 04 September 2020
  */
 import com.digital.epharmacy.entity.Driver.DriverCar;
+import com.digital.epharmacy.entity.Driver.DriverLocation;
+import com.digital.epharmacy.entity.Driver.DriverProfile;
 import com.digital.epharmacy.factory.Driver.DriverCarFactory;
+import com.digital.epharmacy.factory.Driver.DriverProfileFactory;
 import com.digital.epharmacy.service.Driver.DriverCarService;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
@@ -14,6 +17,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
@@ -23,29 +27,34 @@ import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DriverCarServiceImplTest {
 
+    DriverLocation driverLocation = new DriverLocation(20, 50);
+    DriverProfile driverProfile = DriverProfileFactory.createDriverProfile("Chaddy","Hawthorne",driverLocation);
+
+
+    @Autowired
     private DriverCarService service;
-    DriverCar driverCar = DriverCarFactory.createDriverCar("CY 240", "blue", "Ford", "Figo");
+    DriverCar driverCar = DriverCarFactory.createDriverCar("CY 240", "blue", "Ford", "Figo", driverProfile);
 
 
     @Order(1)
     @Test
     public void a_create() {
         DriverCar created = service.create((driverCar));
-        Assert.assertEquals(driverCar.getCarId(), created.getCarId());
+        Assert.assertEquals(driverCar.getCar_id(), created.getCar_id());
         System.out.println("Create: " + created);
     }
 
     @Order(2)
     @Test
     public void b_read() {
-        DriverCar read = service.read(driverCar.getCarId());
+        DriverCar read = service.read(driverCar.getCar_id());
         System.out.println("Read: " + read);
     }
 
     @Order(3)
     @Test
     public void c_update() {
-        DriverCar updated = new DriverCar.Builder().copy(driverCar).setCarName("Golf").builder();
+        DriverCar updated = new DriverCar.Builder().copy(driverCar).setCar_name("Golf").build();
         updated = service.update(updated);
         System.out.println("Updated: " + updated);
     }
@@ -61,7 +70,7 @@ public class DriverCarServiceImplTest {
     @Order(5)
     @Test
     public void e_delete() {
-        boolean deleted = service.delete(driverCar.getCarId());
+        boolean deleted = service.delete(driverCar.getCar_id());
         Assert.assertTrue(deleted);
 
         if (deleted)

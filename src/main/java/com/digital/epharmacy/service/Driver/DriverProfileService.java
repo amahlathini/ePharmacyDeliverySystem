@@ -8,6 +8,7 @@ import com.digital.epharmacy.entity.Driver.DriverProfile;
 import com.digital.epharmacy.service.IService;
 
 import java.util.Set;
+;
 
 public interface DriverProfileService extends IService <DriverProfile , String> {
     Set<DriverProfile> getAll();

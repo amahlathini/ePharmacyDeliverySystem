@@ -6,7 +6,7 @@ package com.digital.epharmacy.repository;
 *  in order to prevent from typing it all out.
 *
 * Author: Nicole Hawthorne
-* Desc - This Interface is no longed needed since using JPA
+* Desc - This Interface is no Stringed needed since using JPA
 * Date - 27/10/2020
 * */
 @Deprecated

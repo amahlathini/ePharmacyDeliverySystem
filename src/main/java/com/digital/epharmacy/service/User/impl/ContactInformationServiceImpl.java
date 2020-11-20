@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class ContactInformationServiceImpl implements ContactInformationService 
     @Override
     public ContactInformation update(ContactInformation contactInformation) {
 
-        if(this.repository.existsById(contactInformation.getcontactId())){
+        if(this.repository.existsById(contactInformation.getContact_id())){
             return this.repository.save(contactInformation);
         }
         return null;
