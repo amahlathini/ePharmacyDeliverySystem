@@ -11,9 +11,10 @@ import com.digital.epharmacy.util.GenericHelper;
 
 public class PharmacyFactory {
 
-    public static Pharmacy createPharmacy(String pharmacy_name){
+    public static Pharmacy createPharmacy(String pharmacy_name, PharmacyBankAccountInformation bank_account){
         Pharmacy pharmacy = new Pharmacy.Builder()
                 .setPharmacy_name(pharmacy_name)
+                .setBank_account(bank_account)
                 .build();
         return pharmacy;
     }

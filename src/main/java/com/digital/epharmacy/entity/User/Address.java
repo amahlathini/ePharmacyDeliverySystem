@@ -21,13 +21,14 @@ import java.util.Objects;
  * Date: 25/10/2020
  * */
 //main class
-@Entity
-@Table(name = "addresses")
+//@Entity
+//@Table(name = "addresses")
+@Embeddable
 public class Address {
     //naming entity attributes and assigning their variable values
-    @Id
-    @Column(name = "user_id")
-    private String address_id;
+//    @Id
+//    @Column(name = "address_id")
+//    private String address_id;
     @NotNull(message = "Street number is required")
     @Range(min = 1, max = 2147483647, message = "Street number is required")
     private int street_number;
@@ -38,10 +39,10 @@ public class Address {
     private String street_name;
     @NotNull(message = "Area name is required")
     private String area_name;
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
-    private UserProfile user;
+    //@OneToOne
+    //@MapsId
+    //@JoinColumn(name = "user_id")
+    //private UserProfile user;
 
 
 
@@ -52,20 +53,20 @@ public class Address {
     }
     //constructor for Builder class
     private Address (Builder builder){
-        this.address_id = builder.address_id;
+       // this.address_id = builder.address_id;
         this.street_number = builder.street_number;
         this.area_code = builder.area_code;
         this.street_name = builder.street_name;
         this.area_name = builder.area_name;
-        this.user = builder.user;
+        //this.user = builder.user;
     }
 
     //getters to get all values of attributes
 
 
-    public String getAddress_id() {
-        return address_id;
-    }
+//    public String getAddress_id() {
+//        return address_id;
+//    }
 
     public int getStreet_number() {
         return street_number;
@@ -83,15 +84,15 @@ public class Address {
         return area_name;
     }
 
-    public UserProfile getUser() {
-        return user;
-    }
+//    public UserProfile getUser() {
+//        return user;
+//    }
 
     // toString to display what is in the Address class
     @Override
     public String toString() {
         return "Address{" +
-                ", pharmacyId=" + address_id +
+             //   ", pharmacyId=" + address_id +
                 ", street_number=" + street_number +
                 ", area_code=" + area_code +
                 ", street_name='" + street_name + '\'' +
@@ -104,7 +105,7 @@ public class Address {
         private String address_id;
         private int street_number, area_code;
         private String street_name, area_name;
-        private UserProfile user;
+       // private UserProfile user;
 
         //setting PharmacyId value using builder pattern
 
@@ -134,19 +135,19 @@ public class Address {
             return this;
         }
 
-        public Builder setUser(UserProfile user) {
-            this.user = user;
-            return this;
-        }
+//        public Builder setUser(UserProfile user) {
+//            this.user = user;
+//            return this;
+//        }
 
         // Builder copy method that create instance of ContactInformation and makes a copy out of it
         public Builder copy(Address address){
-            this.address_id = address.address_id;
+           // this.address_id = address.address_id;
             this.street_number = address.street_number;
             this.area_code = address.area_code;
             this.street_name = address.street_name;
             this.area_name = address.area_name;
-            this.user = address.user;
+            //this.user = address.user;
             return this;
         }
 
@@ -163,14 +164,14 @@ public class Address {
         Address address = (Address) o;
         return street_number == address.street_number &&
                 area_code == address.area_code &&
-                address_id.equals(address.address_id) &&
+              //  address_id.equals(address.address_id) &&
                 street_name.equals(address.street_name) &&
-                area_name.equals(address.area_name) &&
-                Objects.equals(user, address.user);
+                area_name.equals(address.area_name);
+                //Objects.equals(user, address.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address_id, street_number, area_code, street_name, area_name, user);
+        return Objects.hash(street_number, area_code, street_name, area_name);
     }
 }

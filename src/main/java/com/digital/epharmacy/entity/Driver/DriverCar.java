@@ -28,15 +28,16 @@ import java.util.Set;
  * Date: 25/10/2020
  * */
 
-@Entity
-@Table(name = "cars")
+//@Entity
+//@Table(name = "cars")
+@Embeddable
 public class DriverCar {
 
     // all the attributes of entity
-    @Id
-    @GeneratedValue
-    @Column(name = "car_id")
-    private String car_id;
+//    @Id
+//    @GeneratedValue
+//    @Column(name = "car_id")
+//    private String car_id;
     @NotNull(message = "Car Registration is required")
     private String car_registration;
     @NotNull(message = "Car Colour is required")
@@ -45,27 +46,27 @@ public class DriverCar {
     private String car_name;
     @NotNull(message = "Car Model is required")
     private String car_model;
-    @PrimaryKeyJoinColumn(name = "driver_id")
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private DriverProfile driver;
+//    @PrimaryKeyJoinColumn(name = "driver_id")
+//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private DriverProfile driver;
 
     protected DriverCar (){}
 
     // builder pattern method constructor
     private DriverCar(Builder builder){
-        this.car_id = builder.car_id;
+      //  this.car_id = builder.car_id;
         this.car_registration = builder.car_registration;
         this.car_colour = builder.car_colour;
         this.car_name = builder.car_name;
         this.car_model = builder.car_model;
-        this.driver = builder.driver;
+      //  this.driver = builder.driver;
     }
 
     // getters for all attributes of entity DriverCar
 
-    public String getCar_id() {
-        return car_id;
-    }
+//    public String getCar_id() {
+//        return car_id;
+//    }
 
     public String getCar_registration() {
         return car_registration;
@@ -83,34 +84,34 @@ public class DriverCar {
         return car_model;
     }
 
-    public DriverProfile getDriver() {
-        return driver;
-    }
+//    public DriverProfile getDriver() {
+//        return driver;
+//    }
 
     @Override
     public String toString() {
         return "DriverCar{" +
-                "car_id=" + car_id +
+               // "car_id=" + car_id +
                 ", car_registration='" + car_registration + '\'' +
                 ", car_colour='" + car_colour + '\'' +
                 ", car_name='" + car_name + '\'' +
                 ", car_model='" + car_model + '\'' +
-                ", driver=" + driver +
+             //   ", driver=" + driver +
                 '}';
     }
 
     // add setters using building pattern
     public static class Builder{
 
-        private String car_id;
+      //  private String car_id;
         private String car_registration;
         private String car_colour, car_name, car_model;
-        private DriverProfile driver;
+       // private DriverProfile driver;
 
-        public Builder setCar_id(String car_id) {
-            this.car_id = car_id;
-            return this;
-        }
+//        public Builder setCar_id(String car_id) {
+//            this.car_id = car_id;
+//            return this;
+//        }
 
         public Builder setCar_registration(String car_registration) {
             this.car_registration = car_registration;
@@ -132,19 +133,19 @@ public class DriverCar {
             return this;
         }
 
-        public Builder setDriver(DriverProfile driver) {
-            this.driver = driver;
-            return this;
-        }
+//        public Builder setDriver(DriverProfile driver) {
+//            this.driver = driver;
+//            return this;
+//        }
 
         //to below method is to make another copy of DriverCar
         public Builder copy (DriverCar driverCar){
-            this.car_id = driverCar.car_id;
+           // this.car_id = driverCar.car_id;
             this.car_registration = driverCar.car_registration;
             this.car_colour = driverCar.car_colour;
             this.car_name = driverCar.car_name;
             this.car_model = driverCar.car_model;
-            this.driver = driverCar.driver;
+           // this.driver = driverCar.driver;
             return this;
         }
 
@@ -159,16 +160,16 @@ public class DriverCar {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DriverCar driverCar = (DriverCar) o;
-        return car_id.equals(driverCar.car_id) &&
+        return //car_id.equals(driverCar.car_id) &&
                 car_registration.equals(driverCar.car_registration) &&
                 Objects.equals(car_colour, driverCar.car_colour) &&
                 car_name.equals(driverCar.car_name) &&
-                car_model.equals(driverCar.car_model) &&
-                driver.equals(driverCar.driver);
+                car_model.equals(driverCar.car_model);
+            //    driver.equals(driverCar.driver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(car_id, car_registration, car_colour, car_name, car_model, driver);
+        return Objects.hash(car_registration, car_colour, car_name, car_model);
     }
 }

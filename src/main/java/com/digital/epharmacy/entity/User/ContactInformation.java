@@ -18,37 +18,36 @@ import java.util.Objects;
  * Date: 25/10/2020
  * */
 //main class
-@Entity
-@Table(name = "contacts")
+@Embeddable
 public class ContactInformation {
     //naming entity attributes and assigning their variable values
-    @Id
-    @Column(name = "user_id")
-    private String contact_id;
+//    @Id
+//    @Column(name = "contact_id")
+//    private String contact_id;
     private String primary_number;
     private String secondary_number;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
-    private UserProfile user;
+//    @OneToOne
+//    @MapsId
+//    @JoinColumn(name = "user_id")
+//    private UserProfile user;
 
     protected ContactInformation(){}
     
     //constructor for Builder class
     private ContactInformation (Builder builder){
-        this.contact_id = builder.contact_id;
+       // this.contact_id = builder.contact_id;
         this.primary_number = builder.primary_number;
         this.secondary_number = builder.secondary_number;
-        this.user = builder.user;
+        //this.user = builder.user;
     }
 
     //getters to get all values of attributes
 
 
-    public String getContact_id() {
-        return contact_id;
-    }
+//    public String getContact_id() {
+//        return contact_id;
+//    }
 
     public String getPrimary_number() {
         return primary_number;
@@ -58,15 +57,15 @@ public class ContactInformation {
         return secondary_number;
     }
 
-    public UserProfile getUser() {
-        return user;
-    }
+//    public UserProfile getUser() {
+//        return user;
+//    }
 
     // toString to display what is in the ContactInformation class
     @Override
     public String toString() {
         return "ContactInformation{" +
-                "contact_id=" + contact_id +
+                //"contact_id=" + contact_id +
                 ", primary_number=" + primary_number +
                 ", secondary_number=" + secondary_number +
                 '}';
@@ -76,8 +75,8 @@ public class ContactInformation {
     public static class Builder{
         private String primary_number;
         private String secondary_number;
-        private String contact_id;
-        private UserProfile user;
+       // private String contact_id;
+       // private UserProfile user;
 
         //setting UserId value using builder pattern
 
@@ -91,22 +90,22 @@ public class ContactInformation {
             return this;
         }
 
-        public Builder setContact_id(String contact_id) {
-            this.contact_id = contact_id;
-            return this;
-        }
+//        public Builder setContact_id(String contact_id) {
+//            this.contact_id = contact_id;
+//            return this;
+//        }
 
-        public Builder setUser(UserProfile user) {
-            this.user = user;
-            return this;
-        }
+//        public Builder setUser(UserProfile user) {
+//            this.user = user;
+//            return this;
+//        }
 
         // Builder copy method that create instance of ContactInformation and makes a copy out of it
         public Builder copy(ContactInformation contactInformation){
-            this.contact_id = contactInformation.contact_id;
+            //this.contact_id = contactInformation.contact_id;
             this.primary_number = contactInformation.primary_number;
             this.secondary_number = contactInformation.secondary_number;
-            this.user = contactInformation.user;
+           // this.user = contactInformation.user;
             return this;
         }
 
@@ -121,14 +120,14 @@ public class ContactInformation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactInformation that = (ContactInformation) o;
-        return contact_id.equals(that.contact_id) &&
+        return //contact_id.equals(that.contact_id) &&
                 primary_number.equals(that.primary_number) &&
-                Objects.equals(secondary_number, that.secondary_number) &&
-                Objects.equals(user, that.user);
+                Objects.equals(secondary_number, that.secondary_number);
+              //  Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(contact_id, primary_number, secondary_number, user);
+        return Objects.hash( primary_number, secondary_number);
     }
 }

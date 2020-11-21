@@ -21,13 +21,14 @@ import java.util.Objects;
  *
  * */
 
-@Entity
-@Table(name = "medical_aids")
+//@Entity
+@Embeddable
+//@Table(name = "medical_aids")
 public class MedicalAid {
     //naming entity attributes and assigning their variable values
-    @Id
-    @Column(name = "user_id")
-    private String medical_aid_id;
+//    @Id
+//    @Column(name = "medical_aid_id")
+//    private String medical_aid_id;
     @NotNull(message = "Medical aid number is required")
     @Range(min = 1, max = 2147483647, message = "Medical aid number is required")
     private int user_medical_aid_number;
@@ -35,30 +36,30 @@ public class MedicalAid {
     private String medical_aid_scheme;
     @NotNull(message = "Medical aid name is required")
     private String medical_aid_name;
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
-    private UserProfile user;
+//    @OneToOne
+//    @MapsId
+//    @JoinColumn(name = "user_id")
+//    private UserProfile user;
 
 
     protected MedicalAid(){}
 
     //constructor for Builder class
     private MedicalAid (Builder builder){
-        this.medical_aid_id = builder.medical_aid_id;
+       // this.medical_aid_id = builder.medical_aid_id;
         this.user_medical_aid_number = builder.user_medical_aid_number;
         this.medical_aid_name = builder.medical_aid_name;
         this.medical_aid_scheme = builder.medical_aid_scheme;
-        this.user = builder.user;
+       // this.user = builder.user;
      
     }
     
     //getters to get all values of attributes
 
 
-    public String getMedical_aid_id() {
-        return medical_aid_id;
-    }
+//    public String getMedical_aid_id() {
+//        return medical_aid_id;
+//    }
 
     public int getUser_medical_aid_number() {
         return user_medical_aid_number;
@@ -72,15 +73,16 @@ public class MedicalAid {
         return medical_aid_name;
     }
 
-    public UserProfile getUser() {
-        return user;
-    }
+
+//    public UserProfile getUser() {
+//        return user;
+//    }
 
     // toString to display what is in the Medical Aid class
     @Override
     public String toString() {
         return "MedicalAid{" +
-                "userId=" + medical_aid_id +
+               // "userId=" + medical_aid_id +
                 ", user_medical_aid_number=" + user_medical_aid_number +
                 ", medical_aid_name='" + medical_aid_name + '\'' +
                 ", medical_aid_scheme='" + medical_aid_scheme + '\'' +
@@ -92,8 +94,8 @@ public class MedicalAid {
         //same assigned attributes in main class with variable values
         private int  user_medical_aid_number;
         private String medical_aid_name, medical_aid_scheme;
-        private String medical_aid_id;
-        private UserProfile user;
+       // private String medical_aid_id;
+        //private UserProfile user;
 
         //setting UserId value using builder pattern
 
@@ -113,23 +115,23 @@ public class MedicalAid {
             return this;
         }
 
-        public Builder setMedical_aid_id(String medical_aid_id) {
-            this.medical_aid_id = medical_aid_id;
-            return this;
-        }
+//        public Builder setMedical_aid_id(String medical_aid_id) {
+//            this.medical_aid_id = medical_aid_id;
+//            return this;
+//        }
 
-        public Builder setUser(UserProfile user) {
-            this.user = user;
-            return this;
-        }
+//        public Builder setUser(UserProfile user) {
+//            this.user = user;
+//            return this;
+//        }
 
         // Builder copy method that create instance of MedicalAid and makes a copy out of it
         public Builder copy(MedicalAid medicalAid){
-            this.medical_aid_id = medicalAid.medical_aid_id;
+          //  this.medical_aid_id = medicalAid.medical_aid_id;
             this.user_medical_aid_number = medicalAid.user_medical_aid_number;
             this.medical_aid_name = medicalAid.medical_aid_name;
             this.medical_aid_scheme = medicalAid.medical_aid_scheme;
-            this.user = medicalAid.user;
+            //this.user = medicalAid.user;
             return this;
 
         }
@@ -145,14 +147,14 @@ public class MedicalAid {
         if (o == null || getClass() != o.getClass()) return false;
         MedicalAid that = (MedicalAid) o;
         return user_medical_aid_number == that.user_medical_aid_number &&
-                medical_aid_id.equals(that.medical_aid_id) &&
+              //  medical_aid_id.equals(that.medical_aid_id) &&
                 Objects.equals(medical_aid_scheme, that.medical_aid_scheme) &&
-                Objects.equals(medical_aid_name, that.medical_aid_name) &&
-                Objects.equals(user, that.user);
+                Objects.equals(medical_aid_name, that.medical_aid_name);
+                //Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(medical_aid_id, user_medical_aid_number, medical_aid_scheme, medical_aid_name, user);
+        return Objects.hash(user_medical_aid_number, medical_aid_scheme, medical_aid_name);
     }
 }

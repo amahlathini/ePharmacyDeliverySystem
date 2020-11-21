@@ -21,7 +21,7 @@ public class DriverProfileController {
 
     @PostMapping ("/create")
     public DriverProfile create (@RequestBody DriverProfile driverProfile){
-        DriverProfile newDriverProfile = DriverProfileFactory.createDriverProfile(driverProfile.getDriver_name(),driverProfile.getDriver_surname(),driverProfile.getDriver_location());
+        DriverProfile newDriverProfile = DriverProfileFactory.createDriverProfile(driverProfile.getDriver_name(),driverProfile.getDriver_surname(),driverProfile.getDriver_location(), driverProfile.getCar());
         return driverProfileService.create(newDriverProfile);
     }
     @GetMapping ("/read/{driver_id}")

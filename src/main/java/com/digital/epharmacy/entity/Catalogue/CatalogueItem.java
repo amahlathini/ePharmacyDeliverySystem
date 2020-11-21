@@ -21,7 +21,7 @@ public class CatalogueItem implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private String item_number;
+    private long item_number;
     @NotNull
     private int item_quantity;
     @NotNull
@@ -36,7 +36,7 @@ public class CatalogueItem implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "catalogue_id")
+    @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
 
     //non argument constructor
@@ -55,7 +55,7 @@ public class CatalogueItem implements Serializable {
 
     //getters to get all values of attributes
 
-    public String getItem_number() {
+    public Long getItem_number() {
         return item_number;
     }
 
@@ -108,7 +108,7 @@ public class CatalogueItem implements Serializable {
     //inner Builder class to implement the builder pattern
     public static class Builder {
         //setting  value using builder pattern
-        private String item_number;
+        private long item_number;
         private int item_quantity;
         String item_name, item_description;
         BigDecimal item_price;
@@ -116,7 +116,7 @@ public class CatalogueItem implements Serializable {
         private Category category;
         private Pharmacy pharmacy;
 
-        public Builder setItem_number(String item_number) {
+        public Builder setItem_number(Long item_number) {
             this.item_number = item_number;
             return this;
         }

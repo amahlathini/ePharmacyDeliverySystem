@@ -17,7 +17,7 @@ public class DriverCarFactory {
                 .setCar_colour(car_colour)
                 .setCar_name(car_name)
                 .setCar_model(car_model)
-                .setDriver(driver)
+                //.setDriver(driver)
                 .build();
         return driverCar;
     }

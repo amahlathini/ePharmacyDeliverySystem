@@ -42,14 +42,17 @@ public class UserProfile {
     @Email(message = "Email Address is required")
     private String email;
     private String password;
-    @OneToOne(mappedBy = "userprofile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "contact_id")
+    @Embedded
     private ContactInformation contact;
-    @OneToOne(mappedBy = "userprofile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+    @Embedded
     private Address address;
-    @OneToOne(mappedBy = "userprofile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "medical_aid_id")
+    @Embedded
     private MedicalAid medical_aid;
 
 

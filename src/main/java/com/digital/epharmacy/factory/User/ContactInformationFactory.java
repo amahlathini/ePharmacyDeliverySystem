@@ -8,12 +8,12 @@ import com.digital.epharmacy.util.GenericHelper;
 // still need to retrieve userId and pharmacyId from their actual classes
 public class ContactInformationFactory {
 
-    public static ContactInformation createContactInformation(UserProfile userProfile){
+    public static ContactInformation createContactInformation(UserProfile userProfile, ContactInformation contact){
 
         ContactInformation contactInformation = new ContactInformation.Builder()
-                .setUser(userProfile)
-                .setPrimary_number(userProfile.getContact().getPrimary_number())
-                .setSecondary_number(userProfile.getContact().getSecondary_number())
+                //.setUser(userProfile)
+                .setPrimary_number(contact.getPrimary_number())
+                .setSecondary_number(contact.getSecondary_number())
                 .build();
         return contactInformation;
     }

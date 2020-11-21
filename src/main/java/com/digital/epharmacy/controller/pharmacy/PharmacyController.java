@@ -42,7 +42,7 @@ public class PharmacyController {
 //        if (errorMap != null)
 //            return errorMap;
 
-        Pharmacy newPharmacy = pharmacyService.create(PharmacyFactory.createPharmacy(pharmacy.getPharmacy_name()));
+        Pharmacy newPharmacy = pharmacyService.create(PharmacyFactory.createPharmacy(pharmacy.getPharmacy_name(), pharmacy.getBank_account()));
 
         return newPharmacy;
 

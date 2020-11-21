@@ -14,7 +14,7 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "category_id")
-    private String category_id;
+    private long category_id;
     @NotNull
     private String category_name;
     @Lob
@@ -30,7 +30,7 @@ public class Category implements Serializable {
         this.category_image = builder.category_image;
     }
 
-    public String getCategory_id() {
+    public Long getCategory_id() {
         return category_id;
     }
 
@@ -53,11 +53,11 @@ public class Category implements Serializable {
 
     public static class Builder {
         //setting  value using builder pattern
-        String category_id;
-        String category_name;
+        private long category_id;
+        private String category_name;
         private String category_image;
 
-        public Builder setCategory_id(String category_id) {
+        public Builder setCategory_id(Long category_id) {
             this.category_id = category_id;
             return this;
         }

@@ -42,10 +42,11 @@ public class DriverProfile {
     private String driver_name;
     @NotNull(message = "Driver Surname is required")
     private String driver_surname;
+    @Embedded
     private DriverLocation driver_location;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Embedded
     private DriverCar car;
 
 

@@ -1,24 +1,20 @@
 package com.digital.epharmacy.controller.user;
 //Nicole Hawthorne - UserProfile Controller to expose the service of the userprofile
 //Added validation service on the 27 october and added read by id and name methods for admin
+
 import com.digital.epharmacy.entity.User.UserProfile;
-import com.digital.epharmacy.factory.User.AddressFactory;
-import com.digital.epharmacy.factory.User.ContactInformationFactory;
-import com.digital.epharmacy.factory.User.MedicalAidFactory;
 import com.digital.epharmacy.factory.User.UserProfileFactory;
-import com.digital.epharmacy.service.MedicalAid.impl.MedicalAidServiceImpl;
-import com.digital.epharmacy.service.User.impl.AddressServiceImpl;
-import com.digital.epharmacy.service.User.impl.ContactInformationServiceImpl;
+//import com.digital.epharmacy.service.MedicalAid.impl.MedicalAidServiceImpl;
+//import com.digital.epharmacy.service.User.impl.AddressServiceImpl;
+//import com.digital.epharmacy.service.User.impl.ContactInformationServiceImpl;
 import com.digital.epharmacy.service.User.impl.UserProfileServiceImpl;
 import com.digital.epharmacy.service.Validation.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Set;
+
 ;
 
 @RestController
@@ -27,14 +23,14 @@ public class UserProfileController {
     @Autowired
     private UserProfileServiceImpl userProfileService;
 
-    @Autowired
-    private ContactInformationServiceImpl contactService;
-
-    @Autowired
-    private AddressServiceImpl addressService;
-
-    @Autowired
-    private MedicalAidServiceImpl medicalAidService;
+//    @Autowired
+//    private ContactInformationServiceImpl contactService;
+//
+//    @Autowired
+//    private AddressServiceImpl addressService;
+//
+//    @Autowired
+//    private MedicalAidServiceImpl medicalAidService;
 
     @Autowired
     private ValidationService validationService;
@@ -45,13 +41,11 @@ public class UserProfileController {
 //        if (errorMap != null) {
 //            return errorMap;
 //        }
+
         UserProfile user = userProfileService.create(UserProfileFactory.createUserProfile(userProfile.getUser_name(),userProfile.getUser_surname(), userProfile.getGender(), userProfile.getEmail(), userProfile.getPassword(), userProfile.getContact(), userProfile.getAddress(), userProfile.getMedical_aid()));
 
-        contactService.create(ContactInformationFactory.createContactInformation(user));
-        addressService.create(AddressFactory.createAddress(user));
-        medicalAidService.create(MedicalAidFactory.createMedicalAid(user));
-
         return user;
+
     }
     @GetMapping("/id/{user_id}")
     public UserProfile readByUserProfileId(@PathVariable String user_id) {

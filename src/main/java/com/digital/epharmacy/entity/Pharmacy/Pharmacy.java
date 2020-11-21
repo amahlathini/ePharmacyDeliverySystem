@@ -23,12 +23,12 @@ public class Pharmacy {
     @GenericGenerator(name = "PHARM-generator",
             parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "PHARM"),
             strategy = "com.digital.epharmacy.util.CustomIDGenerator")
-    @Column(name = "id")
+    @Column(name = "pharmacy_id")
     private String pharmacy_id;
     @Column(unique = true)
     @NotNull
     private String pharmacy_name;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Embedded
     private PharmacyBankAccountInformation bank_account;
 
     protected Pharmacy(){}

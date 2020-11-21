@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category update(Category Category) {
 
-        if (this.repository.existsById(Category.getCategory_id()))
+        if (this.repository.existsById(Category.getCategory_id().toString()))
             return this.repository.save(Category);
         return null;
     }
