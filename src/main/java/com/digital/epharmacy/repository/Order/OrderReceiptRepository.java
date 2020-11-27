@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface OrderReceiptRepository extends JpaRepository<OrderReceipt, String> {
+public interface OrderReceiptRepository extends JpaRepository<OrderReceipt, Long> {
 
 }

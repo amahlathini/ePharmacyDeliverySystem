@@ -16,4 +16,4 @@ import java.util.Set;
  * Desc: changed from the depricated Repository to using the JpaRepository
  */
 @Repository
-public interface OrderRepository extends JpaRepository<Order, String> { }
+public interface OrderRepository extends JpaRepository<Order, Long> { }

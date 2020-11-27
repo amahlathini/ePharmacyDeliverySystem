@@ -28,7 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment read(String s) {
+    public Payment read(Long s) {
         return this.repository.findById(s).orElseGet(null);
     }
 
@@ -44,7 +44,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public boolean delete(String s) {
+    public boolean delete(Long s) {
          this.repository.deleteById(s);
          if(this.repository.existsById(s))  return false;
          else return true;

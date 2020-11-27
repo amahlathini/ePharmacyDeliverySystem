@@ -11,7 +11,7 @@ import com.digital.epharmacy.service.IService;
 import java.util.Set;
 ;
 
-public interface OrderService extends IService<Order, String> {
+public interface OrderService extends IService<Order, Long> {
     Set<Order> getAll();
 
     Set<Order> getAllCompletedOrders();
@@ -21,7 +21,7 @@ public interface OrderService extends IService<Order, String> {
     Set<Order> getAllCanceled();
 
 
-    String trackOrderStatus(String orderID);
+    String trackOrderStatus(Long orderID);
 
     Set<Order> getAllOrdersByUser(String userID);
 

@@ -5,7 +5,7 @@ import com.digital.epharmacy.service.IService;
 
 import java.util.Set;
 
-public interface PaymentService extends IService <Payment, String> {
+public interface PaymentService extends IService <Payment, Long> {
 
     Set<Payment>getAll();
 

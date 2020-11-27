@@ -32,12 +32,9 @@ public class Order {
 
     //Entity attributes
     @Id
-    @GeneratedValue(generator = "ORDER-generator")
-    @GenericGenerator(name = "ORDER-generator",
-            parameters = @Parameter(name = "prefix", value = "ORDER"),
-            strategy = "com.digital.epharmacy.util.CustomIDGenerator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    private String order_number; // (Ayabulela Mahlathini) changed order number to string so that it is auto generated in the factor;
+    private Long order_number; // (Ayabulela Mahlathini) changed order number to string so that it is auto generated in the factor;
     @NotNull(message = "User is required")
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserProfile user;
@@ -70,7 +67,7 @@ public class Order {
     }
     //Getters for all attributes.
 
-    public String getOrder_number() {
+    public Long getOrder_number() {
         return order_number;
     }
 
@@ -129,7 +126,7 @@ public class Order {
 
 
         private UserProfile user;
-        private String order_number;
+        private long order_number;
         private Set<CatalogueItem> items;
         private int total_catalogue_items;
         private BigDecimal order_total;
@@ -145,7 +142,7 @@ public class Order {
             return this;
         }
 
-        public Builder setOrder_number(String order_number) {
+        public Builder setOrder_number(Long order_number) {
             this.order_number = order_number;
             return this;
         }

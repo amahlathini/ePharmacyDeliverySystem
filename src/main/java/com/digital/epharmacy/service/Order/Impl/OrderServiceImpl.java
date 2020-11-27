@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
 
     //tracking order status
     @Override
-    public String trackOrderStatus(String order_id) {
+    public String trackOrderStatus(Long order_id) {
         return this.read(order_id).getOrder_status();
     }
 
@@ -106,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order read(String id) {
+    public Order read(Long id) {
         return this.repository.findById(id).orElseGet(null);
     }
 
@@ -119,7 +119,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Long id) {
         this.repository.deleteById(id);
         if (this.repository.existsById(id)){
             return false;

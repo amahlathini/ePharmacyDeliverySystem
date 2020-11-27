@@ -19,7 +19,7 @@ import java.util.Objects;
 public class CatalogueItem implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long item_number;
     @NotNull
@@ -32,10 +32,10 @@ public class CatalogueItem implements Serializable {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String item_image;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
 

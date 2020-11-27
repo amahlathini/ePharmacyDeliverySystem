@@ -30,20 +30,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category read(String s) {
+    public Category read(Long s) {
         return this.repository.findById(s).orElseGet(null);
     }
 
     @Override
     public Category update(Category Category) {
 
-        if (this.repository.existsById(Category.getCategory_id().toString()))
+        if (this.repository.existsById(Category.getCategory_id()))
             return this.repository.save(Category);
         return null;
     }
 
     @Override
-    public boolean delete(String s) {
+    public boolean delete(Long s) {
         this.repository.deleteById(s);
         if (this.repository.existsById(s)) return false;
         else return true;

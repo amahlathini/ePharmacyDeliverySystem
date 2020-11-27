@@ -29,7 +29,7 @@ public class OrderReceipt {
     //Entity attributes
     @Id
     @Column(name = "receipt_number")
-    private String receipt_number;
+    private Long receipt_number;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn(name = "order_number")
     private Order order;
@@ -71,7 +71,7 @@ public class OrderReceipt {
     //Getters for all attributes
 
 
-    public String getReceipt_number() {
+    public Long getReceipt_number() {
         return receipt_number;
     }
 
@@ -125,7 +125,7 @@ public class OrderReceipt {
     //Builder class to implement the builder pattern
     public static class Builder {
 
-        private String receipt_number;
+        private long receipt_number;
         private Order order;
         private int quantity;
         private BigDecimal payment_total;
@@ -139,7 +139,7 @@ public class OrderReceipt {
         //setting orderNumber value using builder pattern
 
 
-        public Builder setReceipt_number(String receipt_number) {
+        public Builder setReceipt_number(Long receipt_number) {
             this.receipt_number = receipt_number;
             return this;
         }

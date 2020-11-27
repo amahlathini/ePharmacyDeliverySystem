@@ -57,7 +57,7 @@ public class CatalogueItemServiceImpl implements CatalogueItemService {
 
     @Override
     @Transactional
-    public CatalogueItem read(String catalogueItem) {
+    public CatalogueItem read(Long catalogueItem) {
         return this.repository.findById(catalogueItem).orElse(null);
     }
 
@@ -70,7 +70,7 @@ public class CatalogueItemServiceImpl implements CatalogueItemService {
 
 
     @Override
-    public boolean delete(String catalogueItem) {
+    public boolean delete(Long catalogueItem) {
         this.repository.deleteById(catalogueItem);
         if (!this.repository.existsById(catalogueItem)) return true;
         return false;

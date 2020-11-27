@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Category implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "category_id")
     private long category_id;
     @NotNull

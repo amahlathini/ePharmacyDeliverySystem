@@ -30,7 +30,7 @@ public class OrderReceiptController {
     }
 
     @GetMapping("/read/{order_number}")
-    public OrderReceipt read(@PathVariable String receipt_number){
+    public OrderReceipt read(@PathVariable Long receipt_number){
         return orderReceiptService.read(receipt_number);
     }
 
@@ -45,7 +45,7 @@ public class OrderReceiptController {
     }
 
     @DeleteMapping("/delete/{receipt_number}")
-    public boolean delete(@PathVariable String receipt_number){
+    public boolean delete(@PathVariable Long receipt_number){
         return orderReceiptService.delete(receipt_number);
     }
 }

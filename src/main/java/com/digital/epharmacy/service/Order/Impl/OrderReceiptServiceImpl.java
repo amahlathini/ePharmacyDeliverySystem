@@ -28,7 +28,7 @@ public class OrderReceiptServiceImpl implements OrderReceiptService {
     }
 
     @Override
-    public OrderReceipt read(String receiptNumber) {
+    public OrderReceipt read(Long receiptNumber) {
         return this.repository.findById(receiptNumber).orElseGet(null);
     }
 
@@ -38,7 +38,7 @@ public class OrderReceiptServiceImpl implements OrderReceiptService {
     }
 
     @Override
-    public boolean delete(String receiptNumber)
+    public boolean delete(Long receiptNumber)
     {
         this.repository.deleteById(receiptNumber);
         if (this.repository.existsById(receiptNumber)) return false;

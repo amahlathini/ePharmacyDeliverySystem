@@ -38,7 +38,7 @@ public class OrderController {
     }
 
     @GetMapping("/read/{order_id}")
-    public Order read(@PathVariable String order_id){
+    public Order read(@PathVariable Long order_id){
         return orderService.read(order_id);
     }
 
@@ -48,7 +48,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/delete/{order_id}")
-    public boolean delete(@PathVariable String order_id) {
+    public boolean delete(@PathVariable Long order_id) {
         return orderService.delete(order_id);
     }
 
@@ -75,7 +75,7 @@ public class OrderController {
 
     //tracking order status
     @GetMapping("/track/{order_id}")
-    public String trackOrderStatus(@PathVariable String order_id) {
+    public String trackOrderStatus(@PathVariable Long order_id) {
         return orderService.trackOrderStatus(order_id);
     }
 

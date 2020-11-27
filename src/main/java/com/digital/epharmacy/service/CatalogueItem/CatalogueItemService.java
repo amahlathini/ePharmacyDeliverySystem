@@ -13,7 +13,7 @@ import java.util.Set;
  * Desc: CatalogueItem Service
  * Date: 3 September 2020
  */
-public interface CatalogueItemService extends IService<CatalogueItem, String> {
+public interface CatalogueItemService extends IService<CatalogueItem, Long> {
     Set<CatalogueItem> getAll();
 
 

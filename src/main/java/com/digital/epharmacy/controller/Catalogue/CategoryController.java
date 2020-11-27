@@ -36,7 +36,7 @@ public class CategoryController {
     }
 
     @GetMapping("/read/{category_id}")
-    public Category read (@PathVariable String category_id){
+    public Category read (@PathVariable Long category_id){
 
         return categoryService.read(category_id);
     }
@@ -52,7 +52,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete/{category_id}")
-    public boolean delete(@PathVariable String category_id){
+    public boolean delete(@PathVariable Long category_id){
         return categoryService.delete(category_id);
     }
 }

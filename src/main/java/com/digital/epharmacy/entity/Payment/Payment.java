@@ -22,9 +22,8 @@ public class Payment {
 
     //Declaring variables using all attributes from the Payment Entity
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String reference_number;
+    private long reference_number;
     @NotNull(message = "Payment Status is required")
     private String payment_status;
     @NotNull(message = "Type of Payment is required")
@@ -62,7 +61,7 @@ public class Payment {
     //getters for the declared variables
 
 
-    public String getReference_number() {
+    public Long getReference_number() {
         return reference_number;
     }
 
@@ -119,7 +118,7 @@ public class Payment {
 
         //Declaring variables using all attributes from the Payment Entity, same as the ones from the main class
         private String payment_status, type_of_payment, payment_notification;
-        private String reference_number;
+        private long reference_number;
         private BigDecimal payment_total;
         private String date;
         private Pharmacy pharmacy;
@@ -146,7 +145,7 @@ public class Payment {
             return this;
         }
 
-        public Builder setReference_number(String reference_number) {
+        public Builder setReference_number(Long reference_number) {
             this.reference_number = reference_number;
             return this;
         }
@@ -203,7 +202,7 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return reference_number.equals(payment.reference_number) &&
+        return reference_number == payment.reference_number &&
                 payment_status.equals(payment.payment_status) &&
                 Objects.equals(type_of_payment, payment.type_of_payment) &&
                 Objects.equals(payment_notification, payment.payment_notification) &&

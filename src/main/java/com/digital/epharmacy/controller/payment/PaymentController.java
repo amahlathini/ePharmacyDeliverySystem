@@ -43,7 +43,7 @@ public class PaymentController {
     }
 
     @GetMapping("/read/{payment_ref}")
-    public Payment read (@PathVariable String payment_ref){
+    public Payment read (@PathVariable Long payment_ref){
 
         return paymentService.read(payment_ref);
     }
@@ -59,7 +59,7 @@ public class PaymentController {
     }
 
     @DeleteMapping("/delete/{payment_ref}")
-    public boolean delete(@PathVariable String payment_ref){
+    public boolean delete(@PathVariable Long payment_ref){
         return paymentService.delete(payment_ref);
     }
 }
