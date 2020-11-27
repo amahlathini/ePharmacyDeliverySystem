@@ -6,6 +6,7 @@ package com.digital.epharmacy.entity.Catalogue;
  * Date: 04/07/2020
  */
 
+import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
 
 import javax.persistence.*;

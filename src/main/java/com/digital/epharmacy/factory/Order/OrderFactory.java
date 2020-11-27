@@ -16,15 +16,14 @@ import java.util.Set;
 public class OrderFactory {
 
     //changed required parameters to accomodate items being ordered
-    public static Order createOrder(UserProfile user, Set<CatalogueItem> items, String payment_type) {
+    public static Order createOrder(UserProfile user, List<CatalogueItem> items, String payment_type) {
 
         double order_total = 0;
 
         //calculating total for the whole order
         if (items != null) {
             for (CatalogueItem ci : items) {
-                double itemsTotal = ci.getItem_price().doubleValue() * ci.getItem_quantity();
-                order_total += itemsTotal;
+                order_total += ci.getItem_price().doubleValue();
             }
         }
         //getting the date
@@ -40,7 +39,7 @@ public class OrderFactory {
                 .setOrder_total(BigDecimal.valueOf(order_total))
                 .setPayment_type(payment_type)
                 .setOrder_status(order_status)
-                .setPharmacy(items.stream().findFirst().get().getPharmacy())
+                .setPharmacy(items.get(0).getPharmacy())
                 .setDate(date)
                 .build();
         return order;

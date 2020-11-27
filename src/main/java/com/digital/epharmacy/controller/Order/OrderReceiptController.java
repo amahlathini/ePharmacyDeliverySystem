@@ -5,6 +5,7 @@ import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.entity.Order.OrderReceipt;
 import com.digital.epharmacy.factory.Order.OrderReceiptFactory;
 import com.digital.epharmacy.service.Order.Impl.OrderReceiptServiceImpl;
+import com.digital.epharmacy.service.Order.Impl.OrderServiceImpl;
 import com.digital.epharmacy.service.Order.OrderReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,15 @@ public class OrderReceiptController {
     @Autowired
     private OrderReceiptServiceImpl orderReceiptService;
 
-    @PostMapping("/create")
-    public OrderReceipt create(@RequestBody OrderReceipt order_receipt) {
-        OrderReceipt createdOrderReceipt = OrderReceiptFactory.createOrderReceipt(order_receipt.getOrder());
+    @Autowired
+    private OrderServiceImpl orderService;
+
+    @PostMapping("/create/{order_number}")
+    public OrderReceipt create(@PathVariable Long order_number) {
+
+        Order order = orderService.read(order_number);
+
+        OrderReceipt createdOrderReceipt = OrderReceiptFactory.createOrderReceipt(order);
 
         return orderReceiptService.create(createdOrderReceipt);
     }

@@ -44,7 +44,7 @@ public class DriverProfile {
     private String driver_surname;
     @Embedded
     private DriverLocation driver_location;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
     @Embedded
     private DriverCar car;

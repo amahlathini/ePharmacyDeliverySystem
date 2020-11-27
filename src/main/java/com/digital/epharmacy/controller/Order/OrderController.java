@@ -8,8 +8,10 @@ package com.digital.epharmacy.controller.Order;
 import com.digital.epharmacy.entity.Catalogue.CatalogueItem;
 import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.entity.Pharmacy.Pharmacy;
+import com.digital.epharmacy.entity.User.UserProfile;
 import com.digital.epharmacy.factory.Order.OrderFactory;
 import com.digital.epharmacy.service.Order.Impl.OrderServiceImpl;
+import com.digital.epharmacy.service.User.impl.UserProfileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +31,19 @@ public class OrderController {
     @Autowired
     private OrderServiceImpl orderService;
 
-    @PostMapping("/create")
-    public Order create(@RequestBody Order order){
+    @Autowired
+    private UserProfileServiceImpl userProfileService;
+
+
+    @PostMapping("/create/{user_id}/{payment_type}")
+    public Order create(@RequestBody List<Long> item_ids, @PathVariable String user_id, @PathVariable String payment_type){
+
+        List<CatalogueItem> items = orderService.addItemsToOrder(item_ids);
+
+        UserProfile user = userProfileService.read(user_id);
 
         Order newOrder = OrderFactory
-                .createOrder(order.getUser(), order.getItems(), order.getPayment_type());
+                .createOrder(user, items, payment_type);
        return orderService.create(newOrder);
     }
 

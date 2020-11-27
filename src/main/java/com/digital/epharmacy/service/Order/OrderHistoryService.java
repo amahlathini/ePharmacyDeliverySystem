@@ -5,12 +5,15 @@ package com.digital.epharmacy.service.Order;
  * Description: Interface for the OrderHistory service, getting all orders from the database
  */
 
+import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.entity.Order.OrderHistory;
 import com.digital.epharmacy.service.IService;
 
+import java.math.BigDecimal;
 import java.util.Set;
 ;
 
 public interface OrderHistoryService extends IService<OrderHistory, String> {
     Set<OrderHistory> getAll();
+    BigDecimal totalValueByUser(Set<Order> orders);
 }

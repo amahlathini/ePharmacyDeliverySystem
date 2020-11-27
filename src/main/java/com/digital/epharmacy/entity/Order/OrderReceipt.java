@@ -17,9 +17,7 @@ import com.digital.epharmacy.entity.User.UserProfile;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "receipts")
@@ -42,8 +40,8 @@ public class OrderReceipt {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserProfile user;
     @NotNull(message = "Items are required")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<CatalogueItem> items = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<CatalogueItem> items = new ArrayList<>();
     @NotNull(message = "Type of Payment total is required")
     private String type_of_payment;
     @NotNull(message = "String is required")
@@ -95,7 +93,7 @@ public class OrderReceipt {
         return user;
     }
 
-    public Set<CatalogueItem> getItems() {
+    public List<CatalogueItem> getItems() {
         return items;
     }
 
@@ -131,7 +129,7 @@ public class OrderReceipt {
         private BigDecimal payment_total;
         private Pharmacy pharmacy;
         private UserProfile user;
-        private Set<CatalogueItem> items;
+        private List<CatalogueItem> items;
         private String type_of_payment;
         private String date;
 
@@ -169,7 +167,7 @@ public class OrderReceipt {
             return this;
         }
 
-        public Builder setItems(Set<CatalogueItem> items) {
+        public Builder setItems(List<CatalogueItem> items) {
             this.items = items;
             return this;
         }

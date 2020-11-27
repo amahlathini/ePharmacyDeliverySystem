@@ -50,13 +50,11 @@ public class CatalogueItemServiceImpl implements CatalogueItemService {
     }
 
     @Override
-    @Transactional
     public CatalogueItem create(CatalogueItem catalogueItem) {
         return this.repository.save(catalogueItem);
     }
 
     @Override
-    @Transactional
     public CatalogueItem read(Long catalogueItem) {
         return this.repository.findById(catalogueItem).orElse(null);
     }

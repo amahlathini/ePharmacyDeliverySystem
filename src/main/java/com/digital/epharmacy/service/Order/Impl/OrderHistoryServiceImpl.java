@@ -8,6 +8,8 @@ package com.digital.epharmacy.service.Order.Impl;
  * Altered Service to use JpaRepository methods for creating, reading, updating and deleting
  */
 
+import com.digital.epharmacy.entity.Catalogue.CatalogueItem;
+import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.entity.Order.OrderHistory;
 import com.digital.epharmacy.repository.Order.OrderHistoryRepository;
 import com.digital.epharmacy.service.Order.OrderHistoryService;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Set;
 ;
 import java.util.stream.Collectors;
@@ -28,6 +31,19 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
     @Override
     public Set<OrderHistory> getAll() {
         return this.repository.findAll().stream().collect(Collectors.toSet());
+    }
+
+    @Override
+    public BigDecimal totalValueByUser(Set<Order> orders) {
+        double order_total = 0;
+
+        //calculating total for the whole order
+        if (orders != null) {
+            for (Order o : orders) {
+                order_total += o.getOrder_total().doubleValue();
+            }
+        }
+        return BigDecimal.valueOf(order_total);
     }
 
     @Override

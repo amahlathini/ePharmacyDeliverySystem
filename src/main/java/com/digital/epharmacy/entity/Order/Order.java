@@ -39,8 +39,8 @@ public class Order {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserProfile user;
     private BigDecimal order_total;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<CatalogueItem> items = new HashSet<>(); //Ayabulela Mahlathini - for relationship with CatalogueItem Entity
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<CatalogueItem> items = new ArrayList<>(); //Ayabulela Mahlathini - for relationship with CatalogueItem Entity
     private int total_catalogue_items;
     private String payment_type;
     private String order_status; //(Ayabulela Mahlathini)added order_status
@@ -79,7 +79,7 @@ public class Order {
         return order_total;
     }
 
-    public Set<CatalogueItem> getItems() {
+    public List<CatalogueItem> getItems() {
         return items;
     }
 
@@ -127,7 +127,7 @@ public class Order {
 
         private UserProfile user;
         private long order_number;
-        private Set<CatalogueItem> items;
+        private List<CatalogueItem> items;
         private int total_catalogue_items;
         private BigDecimal order_total;
         private String payment_type, order_status;
@@ -147,7 +147,7 @@ public class Order {
             return this;
         }
 
-        public Builder setItems(Set<CatalogueItem> items) {
+        public Builder setItems(List<CatalogueItem> items) {
             this.items = items;
             return this;
         }

@@ -8,13 +8,18 @@ package com.digital.epharmacy.service.Order.Impl;
  * Desc: Altered Service to use JpaRepository methods for creating, reading, updating and deleting
  */
 
+import com.digital.epharmacy.entity.Catalogue.CatalogueItem;
 import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.repository.Order.OrderRepository;
+import com.digital.epharmacy.service.CatalogueItem.impl.CatalogueItemServiceImpl;
 import com.digital.epharmacy.service.Order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 ;
 import java.util.stream.Collectors;
@@ -24,6 +29,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository repository;
+
+    @Autowired
+    private CatalogueItemServiceImpl catalogueItemService;
+
 
     @Override
     public Set<Order> getAll() {
@@ -74,6 +83,17 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toSet());
 
         return canceledOrders;
+    }
+
+    @Override
+    public List<CatalogueItem> addItemsToOrder(List<Long> item_ids) {
+        List<CatalogueItem> items = new ArrayList<>();
+
+        for (Long i : item_ids) {
+            items.add(catalogueItemService.read(i));
+        }
+
+        return items;
     }
 
     //tracking order status

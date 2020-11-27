@@ -1,8 +1,11 @@
 package com.digital.epharmacy.controller.payment;
 //Matthew Pearce - Payment Controller
 
+import com.digital.epharmacy.entity.Order.Order;
 import com.digital.epharmacy.entity.Payment.Payment;
 import com.digital.epharmacy.factory.Payment.PaymentFactory;
+import com.digital.epharmacy.service.Order.Impl.OrderServiceImpl;
+import com.digital.epharmacy.service.Order.OrderService;
 import com.digital.epharmacy.service.Payment.PaymentService;
 import com.digital.epharmacy.service.Payment.impl.PaymentServiceImpl;
 import com.digital.epharmacy.service.Validation.ValidationService;
@@ -23,10 +26,10 @@ public class PaymentController {
     private PaymentServiceImpl paymentService;
 
     @Autowired
-    private ValidationService validationService;
+    private OrderServiceImpl orderService;
 
-    @PostMapping("/create")
-    public Payment create(@Valid @RequestBody Payment payment) {
+    @PostMapping("/create/{order_number}")
+    public Payment create(@PathVariable Long order_number) {
 //        ResponseEntity<Payment>  errorMap = (ResponseEntity<Payment>) validationService.MapValidationService(result);
 //
 //        if(errorMap != null){
@@ -34,9 +37,11 @@ public class PaymentController {
 //            return errorMap;
 //        }
 
+        Order order = orderService.read(order_number);
+
         Payment newPayment = PaymentFactory
                 .makePayment(
-                        payment.getOrder()
+                        order
                 );
         return paymentService.create(newPayment);
 
