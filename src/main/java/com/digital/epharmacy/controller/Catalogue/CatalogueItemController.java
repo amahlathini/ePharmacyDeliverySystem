@@ -69,7 +69,7 @@ public class CatalogueItemController {
     public CatalogueItem update(@Valid @RequestBody CatalogueItem catItemInfo){
         return catalogueItemService.update(catItemInfo);
     }
-    @GetMapping("/")
+    @GetMapping("")
     public Set<CatalogueItem> getall(){
         return catalogueItemService.getAll();
     }
