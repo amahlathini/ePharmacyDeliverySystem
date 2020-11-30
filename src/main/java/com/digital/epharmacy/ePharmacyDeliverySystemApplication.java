@@ -3,6 +3,11 @@ package com.digital.epharmacy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import digital.epharmacy.pharmacy.config.MyIntercepter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 
 @SpringBootApplication
 public class ePharmacyDeliverySystemApplication {
