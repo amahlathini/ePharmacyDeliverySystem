@@ -25,4 +25,20 @@ public class ePharmacyDeliverySystemApplication {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200", "http://localhost:3000", "https://epharmacy-sa.herokuapp.com", "https://amahlathini.github.io/admin-dashboard", "https://vibekonnect.tech/admin-dashboard");
+            }
+        };
+    }
+
+    @Bean
+    public MappedInterceptor myMappedInterceptor(){
+        return new MappedInterceptor(new String[]{"/**"}, new MyIntercepter());
+    }
 }
