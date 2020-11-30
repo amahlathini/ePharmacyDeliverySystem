@@ -21,6 +21,10 @@ public class PaymentFactory {
         String payment_notification = GenericHelper.handleNotifications(payment_status);
         String date = GenericHelper.paymentDate();
 
+//        if (GenericHelper.handleOrderStatus(payment_status).equalsIgnoreCase("completed")) {
+//            order.
+//        }
+
         Payment payment = new Payment.Builder()
                 .setType_of_payment(order.getPayment_type())
                 .setPayment_total(order.getOrder_total())
