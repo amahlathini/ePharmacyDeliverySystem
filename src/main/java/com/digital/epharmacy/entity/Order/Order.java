@@ -34,7 +34,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    //@Column(name = "id", insertable = false, updatable = false)
+    @Column(name = "id", insertable = false, updatable = false)
     private Long id; // (Ayabulela Mahlathini) changed order number to string so that it is auto generated in the factor;
     @NotNull(message = "User is required")
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

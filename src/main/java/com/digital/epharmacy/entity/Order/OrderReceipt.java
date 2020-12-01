@@ -26,7 +26,6 @@ public class OrderReceipt {
     //Ayabulela Mahlathini - Fixed relationships
     //Entity attributes
     @Id
-    @Column(name = "id")
     private Long id;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn(name = "id")
