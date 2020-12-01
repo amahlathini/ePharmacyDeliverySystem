@@ -22,7 +22,7 @@ Version: 1.0
 public class PrescriptionItem {
     //declaring the Variables
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private String id;
     @NotNull(message = "Prescription type is required")
