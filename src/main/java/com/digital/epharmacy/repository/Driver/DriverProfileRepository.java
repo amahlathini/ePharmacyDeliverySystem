@@ -12,11 +12,13 @@ package com.digital.epharmacy.repository.Driver;
 
 import com.digital.epharmacy.entity.Driver.DriverProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 ;
 
 @Repository
+@RepositoryRestResource(collectionResourceRel = "drivers", path = "drivers")
 public interface DriverProfileRepository extends JpaRepository<DriverProfile, String> {
 
 }

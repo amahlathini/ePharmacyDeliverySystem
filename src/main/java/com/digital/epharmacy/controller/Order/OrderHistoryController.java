@@ -60,7 +60,7 @@ public class OrderHistoryController {
         return orderHistoryService.delete(user_id);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Set<OrderHistory> getAll() {
         return orderHistoryService.getAll();
     }

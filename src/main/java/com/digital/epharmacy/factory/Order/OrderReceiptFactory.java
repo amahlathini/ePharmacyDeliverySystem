@@ -19,7 +19,7 @@ public class OrderReceiptFactory {
        String date = GenericHelper.paymentDate();
 
         OrderReceipt orderReceipt = new OrderReceipt.Builder()
-                .setReceipt_number(order.getOrder_number())
+                .setId(order.getId())
                 .setOrder(order)
                 .setPharmacy(order.getPharmacy())
                 .setUser(order.getUser())

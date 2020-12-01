@@ -35,7 +35,7 @@
  public UserProfile read (String userId){
  UserProfile userProfile = null;
  for (UserProfile u: this.userProfileDB)
- if (u.getUser_id().equalsIgnoreCase(userId) ) {
+ if (u.getId().equalsIgnoreCase(userId) ) {
  userProfile = u;
  break;
  }
@@ -43,7 +43,7 @@
  }
  @Override
  public UserProfile update (UserProfile userProfile){
- UserProfile oldUserProfile = read(userProfile.getUser_id());
+ UserProfile oldUserProfile = read(userProfile.getId());
  if (oldUserProfile != null ){
  this.userProfileDB.remove(oldUserProfile);
  this.userProfileDB.add(userProfile);

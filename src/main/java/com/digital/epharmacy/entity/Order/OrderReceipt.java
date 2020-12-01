@@ -26,10 +26,10 @@ public class OrderReceipt {
     //Ayabulela Mahlathini - Fixed relationships
     //Entity attributes
     @Id
-    @Column(name = "receipt_number")
-    private Long receipt_number;
+    @Column(name = "id")
+    private Long id;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "order_number")
+    @PrimaryKeyJoinColumn(name = "id")
     private Order order;
     @NotNull(message = "Item Qty is required")
     private int quantity;
@@ -55,7 +55,7 @@ public class OrderReceipt {
     //Builder class constructor
     private OrderReceipt(Builder builder) {
 
-        this.receipt_number = builder.receipt_number;
+        this.id = builder.id;
         this.order = builder.order;
         this.date = builder.date;
         this.pharmacy = builder.pharmacy;
@@ -69,8 +69,8 @@ public class OrderReceipt {
     //Getters for all attributes
 
 
-    public Long getReceipt_number() {
-        return receipt_number;
+    public Long getId() {
+        return id;
     }
 
     public Order getOrder() {
@@ -108,7 +108,7 @@ public class OrderReceipt {
     @Override
     public String toString() {
         return "OrderReceipt{" +
-                "receipt_number=" + receipt_number +
+                "id=" + id +
                 ", order=" + order +
                 ", quantity=" + quantity +
                 ", payment_total=" + payment_total +
@@ -123,7 +123,7 @@ public class OrderReceipt {
     //Builder class to implement the builder pattern
     public static class Builder {
 
-        private long receipt_number;
+        private long id;
         private Order order;
         private int quantity;
         private BigDecimal payment_total;
@@ -137,8 +137,8 @@ public class OrderReceipt {
         //setting orderNumber value using builder pattern
 
 
-        public Builder setReceipt_number(Long receipt_number) {
-            this.receipt_number = receipt_number;
+        public Builder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -185,7 +185,7 @@ public class OrderReceipt {
         // Builder copy method that create instance of OrderReceipt
         public Builder copy(OrderReceipt orderReceipt) {
 
-            this.receipt_number = orderReceipt.receipt_number;
+            this.id = orderReceipt.id;
             this.order = orderReceipt.order;
             this.date = orderReceipt.date;
             this.pharmacy = orderReceipt.pharmacy;
@@ -212,7 +212,7 @@ public class OrderReceipt {
         if (o == null || getClass() != o.getClass()) return false;
         OrderReceipt that = (OrderReceipt) o;
         return quantity == that.quantity &&
-                receipt_number.equals(that.receipt_number) &&
+                id.equals(that.id) &&
                 order.equals(that.order) &&
                 payment_total.equals(that.payment_total) &&
                 pharmacy.equals(that.pharmacy) &&
@@ -224,6 +224,6 @@ public class OrderReceipt {
 
     @Override
     public int hashCode() {
-        return Objects.hash(receipt_number, order, quantity, payment_total, pharmacy, user, items, type_of_payment, date);
+        return Objects.hash(id, order, quantity, payment_total, pharmacy, user, items, type_of_payment, date);
     }
 }

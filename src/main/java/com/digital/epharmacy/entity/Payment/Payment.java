@@ -23,7 +23,7 @@ public class Payment {
     //Declaring variables using all attributes from the Payment Entity
     @Id
     @Column(name = "id")
-    private long reference_number;
+    private long id;
     @NotNull(message = "Payment Status is required")
     private String payment_status;
     @NotNull(message = "Type of Payment is required")
@@ -36,7 +36,7 @@ public class Payment {
     private String date;
     @NotNull
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "order_id")
+    @PrimaryKeyJoinColumn(name = "id")
     private Order order;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Pharmacy pharmacy;
@@ -52,7 +52,7 @@ public class Payment {
         this.order = builder.order;
         this.payment_status = builder.payment_status;
         this.type_of_payment = builder.type_of_payment;
-        this.reference_number = builder.reference_number;
+        this.id = builder.id;
         this.payment_notification = builder.payment_notification;
         this.payment_total = builder.payment_total;
         this.date = builder.date;
@@ -61,8 +61,8 @@ public class Payment {
     //getters for the declared variables
 
 
-    public Long getReference_number() {
-        return reference_number;
+    public Long getId() {
+        return id;
     }
 
     public String getPayment_status() {
@@ -103,7 +103,7 @@ public class Payment {
         return "Payment{" +
                 "payment_status='" + payment_status + '\'' +
                 ", type_of_payment='" + type_of_payment + '\'' +
-                ", reference_number='" + reference_number + '\'' +
+                ", id='" + id + '\'' +
                 ", payment_notification='" + payment_notification + '\'' +
                 ", payment_total=" + payment_total +
                 ", date=" + date +
@@ -118,7 +118,7 @@ public class Payment {
 
         //Declaring variables using all attributes from the Payment Entity, same as the ones from the main class
         private String payment_status, type_of_payment, payment_notification;
-        private long reference_number;
+        private long id;
         private BigDecimal payment_total;
         private String date;
         private Pharmacy pharmacy;
@@ -145,8 +145,8 @@ public class Payment {
             return this;
         }
 
-        public Builder setReference_number(Long reference_number) {
-            this.reference_number = reference_number;
+        public Builder setReference_number(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -187,7 +187,7 @@ public class Payment {
             this.payment_total = payment.payment_total;
             this.type_of_payment = payment.type_of_payment;
             this.date = payment.date;
-            this.reference_number = payment.reference_number;
+            this.id = payment.id;
             return this;
         }
 
@@ -202,7 +202,7 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return reference_number == payment.reference_number &&
+        return id == payment.id &&
                 payment_status.equals(payment.payment_status) &&
                 Objects.equals(type_of_payment, payment.type_of_payment) &&
                 Objects.equals(payment_notification, payment.payment_notification) &&
@@ -215,6 +215,6 @@ public class Payment {
 
     @Override
     public int hashCode() {
-        return Objects.hash(reference_number, payment_status, type_of_payment, payment_notification, payment_total, date, order, pharmacy, user);
+        return Objects.hash(id, payment_status, type_of_payment, payment_notification, payment_total, date, order, pharmacy, user);
     }
 }

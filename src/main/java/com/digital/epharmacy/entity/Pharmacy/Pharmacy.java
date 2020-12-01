@@ -23,8 +23,8 @@ public class Pharmacy {
     @GenericGenerator(name = "PHARM-generator",
             parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "PHARM"),
             strategy = "com.digital.epharmacy.util.CustomIDGenerator")
-    @Column(name = "pharmacy_id")
-    private String pharmacy_id;
+    @Column(name = "id")
+    private String id;
     @Column(unique = true)
     @NotNull
     private String pharmacy_name;
@@ -36,7 +36,7 @@ public class Pharmacy {
     // builder pattern method constructor
     private Pharmacy(Builder builder)
     {
-        this.pharmacy_id = builder.pharmacy_id;
+        this.id = builder.id;
         this.pharmacy_name = builder.pharmacy_name;
         this.bank_account = builder.bank_account;
     }
@@ -44,8 +44,8 @@ public class Pharmacy {
     // getters for all attributes of entity Pharmacy
 
 
-    public String getPharmacy_id() {
-        return pharmacy_id;
+    public String getId() {
+        return id;
     }
 
     public String getPharmacy_name() {
@@ -59,7 +59,7 @@ public class Pharmacy {
     @Override
     public String toString() {
         return "Pharmacy{" +
-                "pharmacy_id=" + pharmacy_id +
+                "id=" + id +
                 ", pharmacy_name='" + pharmacy_name + '\'' +
                 ", bank_account=" + bank_account +
                 '}';
@@ -68,12 +68,12 @@ public class Pharmacy {
     // add setters using building pattern
     public static class Builder
     {
-        private String pharmacy_id;
+        private String id;
         private String pharmacy_name;
         private PharmacyBankAccountInformation bank_account;
 
-        public Builder setPharmacy_id(String pharmacy_id) {
-            this.pharmacy_id = pharmacy_id;
+        public Builder setId(String id) {
+            this.id = id;
             return this;
         }
 
@@ -90,7 +90,7 @@ public class Pharmacy {
         // Copy method for Pharmacy entity
         public Builder copy (Pharmacy pharmacy)
         {
-            this.pharmacy_id = pharmacy.pharmacy_id;
+            this.id = pharmacy.id;
             this.pharmacy_name = pharmacy.pharmacy_name;
             this.bank_account = pharmacy.bank_account;
             return this;
@@ -107,14 +107,14 @@ public class Pharmacy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pharmacy pharmacy = (Pharmacy) o;
-        return Objects.equals(pharmacy_id, pharmacy.pharmacy_id) &&
+        return Objects.equals(id, pharmacy.id) &&
                 pharmacy_name.equals(pharmacy.pharmacy_name) &&
                 Objects.equals(bank_account, pharmacy.bank_account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pharmacy_id, pharmacy_name, bank_account);
+        return Objects.hash(id, pharmacy_name, bank_account);
     }
 }
 

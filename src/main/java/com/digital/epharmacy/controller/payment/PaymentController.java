@@ -58,7 +58,7 @@ public class PaymentController {
         return paymentService.update(payment);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Set<Payment>getAll(){
         return paymentService.getAll();
     }

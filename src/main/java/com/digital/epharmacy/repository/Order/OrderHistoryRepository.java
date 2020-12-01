@@ -3,6 +3,7 @@ package com.digital.epharmacy.repository.Order;
 
 import com.digital.epharmacy.entity.Order.OrderHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.Set;
  * Desc: changed from the depricated Repository to using the JpaRepository
  */
 @Repository
+@RepositoryRestResource(collectionResourceRel = "history", path = "history")
 public interface OrderHistoryRepository extends JpaRepository<OrderHistory, String> { }
 
 

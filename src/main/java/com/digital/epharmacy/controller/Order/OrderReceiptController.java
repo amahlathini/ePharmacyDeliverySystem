@@ -46,7 +46,7 @@ public class OrderReceiptController {
         return orderReceiptService.update(order_receipt);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Set<OrderReceipt> getAll(){
         return orderReceiptService.getAll();
     }

@@ -10,7 +10,7 @@ public class OrderHistoryFactory {
 
     public static OrderHistory createOrderHistory(UserProfile user, int total_number_of_orders, BigDecimal total_order_value){
         OrderHistory orderHistory = new OrderHistory.Builder()
-                .setId(user.getUser_id())
+                .setId(user.getId())
                 .setUser(user)
                 .setTotal_number_of_orders(total_number_of_orders)
                 .setTotal_order_value(total_order_value)

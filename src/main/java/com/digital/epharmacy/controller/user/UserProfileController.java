@@ -60,7 +60,7 @@ public class UserProfileController {
     public UserProfile update (@Valid @RequestBody UserProfile userProfile){
         return userProfileService.update(userProfile);
     }
-    @GetMapping("/")
+    @GetMapping("")
     public Set<UserProfile>getall(){
         return userProfileService.getAll();
     }

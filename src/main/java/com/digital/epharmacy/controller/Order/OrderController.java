@@ -62,7 +62,7 @@ public class OrderController {
         return orderService.delete(order_id);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Set<Order> getAll() {
         return orderService.getAll();
     }

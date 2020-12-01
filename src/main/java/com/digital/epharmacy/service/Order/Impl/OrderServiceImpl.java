@@ -111,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
         orderHistoryByUser = orders.stream()
                 .filter(o -> o
                         .getUser()
-                        .getUser_id()
+                        .getId()
                         .equals(user_id))
                 .collect(Collectors.toSet());
 
@@ -132,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order update(Order order) {
-        if (this.repository.existsById(order.getOrder_number())) {
+        if (this.repository.existsById(order.getId())) {
             return this.repository.save(order);
         }
         return null;

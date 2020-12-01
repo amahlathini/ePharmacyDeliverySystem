@@ -39,7 +39,7 @@
 //        OrderHistory orderHistory = this.orderHistoryDB
 //                .stream()
 //                .filter(o -> o
-//                        .getUser_id()
+//                        .getId()
 //                        .trim()
 //                        .equalsIgnoreCase(userId))
 //                .findAny()
@@ -50,7 +50,7 @@
 //    //updating user's order history
 //    @Override
 //    public OrderHistory update(OrderHistory orderHistory) {
-//        boolean delOrderHistory = delete(orderHistory.getUser_id());
+//        boolean delOrderHistory = delete(orderHistory.getId());
 //
 //        if (delOrderHistory) {
 //            this.orderHistoryDB.add(orderHistory);

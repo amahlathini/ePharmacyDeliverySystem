@@ -34,7 +34,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    private Long order_number; // (Ayabulela Mahlathini) changed order number to string so that it is auto generated in the factor;
+    private Long id; // (Ayabulela Mahlathini) changed order number to string so that it is auto generated in the factor;
     @NotNull(message = "User is required")
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserProfile user;
@@ -56,7 +56,7 @@ public class Order {
     private Order(Builder builder){
 
         this.user =  builder.user;
-        this.order_number = builder.order_number;
+        this.id = builder.id;
         this.items = builder.items;
         this.total_catalogue_items = builder.total_catalogue_items;
         this.order_total = builder.order_total;
@@ -67,8 +67,8 @@ public class Order {
     }
     //Getters for all attributes.
 
-    public Long getOrder_number() {
-        return order_number;
+    public Long getId() {
+        return id;
     }
 
     public UserProfile getUser() {
@@ -109,7 +109,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "order_number=" + order_number +
+                "id=" + id +
                 ", user=" + user +
                 ", order_total=" + order_total +
                 ", items=" + items +
@@ -126,7 +126,7 @@ public class Order {
 
 
         private UserProfile user;
-        private long order_number;
+        private long id;
         private List<CatalogueItem> items;
         private int total_catalogue_items;
         private BigDecimal order_total;
@@ -142,8 +142,8 @@ public class Order {
             return this;
         }
 
-        public Builder setOrder_number(Long order_number) {
-            this.order_number = order_number;
+        public Builder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -186,7 +186,7 @@ public class Order {
         public Builder copy(Order order){
 
             this.user = order.user;
-            this.order_number = order.order_number;
+            this.id = order.id;
             this.items = order.items;
             this.total_catalogue_items = order.total_catalogue_items;
             this.order_total = order.order_total;
@@ -207,7 +207,7 @@ public class Order {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
         return total_catalogue_items == order.total_catalogue_items &&
-                order_number.equals(order.order_number) &&
+                id.equals(order.id) &&
                 user.equals(order.user) &&
                 order_total.equals(order.order_total) &&
                 items.equals(order.items) &&
@@ -219,6 +219,6 @@ public class Order {
 
     @Override
     public int hashCode() {
-        return Objects.hash(order_number, user, order_total, items, total_catalogue_items, payment_type, order_status, date, pharmacy);
+        return Objects.hash(id, user, order_total, items, total_catalogue_items, payment_type, order_status, date, pharmacy);
     }
 }

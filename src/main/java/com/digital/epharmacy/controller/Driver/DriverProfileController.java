@@ -33,7 +33,7 @@ public class DriverProfileController {
         return driverProfileService.update(driverProfile);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Set<DriverProfile>getAll(){
         return driverProfileService.getAll();
     }

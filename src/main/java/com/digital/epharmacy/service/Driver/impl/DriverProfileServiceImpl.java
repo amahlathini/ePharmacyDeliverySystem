@@ -38,7 +38,7 @@ public class DriverProfileServiceImpl implements DriverProfileService {
                 return this.repository.save(driverProfile);
             }catch (Exception e)
             {
-                throw new MyCustomExceptionHandler("Driver Profile '" + driverProfile.getDriver_id() + "' already exists");
+                throw new MyCustomExceptionHandler("Driver Profile '" + driverProfile.getId() + "' already exists");
             }
     }
 
@@ -56,7 +56,7 @@ public class DriverProfileServiceImpl implements DriverProfileService {
     @Override
     public DriverProfile update(DriverProfile driverProfile) {
 
-        if(this.repository.existsById(driverProfile.getDriver_id())) {
+        if(this.repository.existsById(driverProfile.getId())) {
             return this.repository.save(driverProfile);
         }
         else {

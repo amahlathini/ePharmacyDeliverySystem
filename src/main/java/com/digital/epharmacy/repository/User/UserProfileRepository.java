@@ -7,6 +7,7 @@ package com.digital.epharmacy.repository.User;
  * */
 import com.digital.epharmacy.entity.User.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 
@@ -14,5 +15,6 @@ import java.util.Set;
 ;
 
 @Repository
+@RepositoryRestResource(collectionResourceRel = "users", path = "users")
 public interface UserProfileRepository extends JpaRepository <UserProfile, String> {
 }

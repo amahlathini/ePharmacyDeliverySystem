@@ -27,7 +27,7 @@ public class OrderHistory implements Serializable {
 
     @NotNull(message = "User is required")
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "user_id")
+    @PrimaryKeyJoinColumn(name = "id")
     private UserProfile user;
     @NotNull(message = "Total number of orders is required")
     private int total_number_of_orders;

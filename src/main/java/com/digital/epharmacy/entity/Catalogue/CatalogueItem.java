@@ -22,7 +22,7 @@ public class CatalogueItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long item_number;
+    private long id;
     @NotNull
     private int item_quantity;
     @NotNull
@@ -34,10 +34,10 @@ public class CatalogueItem implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     private String item_image;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "id")
     private Category category;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "pharmacy_id")
+    @JoinColumn(name = "id")
     private Pharmacy pharmacy;
 
     //non argument constructor
@@ -46,7 +46,7 @@ public class CatalogueItem implements Serializable {
     private CatalogueItem(Builder builder) {
         this.item_description = builder.item_description;
         this.item_name = builder.item_name;
-        this.item_number = builder.item_number;
+        this.id = builder.id;
         this.item_quantity = builder.item_quantity;
         this.item_price = builder.item_price;
         this.item_image = builder.item_image;
@@ -56,8 +56,8 @@ public class CatalogueItem implements Serializable {
 
     //getters to get all values of attributes
 
-    public Long getItem_number() {
-        return item_number;
+    public Long getId() {
+        return id;
     }
 
     public int getItem_quantity() {
@@ -95,7 +95,7 @@ public class CatalogueItem implements Serializable {
     @Override
     public String toString() {
         return "CatalogueItem{" +
-                "item_number=" + item_number +
+                "id=" + id +
                 ", item_quantity=" + item_quantity +
                 ", item_name='" + item_name + '\'' +
                 ", item_description='" + item_description + '\'' +
@@ -109,7 +109,7 @@ public class CatalogueItem implements Serializable {
     //inner Builder class to implement the builder pattern
     public static class Builder {
         //setting  value using builder pattern
-        private long item_number;
+        private long id;
         private int item_quantity;
         String item_name, item_description;
         BigDecimal item_price;
@@ -117,8 +117,8 @@ public class CatalogueItem implements Serializable {
         private Category category;
         private Pharmacy pharmacy;
 
-        public Builder setItem_number(Long item_number) {
-            this.item_number = item_number;
+        public Builder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -159,7 +159,7 @@ public class CatalogueItem implements Serializable {
 
         //Copy method
         public Builder copy(CatalogueItem catalogueItem){
-            this.item_number = catalogueItem.item_number;
+            this.id = catalogueItem.id;
             this.item_quantity = catalogueItem.item_quantity;
             this.item_name = catalogueItem.item_name;
             this.item_description = catalogueItem.item_description;
@@ -181,7 +181,7 @@ public class CatalogueItem implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CatalogueItem that = (CatalogueItem) o;
-        return item_number == that.item_number &&
+        return id == that.id &&
                 item_quantity == that.item_quantity &&
                 item_name.equals(that.item_name) &&
                 Objects.equals(item_description, that.item_description) &&
@@ -193,7 +193,7 @@ public class CatalogueItem implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(item_number, item_quantity, item_name, item_description, item_price, item_image, category, pharmacy);
+        return Objects.hash(id, item_quantity, item_name, item_description, item_price, item_image, category, pharmacy);
     }
 }
 

@@ -36,8 +36,8 @@ public class DriverProfile {
     @GenericGenerator(name = "DRIVER-generator",
             parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "DRIVER"),
             strategy = "com.digital.epharmacy.util.CustomIDGenerator")
-    @Column(name= "driver_id")
-    private String driver_id;
+    @Column(name= "id")
+    private String id;
     @NotNull(message = "Driver Name is required")
     private String driver_name;
     @NotNull(message = "Driver Surname is required")
@@ -57,7 +57,7 @@ public class DriverProfile {
 
     // builder pattern method constructor
     private DriverProfile(Builder builder){
-        this.driver_id = builder.driver_id;
+        this.id = builder.id;
         this.driver_name = builder.driver_name;
         this.driver_surname = builder.driver_surname;
         this.driver_location = builder.driver_location;
@@ -70,8 +70,8 @@ public class DriverProfile {
 // origin/groupCollaboration
 
 
-    public String getDriver_id() {
-        return driver_id;
+    public String getId() {
+        return id;
     }
 
     public String getDriver_name() {
@@ -97,7 +97,7 @@ public class DriverProfile {
     @Override
     public String toString() {
         return "DriverProfile{" +
-                "driver_id=" + driver_id +
+                "id=" + id +
                 ", driver_name='" + driver_name + '\'' +
                 ", driver_surname='" + driver_surname + '\'' +
                 ", driver_location=" + driver_location +
@@ -109,7 +109,7 @@ public class DriverProfile {
     // add setters using building pattern
     public static class Builder{
 
-        private String driver_id;
+        private String id;
         private String driver_name, driver_surname;
         private DriverCar car;
 
@@ -117,8 +117,8 @@ public class DriverProfile {
 
         private DriverLocation driver_location;
 
-        public Builder setDriver_id(String driver_id) {
-            this.driver_id = driver_id;
+        public Builder setId(String id) {
+            this.id = id;
             return this;
         }
 
@@ -149,7 +149,7 @@ public class DriverProfile {
 
         //to below method is to make another copy of driverProfile
         public Builder copy (DriverProfile driverProfile){
-            this.driver_id = driverProfile.driver_id;
+            this.id = driverProfile.id;
             this.driver_name = driverProfile.driver_name;
             this.driver_surname = driverProfile.driver_surname;
             this.driver_location = driverProfile.driver_location;
@@ -168,7 +168,7 @@ public class DriverProfile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DriverProfile that = (DriverProfile) o;
-        return driver_id.equals(that.driver_id) &&
+        return id.equals(that.id) &&
                 driver_name.equals(that.driver_name) &&
                 driver_surname.equals(that.driver_surname) &&
                 Objects.equals(driver_location, that.driver_location) &&
@@ -178,6 +178,6 @@ public class DriverProfile {
 
     @Override
     public int hashCode() {
-        return Objects.hash(driver_id, driver_name, driver_surname, driver_location, orders, car);
+        return Objects.hash(id, driver_name, driver_surname, driver_location, orders, car);
     }
 }

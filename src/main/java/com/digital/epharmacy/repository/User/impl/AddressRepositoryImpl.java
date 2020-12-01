@@ -39,7 +39,7 @@ public class AddressRepositoryImpl implements AddressRepository {
     public Address read (String userId){
         Address address = null;
         for (Address u: this.AddressDB)
-            if (u.getUser_id().equalsIgnoreCase(userId) ) {
+            if (u.getId().equalsIgnoreCase(userId) ) {
                 address = u;
                 break;
             }
@@ -48,7 +48,7 @@ public class AddressRepositoryImpl implements AddressRepository {
 
     @Override
     public Address update (Address address){
-        Address oldAddress = read(address.getUser_id());
+        Address oldAddress = read(address.getId());
         if (oldAddress != null ){
             this.AddressDB.remove(oldAddress);
             this.AddressDB.add(address);

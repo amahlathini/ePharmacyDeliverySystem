@@ -32,8 +32,8 @@ public class UserProfile {
     @GenericGenerator(name = "USER-generator",
             parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "USER"),
             strategy = "com.digital.epharmacy.util.CustomIDGenerator")
-    @Column(name = "user_id", columnDefinition = "varchar(255)")
-    private String user_id;
+    @Column(name = "id", columnDefinition = "varchar(255)")
+    private String id;
     @NotNull(message = "Name is required")
     private String user_name;
     @NotNull(message = "Surname is required")
@@ -60,7 +60,7 @@ public class UserProfile {
 
     //constructor for Builder class
     private UserProfile (Builder builder){
-        this.user_id = builder.user_id;
+        this.id = builder.id;
         this.user_name = builder.user_name;
         this.user_surname = builder.user_surname;
         this.gender = builder.gender;
@@ -74,8 +74,8 @@ public class UserProfile {
     //getters to get all values of attributes
 
 
-    public String getUser_id() {
-        return user_id;
+    public String getId() {
+        return id;
     }
 
     public String getUser_name() {
@@ -115,7 +115,7 @@ public class UserProfile {
     @Override
     public String toString() {
         return "UserProfile{" +
-                "user_id=" + user_id +
+                "id=" + id +
                 ", user_name='" + user_name + '\'' +
                 ", user_surname='" + user_surname + '\'' +
                 ", gender='" + gender + '\'' +
@@ -129,15 +129,15 @@ public class UserProfile {
     //inner Builder class to implement the builder pattern
     public static class Builder{
         //same assigned attributes in main class with variable values
-        private String user_id;
+        private String id;
         private String user_name, user_surname, gender, email, password;
         private ContactInformation contact;
         private Address address;
         private MedicalAid medical_aid;
 
 
-        public Builder setUser_id(String user_id) {
-            this.user_id = user_id;
+        public Builder setId(String id) {
+            this.id = id;
             return this;
         }
 
@@ -184,7 +184,7 @@ public class UserProfile {
 
         // Builder copy method that create instance of UserProfile and makes a copy out of it
         public Builder copy(UserProfile userProfile){
-            this.user_id = userProfile.user_id;
+            this.id = userProfile.id;
             this.user_name = userProfile.user_name;
             this.user_surname = userProfile.user_surname;
             this.gender = userProfile.gender;
@@ -207,7 +207,7 @@ public class UserProfile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserProfile that = (UserProfile) o;
-        return Objects.equals(user_id, that.user_id) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(user_name, that.user_name) &&
                 Objects.equals(user_surname, that.user_surname) &&
                 Objects.equals(gender, that.gender) &&
@@ -220,6 +220,6 @@ public class UserProfile {
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, user_name, user_surname, gender, email, password, contact, address, medical_aid);
+        return Objects.hash(id, user_name, user_surname, gender, email, password, contact, address, medical_aid);
     }
 }

@@ -31,7 +31,7 @@ public class PaymentFactory {
                 .setPharmacy(order.getPharmacy())
                 .setUser(order.getUser())
                 .setDate(date)
-                .setReference_number(order.getOrder_number())
+                .setReference_number(order.getId())
                 .setPayment_status(payment_status)
                 .setPayment_notification(payment_notification)
                 .build();

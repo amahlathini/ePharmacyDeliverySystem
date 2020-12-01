@@ -13,8 +13,8 @@ public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "category_id")
-    private long category_id;
+    @Column(name = "id")
+    private long id;
     @NotNull
     private String category_name;
     @Lob
@@ -25,13 +25,13 @@ public class Category implements Serializable {
     }
 
     private Category(Builder builder) {
-        this.category_id = builder.category_id;
+        this.id = builder.id;
         this.category_name = builder.category_name;
         this.category_image = builder.category_image;
     }
 
-    public Long getCategory_id() {
-        return category_id;
+    public Long getId() {
+        return id;
     }
 
     public String getCategory_name() {
@@ -45,7 +45,7 @@ public class Category implements Serializable {
     @Override
     public String toString() {
         return "Category{" +
-                "category_id=" + category_id +
+                "id=" + id +
                 ", category_name='" + category_name + '\'' +
                 ", category_image=" + category_image +
                 '}';
@@ -53,12 +53,12 @@ public class Category implements Serializable {
 
     public static class Builder {
         //setting  value using builder pattern
-        private long category_id;
+        private long id;
         private String category_name;
         private String category_image;
 
-        public Builder setCategory_id(Long category_id) {
-            this.category_id = category_id;
+        public Builder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -74,7 +74,7 @@ public class Category implements Serializable {
 
         //Copy method
         public Builder copy(Category category){
-            this.category_id = category.category_id;
+            this.id = category.id;
             this.category_name = category.category_name;
             this.category_image = category.category_image;
             return this;
@@ -91,13 +91,13 @@ public class Category implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return category_id == category.category_id &&
+        return id == category.id &&
                 category_name.equals(category.category_name) &&
                 Objects.equals(category_image, category.category_image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(category_id, category_name, category_image);
+        return Objects.hash(id, category_name, category_image);
     }
 }

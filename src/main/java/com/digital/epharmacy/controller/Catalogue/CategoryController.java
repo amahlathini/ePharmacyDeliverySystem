@@ -46,7 +46,7 @@ public class CategoryController {
         return categoryService.update(category);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Set<Category>getAll(){
         return categoryService.getAll();
     }

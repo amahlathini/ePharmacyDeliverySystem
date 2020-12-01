@@ -24,7 +24,7 @@ public class PrescriptionItem {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private String prescription_number;
+    private String id;
     @NotNull(message = "Prescription type is required")
     private String prescription_type;
     @NotNull(message = "Prescribing doctor number is required")
@@ -32,8 +32,8 @@ public class PrescriptionItem {
 
     protected PrescriptionItem (){}
 
-    public String getPrescription_number() {
-        return prescription_number;
+    public String getId() {
+        return id;
     }
 
     public String getPrescription_type() {
@@ -48,8 +48,8 @@ public class PrescriptionItem {
     @Override
     public String toString() {
         return "Prescription Item{" +
-                "prescription Id=" + prescription_number +
-                "prescription Number=" + prescription_number +
+                "prescription Id=" + id +
+                "prescription Number=" + id +
                 ", prescription Type='" + prescription_type + '\'' +
                 ", prescribing Doctor='" + prescribing_doctor + '\'' +
                 '}';
@@ -58,11 +58,11 @@ public class PrescriptionItem {
 
     //Creating a builder static class. An immutable class
     public static class Builder {
-        private String prescription_number;
+        private String id;
         private String prescription_type, prescribing_doctor;
 
-        public Builder setPrescription_number(String prescription_number) {
-            this.prescription_number = prescription_number;
+        public Builder setId(String id) {
+            this.id = id;
             return this;
         }
 
@@ -78,7 +78,7 @@ public class PrescriptionItem {
 
         // copy method
         public Builder copy(PrescriptionItem prescriptionItem) {
-            this.prescription_number = prescriptionItem.prescription_number;
+            this.id = prescriptionItem.id;
             this.prescription_type = prescriptionItem.prescription_type;
             this.prescribing_doctor = prescriptionItem.prescribing_doctor;
             return this;
@@ -90,7 +90,7 @@ public class PrescriptionItem {
 
     //A private constructor
     private PrescriptionItem(Builder builder) {
-        this.prescription_number = builder.prescription_number;
+        this.id = builder.id;
         this.prescribing_doctor = builder.prescribing_doctor;
         this.prescription_type = builder.prescription_type;
     }
@@ -100,13 +100,13 @@ public class PrescriptionItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PrescriptionItem that = (PrescriptionItem) o;
-        return prescription_number == that.prescription_number &&
+        return id == that.id &&
                 prescription_type.equals(that.prescription_type) &&
                 prescribing_doctor.equals(that.prescribing_doctor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(prescription_number, prescription_type, prescribing_doctor);
+        return Objects.hash(id, prescription_type, prescribing_doctor);
     }
 }

@@ -67,7 +67,7 @@ public class PharmacyController {
         return pharmacyService.update(pharmacy);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Set<Pharmacy> getAll(){
         return pharmacyService.getAll();
     }

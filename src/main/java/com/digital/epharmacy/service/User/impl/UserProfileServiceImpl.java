@@ -59,7 +59,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfile update(UserProfile userProfile) {
 
-        if (this.repository.existsById(userProfile.getUser_id()))
+        if (this.repository.existsById(userProfile.getId()))
             return this.repository.save(userProfile);
         return null;
     }

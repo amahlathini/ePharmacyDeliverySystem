@@ -75,7 +75,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     @Override
     public Pharmacy update(Pharmacy pharmacy) {
-        if(this.repository.existsById(pharmacy.getPharmacy_id())) {
+        if(this.repository.existsById(pharmacy.getId())) {
             return this.repository.save(pharmacy);
         }
         else {
