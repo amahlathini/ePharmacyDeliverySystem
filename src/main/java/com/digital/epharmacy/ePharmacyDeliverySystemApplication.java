@@ -26,6 +26,7 @@ public class ePharmacyDeliverySystemApplication {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("http://localhost:4200");
         config.addAllowedOrigin("https://vibekonnect.tech/admin-dashboard");
         config.addAllowedOrigin("https://amahlathini.github.io/admin-dashboard");
         config.addAllowedHeader("*");
