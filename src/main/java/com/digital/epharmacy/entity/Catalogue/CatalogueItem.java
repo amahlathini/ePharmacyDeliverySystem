@@ -21,7 +21,7 @@ public class CatalogueItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id")
+    @Column(name = "id")
     private long id;
     @NotNull
     private int item_quantity;
@@ -34,10 +34,10 @@ public class CatalogueItem implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     private String item_image;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "category_id")
     private Category category;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
 
     //non argument constructor
