@@ -21,7 +21,7 @@ public class CatalogueItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", insertable = false, updatable = false)
+    @Column(name = "item_id")
     private long id;
     @NotNull
     private int item_quantity;
