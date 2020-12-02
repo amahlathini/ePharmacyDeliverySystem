@@ -29,6 +29,7 @@ public class PaymentFactory {
                 .setType_of_payment(order.getPayment_type())
                 .setPayment_total(order.getOrder_total())
                 .setPharmacy(order.getPharmacy())
+                .setOrder(order)
                 .setUser(order.getUser())
                 .setDate(date)
                 .setReference_number(order.getId())
