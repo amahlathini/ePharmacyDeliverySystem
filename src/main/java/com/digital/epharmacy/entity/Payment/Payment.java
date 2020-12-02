@@ -25,17 +25,11 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-    @NotNull(message = "Payment Status is required")
     private String payment_status;
-    @NotNull(message = "Type of Payment is required")
     private String type_of_payment;
-    @NotNull(message = "Payment Notification is required")
     private String payment_notification;
-    @NotNull(message = "Payment total is required")
     private BigDecimal payment_total;
-    @NotNull(message = "Date is required")
     private String date;
-    @NotNull
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Order order;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
