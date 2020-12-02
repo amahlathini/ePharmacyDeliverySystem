@@ -22,6 +22,7 @@ public class Payment {
 
     //Declaring variables using all attributes from the Payment Entity
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
     @NotNull(message = "Payment Status is required")
@@ -36,7 +37,6 @@ public class Payment {
     private String date;
     @NotNull
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "id")
     private Order order;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Pharmacy pharmacy;
