@@ -30,7 +30,15 @@ public class ePharmacyDeliverySystemApplication {
         config.addAllowedOrigin("http://192.168.18.2:4200");
         config.addAllowedOrigin("http://192.168.18.2:4200/**");
         config.addAllowedOrigin("https://vibekonnect.tech/admin-dashboard");
+        config.addAllowedOrigin("http://vibekonnect.tech/admin-dashboard");
+        config.addAllowedOrigin("https://epharmacy-angular-frontend.herokuapp.com");
+        config.addAllowedOrigin("https://epharmacy-angular-frontend.herokuapp.com/**");
+        config.addAllowedOrigin("http://vibekonnect.tech/**");
+        config.addAllowedOrigin("https://vibekonnect.tech/**");
         config.addAllowedOrigin("https://amahlathini.github.io/admin-dashboard");
+        config.addAllowedOrigin("https://amahlathini.github.io/**");
+        config.addAllowedOrigin("http://amahlathini.github.io/admin-dashboard");
+        config.addAllowedOrigin("http://amahlathini.github.io/**");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
@@ -43,7 +51,7 @@ public class ePharmacyDeliverySystemApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200", "http://192.168.18.2:4200", "http://192.168.18.2:4200/**", "http://localhost:3000", "https://epharmacy-sa.herokuapp.com", "https://amahlathini.github.io/admin-dashboard", "https://vibekonnect.tech/admin-dashboard")
+                        .allowedOrigins("http://localhost:4200", "https://epharmacy-angular-frontend.herokuapp.com", "https://epharmacy-angular-frontend.herokuapp.com/**", "http://192.168.18.2:4200", "http://192.168.18.2:4200/**", "http://localhost:3000", "https://epharmacy-sa.herokuapp.com", "https://amahlathini.github.io/**", "https://amahlathini.github.io/admin-dashboard", "https://vibekonnect.tech/**", "https://vibekonnect.tech/admin-dashboard", "https://amahlathini.github.io/**", "http://amahlathini.github.io/admin-dashboard", "http://vibekonnect.tech/**", "http://vibekonnect.tech/admin-dashboard")
                         .allowedHeaders("*")
                         .allowedMethods("*");
             }
