@@ -27,6 +27,8 @@ public class ePharmacyDeliverySystemApplication {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedOrigin("http://192.168.18.2:4200");
+        config.addAllowedOrigin("http://192.168.18.2:4200/**");
         config.addAllowedOrigin("https://vibekonnect.tech/admin-dashboard");
         config.addAllowedOrigin("https://amahlathini.github.io/admin-dashboard");
         config.addAllowedHeader("*");
@@ -41,7 +43,7 @@ public class ePharmacyDeliverySystemApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200", "http://localhost:3000", "https://epharmacy-sa.herokuapp.com", "https://amahlathini.github.io/admin-dashboard", "https://vibekonnect.tech/admin-dashboard")
+                        .allowedOrigins("http://localhost:4200", "http://192.168.18.2:4200", "http://192.168.18.2:4200/**", "http://localhost:3000", "https://epharmacy-sa.herokuapp.com", "https://amahlathini.github.io/admin-dashboard", "https://vibekonnect.tech/admin-dashboard")
                         .allowedHeaders("*")
                         .allowedMethods("*");
             }

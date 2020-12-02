@@ -32,7 +32,7 @@ public class Order {
 
     //Entity attributes
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "id")
     private Long id; // (Ayabulela Mahlathini) changed order number to string so that it is auto generated in the factor;
